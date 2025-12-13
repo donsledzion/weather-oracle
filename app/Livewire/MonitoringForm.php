@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\MonitoringRequest;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -20,7 +21,13 @@ class MonitoringForm extends Component
     {
         $this->validate();
 
-        // TODO: Create monitoring request
+        MonitoringRequest::create([
+            'location' => $this->location,
+            'target_date' => $this->targetDate,
+            'email' => $this->email,
+            'status' => 'active',
+        ]);
+
         session()->flash('message', 'Monitoring request created successfully!');
 
         $this->reset();

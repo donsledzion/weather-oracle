@@ -1,6 +1,6 @@
 # Setup Instructions
 
-## Quick Start
+## Local Development
 
 ### 1. Install Dependencies
 
@@ -9,15 +9,9 @@ composer install
 npm install
 ```
 
-### 2. Build Assets
+### 2. Configure Environment
 
-```bash
-npm run dev
-```
-
-### 3. Configure Database
-
-Update `.env` file with your MySQL credentials:
+Copy `.env.example` to `.env` and update:
 
 ```env
 DB_CONNECTION=mysql
@@ -28,19 +22,86 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-### 4. Run Migrations
+Generate application key:
+
+```bash
+php artisan key:generate
+```
+
+### 3. Run Migrations
 
 ```bash
 php artisan migrate
 ```
 
-### 5. Start Development Server
+### 4. Build Assets & Start Server
 
 ```bash
+npm run dev
 php artisan serve
 ```
 
 Visit: http://localhost:8000
+
+---
+
+## Server Deployment (MyDevil)
+
+### Initial Setup (One-time)
+
+1. **Clone repository:**
+   ```bash
+   cd ~/domains/weather-oracle.softaware.pl
+   git clone <repo-url> .
+   ```
+
+2. **Create symlink for public_html:**
+   ```bash
+   ln -s public public_html
+   ```
+
+3. **Set permissions:**
+   ```bash
+   chmod -R 775 storage bootstrap/cache
+   ```
+
+4. **Configure .env:**
+   ```bash
+   cp .env.example .env
+   nano .env
+   ```
+
+   Update database credentials and generate key:
+   ```bash
+   php82 artisan key:generate
+   ```
+
+5. **Install dependencies:**
+   ```bash
+   php82 $(which composer) install --no-dev
+   npm install
+   npm run build
+   ```
+
+6. **Run migrations:**
+   ```bash
+   php82 artisan migrate --force
+   ```
+
+### Automatic Deployment
+
+After initial setup, GitHub Actions automatically deploys on push to `main`:
+- Pulls latest code
+- Installs dependencies
+- Builds assets
+- Runs migrations
+- Clears cache
+
+**Required GitHub Secrets:**
+- `SSH_PRIVATE_KEY`
+- `SSH_HOST`
+- `SSH_PORT`
+- `SSH_USER`
 
 ---
 
