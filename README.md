@@ -163,6 +163,78 @@ For completed requests:
 
 ---
 
-## Status
+## Current Status
 
-MVP – in progress
+### ✅ Implemented (MVP v0.1)
+
+1. **User Input** ✅
+   - Form for creating monitoring requests (location, target date, email)
+   - Livewire component with validation
+
+2. **Monitoring Registration** ✅
+   - MonitoringRequest model and database
+   - Stores all required fields
+   - Initial forecast fetch on creation
+
+3. **Weather Data Providers** ✅
+   - OpenWeather API integration
+   - WeatherService for fetching forecasts
+   - Configuration via `config/services.php`
+   - Seeder for weather providers
+
+4. **Forecast Storage** ✅
+   - ForecastSnapshot model with relations
+   - Stores forecast data as JSON
+   - Links to MonitoringRequest and WeatherProvider
+
+5. **UI/UX** ✅
+   - Dashboard with monitoring form
+   - List of all monitoring requests
+   - Detail page showing forecast snapshots
+   - Tailwind CSS styling
+
+### 🚧 Todo (MVP v0.1)
+
+4. **Periodic Forecast Collection** 🚧
+   - Scheduler to fetch forecasts every X hours
+   - Update existing monitoring requests
+
+5. **Target Date Handling** 🚧
+   - Fetch actual weather on target date
+   - Mark requests as completed
+   - Stop forecast collection
+
+6. **Result Summary** 🚧
+   - Compare initial vs final vs actual
+   - Calculate accuracy metrics
+
+7. **Visualization** 🚧
+   - Chart.js integration
+   - Temperature/precipitation trends over time
+
+---
+
+## Configuration
+
+### Required Environment Variables
+
+**Local & Production:**
+
+```env
+# OpenWeather API
+OPENWEATHER_API_KEY=your_api_key_here
+
+# Database (MySQL)
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=weather_oracle
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+**Get OpenWeather API Key:**
+1. Sign up at https://openweathermap.org/api
+2. Navigate to API Keys section
+3. Copy your key (activation takes ~10-15 minutes)
+4. Free tier: 1000 requests/day, 60 requests/minute

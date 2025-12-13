@@ -52,6 +52,9 @@ jobs:
           # Run migrations
           php82 artisan migrate --force
 
+          # Seed weather providers (idempotent)
+          php82 artisan db:seed --class=WeatherProviderSeeder --force
+
           # Clear and optimize cache
           php82 artisan optimize
 

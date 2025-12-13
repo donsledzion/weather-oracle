@@ -71,7 +71,24 @@ Visit: http://localhost:8000
    nano .env
    ```
 
-   Update database credentials and generate key:
+   **Required variables:**
+   ```env
+   # Application
+   APP_KEY=  # will be generated below
+
+   # Database
+   DB_CONNECTION=mysql
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+
+   # OpenWeather API (REQUIRED!)
+   OPENWEATHER_API_KEY=your_openweather_api_key
+   ```
+
+   Generate application key:
    ```bash
    php82 artisan key:generate
    ```
@@ -83,9 +100,10 @@ Visit: http://localhost:8000
    npm run build
    ```
 
-6. **Run migrations:**
+6. **Run migrations and seed:**
    ```bash
    php82 artisan migrate --force
+   php82 artisan db:seed --class=WeatherProviderSeeder
    ```
 
 ### Automatic Deployment
