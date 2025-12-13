@@ -8,8 +8,14 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Fetch weather forecasts every 12 hours
+// Fetch weather forecasts every 6 hours
 Schedule::command('forecasts:fetch')
     ->everySixHours()
+    ->withoutOverlapping()
+    ->onOneServer();
+
+// Check for reached target dates daily
+Schedule::command('targets:check')
+    ->daily()
     ->withoutOverlapping()
     ->onOneServer();

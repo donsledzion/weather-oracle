@@ -27,6 +27,82 @@
         </div>
     </div>
 
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h3 class="text-xl font-bold mb-4">Temperature Trends</h3>
+
+        @if($request->forecastSnapshots->count() > 1)
+            <canvas id="temperatureChart" height="100"></canvas>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const ctx = document.getElementById('temperatureChart').getContext('2d');
+                    const snapshots = @json($request->forecastSnapshots->sortBy('fetched_at')->values());
+
+                    const labels = snapshots.map(s => new Date(s.fetched_at).toLocaleString('pl-PL', {
+                        month: 'short',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }));
+
+                    const avgTemps = snapshots.map(s => s.forecast_data.temperature_avg);
+                    const minTemps = snapshots.map(s => s.forecast_data.temperature_min);
+                    const maxTemps = snapshots.map(s => s.forecast_data.temperature_max);
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [
+                                {
+                                    label: 'Avg Temperature',
+                                    data: avgTemps,
+                                    borderColor: 'rgb(59, 130, 246)',
+                                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                    tension: 0.3
+                                },
+                                {
+                                    label: 'Min Temperature',
+                                    data: minTemps,
+                                    borderColor: 'rgb(99, 102, 241)',
+                                    borderDash: [5, 5],
+                                    fill: false
+                                },
+                                {
+                                    label: 'Max Temperature',
+                                    data: maxTemps,
+                                    borderColor: 'rgb(239, 68, 68)',
+                                    borderDash: [5, 5],
+                                    fill: false
+                                }
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: false
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    title: {
+                                        display: true,
+                                        text: 'Temperature (°C)'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        @else
+            <p class="text-gray-500">Not enough data for chart (need at least 2 snapshots)</p>
+        @endif
+    </div>
+
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-xl font-bold mb-4">Forecast Snapshots ({{ $request->forecastSnapshots->count() }})</h3>
 
