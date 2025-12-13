@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer create-project:*)",
+      "Bash(dir)",
+      "Bash(composer:*)",
+      "Bash(php artisan livewire:publish:*)",
+      "Bash(npm install:*)",
+      "Bash(php artisan make:livewire:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

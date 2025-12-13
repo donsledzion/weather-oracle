@@ -1,0 +1,60 @@
+name: Deploy Weather Oracle to MyDevil
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # --- SSH setup ---
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # --- Deploy via git pull on server ---
+      - name: Deploy via git pull
+        run: |
+          ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} /bin/bash << 'EOSSH'
+          set -euo pipefail
+          APP_DIR=~/domains/weather-oracle.softaware.pl
+          cd "$APP_DIR"
+
+          # Pull latest changes
+          git pull origin main
+
+          # Install/update npm dependencies
+          npm ci || npm install
+
+          # Build frontend assets
+          npm run build
+
+          # Composer install
+          if command -v composer82 >/dev/null 2>&1; then
+            composer82 install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+          else
+            if command -v composer >/dev/null 2>&1; then
+              php82 "$(command -v composer)" install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            elif [ -x /usr/local/bin/composer ]; then
+              php82 /usr/local/bin/composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            else
+              echo "Composer not found on server. Install composer or provide path." >&2
+              exit 1
+            fi
+          fi
+
+          # Run migrations
+          php82 artisan migrate --force
+
+          # Clear and optimize cache
+          php82 artisan optimize
+
+          # Publish Livewire assets (if needed)
+          php82 artisan livewire:publish --assets
+
+          EOSSH
