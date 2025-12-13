@@ -10,6 +10,6 @@ Artisan::command('inspire', function () {
 
 // Fetch weather forecasts every 12 hours
 Schedule::command('forecasts:fetch')
-    ->everyTwoHours()
+    ->everySixHours()
     ->withoutOverlapping()
     ->onOneServer();
