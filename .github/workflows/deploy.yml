@@ -28,7 +28,6 @@ jobs:
           # Pull latest changes (force reset to remote state)
           git fetch origin main
           git reset --hard origin/main
-          git clean -fd
 
           # Install/update npm dependencies
           npm ci || npm install
