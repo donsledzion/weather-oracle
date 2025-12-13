@@ -7,7 +7,9 @@
       "Bash(php artisan livewire:publish:*)",
       "Bash(npm install:*)",
       "Bash(php artisan make:livewire:*)",
-      "Bash(php artisan make:model:*)"
+      "Bash(php artisan make:model:*)",
+      "Bash(php artisan make:seeder:*)",
+      "Bash(php artisan db:seed:*)"
     ],
     "deny": [],
     "ask": []

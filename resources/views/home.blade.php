@@ -8,15 +8,9 @@
             </div>
         </div>
 
-        {{-- Example Alpine.js component --}}
-        <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6" x-data="{ open: false }">
-            <button @click="open = !open" class="bg-blue-500 text-white px-4 py-2 rounded">
-                Toggle Info
-            </button>
-
-            <div x-show="open" x-transition class="mt-4 p-4 bg-blue-50 rounded">
-                <p>This is an example of Alpine.js working!</p>
-            </div>
+        {{-- Monitoring Requests List --}}
+        <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+            @livewire('monitoring-requests-list')
         </div>
     </div>
 </x-layouts.app>
