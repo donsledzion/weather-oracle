@@ -13,18 +13,18 @@
 
     <form wire:submit="submit" class="space-y-4">
         <div>
-            <label class="block text-sm font-medium text-gray-700">Location</label>
+            <label class="block text-sm font-medium text-gray-700">{{ __('app.location') }}</label>
             <input
                 type="text"
                 wire:model="location"
-                placeholder="Enter city name or coordinates"
+                placeholder="{{ __('app.location_placeholder') }}"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             >
             @error('location') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">Target Date</label>
+            <label class="block text-sm font-medium text-gray-700">{{ __('app.target_date') }}</label>
             <input
                 type="date"
                 wire:model="targetDate"
@@ -34,11 +34,11 @@
         </div>
 
         <div>
-            <label class="block text-sm font-medium text-gray-700">Email (optional)</label>
+            <label class="block text-sm font-medium text-gray-700">{{ __('app.email') }}</label>
             <input
                 type="email"
                 wire:model="email"
-                placeholder="your@email.com"
+                placeholder="{{ __('app.email_placeholder') }}"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
             >
             @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -49,8 +49,8 @@
             class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md"
             wire:loading.attr="disabled"
         >
-            <span wire:loading.remove>Start Monitoring</span>
-            <span wire:loading>Creating...</span>
+            <span wire:loading.remove>{{ __('app.start_monitoring') }}</span>
+            <span wire:loading>{{ __('app.creating') }}</span>
         </button>
     </form>
 </div>

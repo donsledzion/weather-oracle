@@ -52,9 +52,9 @@ class MonitoringForm extends Component
                         'forecast_data' => $forecastData,
                         'fetched_at' => now(),
                     ]);
-                    session()->flash('message', 'Monitoring request created and initial forecast fetched successfully!');
+                    session()->flash('message', __('app.request_created_success'));
                 } else {
-                    session()->flash('message', 'Monitoring request created. Forecast data will be available when target date is within 5 days.');
+                    session()->flash('message', __('app.request_created_no_data'));
                 }
             }
 
@@ -71,11 +71,11 @@ class MonitoringForm extends Component
 
             // Make error messages more user-friendly
             if (str_contains($errorMessage, '404') || str_contains($errorMessage, 'not found')) {
-                session()->flash('error', 'Location not found. Please check the spelling or try coordinates (lat,lon).');
+                session()->flash('error', __('app.location_not_found'));
             } elseif (str_contains($errorMessage, '401')) {
-                session()->flash('error', 'Weather API configuration error. Please contact support.');
+                session()->flash('error', __('app.api_config_error'));
             } else {
-                session()->flash('error', 'Failed to fetch weather data: ' . $errorMessage);
+                session()->flash('error', __('app.fetch_failed', ['message' => $errorMessage]));
             }
         }
     }
