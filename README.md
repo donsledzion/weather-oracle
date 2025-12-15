@@ -193,24 +193,34 @@ For completed requests:
    - Detail page showing forecast snapshots
    - Tailwind CSS styling
 
-### 🚧 Todo (MVP v0.1)
+6. **Periodic Forecast Collection** ✅
+   - Laravel Command `forecasts:fetch`
+   - Scheduler runs every 6 hours
+   - Fetches forecasts for all active requests
+   - Stores new snapshots
 
-4. **Periodic Forecast Collection** 🚧
-   - Scheduler to fetch forecasts every X hours
-   - Update existing monitoring requests
+7. **Target Date Handling** ✅
+   - Laravel Command `targets:check`
+   - Runs daily via scheduler
+   - Fetches actual weather when target date reached
+   - Marks requests as completed
+   - Stores actual weather data
 
-5. **Target Date Handling** 🚧
-   - Fetch actual weather on target date
-   - Mark requests as completed
-   - Stop forecast collection
-
-6. **Result Summary** 🚧
-   - Compare initial vs final vs actual
-   - Calculate accuracy metrics
-
-7. **Visualization** 🚧
+8. **Visualization** ✅
    - Chart.js integration
-   - Temperature/precipitation trends over time
+   - Temperature trends chart (avg/min/max)
+   - Shows forecast changes over time
+   - Displays on request details page
+
+### 🚧 Planned Features
+
+See [TODO.md](TODO.md) for detailed roadmap with implementation phases:
+
+**Phase 1:** Extended weather data (humidity, pressure, wind, UV, cloud coverage)
+**Phase 2:** Daily email summaries
+**Phase 3:** Multiple weather providers + comparison view
+**Phase 4:** Email verification + unsubscribe system
+**Phase 5:** Optional user accounts + rate limiting
 
 ---
 
