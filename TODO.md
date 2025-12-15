@@ -6,21 +6,29 @@
 - [x] Zaktualizować WeatherService aby pobierał rozszerzone dane
 - [x] Dodać wyświetlanie rozszerzonych danych na kartkach snapshot'ów
 
-## Faza 2: Upgrade dashboard'u
+## Faza 2: Upgrade dashboard'u ✅
 
-- [ ] Naprawić czyszczenie inputów formularza po submit
-- [ ] Dodać auto-refresh listy requestów po utworzeniu nowego
-- [ ] Obsłużyć błędy API (lokalizacja nie znaleziona)
-- [ ] Ulepszyć komunikaty walidacji
-- [ ] **Przyszłość:** Dodać map picker do wyboru lokalizacji
+- [x] Naprawić czyszczenie inputów formularza po submit
+- [x] Dodać auto-refresh listy requestów po utworzeniu nowego
+- [x] Obsłużyć błędy API (lokalizacja nie znaleziona)
+- [x] Ulepszyć komunikaty walidacji
+- [x] Naprawić problem z zapisywaniem snapshot'ów dla zbyt odległych dat
 
-## Faza 3: Więcej providerów + porównanie
+## Faza 3: Localization (PL/EN)
+
+- [ ] Skonfigurować Laravel localization (pl, en)
+- [ ] Dodać pliki tłumaczeń (resources/lang/pl i resources/lang/en)
+- [ ] Przetłumaczyć wszystkie teksty w UI (formularze, komunikaty, błędy)
+- [ ] Zaimplementować language picker w nawigacji
+- [ ] Zapisywać preferencję języka użytkownika (session/cookie)
+
+## Faza 4: Więcej providerów + porównanie
 
 - [ ] Dodać drugiego providera (np. WeatherAPI.com lub Tomorrow.io)
 - [ ] Rozszerzyć UI o wybór providerów przy tworzeniu requesta
 - [ ] Stworzyć widok porównania providerów dla tego samego requesta
 
-## Faza 4: Email verification + unsubscribe
+## Faza 5: Email verification + unsubscribe
 
 - [ ] Stworzyć system weryfikacji email (token w URL)
 - [ ] Dodać status 'pending_verification' do MonitoringRequest
@@ -28,7 +36,7 @@
 - [ ] Stworzyć endpoint do potwierdzania requestu z tokenu
 - [ ] Dodać system unsubscribe (token w mailu)
 
-## Faza 5: Konta użytkowników + limity
+## Faza 6: Konta użytkowników + limity
 
 - [ ] Stworzyć model User + migration (opcjonalne konta)
 - [ ] Dodać Laravel Breeze do autoryzacji
@@ -36,12 +44,16 @@
 - [ ] Dodać middleware: zablokować anonimowe zapytania dla zalogowanych
 - [ ] Dashboard dla zalogowanych użytkowników
 
-## Faza 6: Email notifications
+## Faza 7: Email notifications
 
 - [ ] Email powiadomienie gdy pierwszy snapshot zostanie zapisany (target date w zasięgu API)
 - [ ] Jeśli kilku providerów zapisuje snapshot tego samego dnia → zbiorczy mail
 - [ ] Daily summary email dla aktywnych requestów z aktualnymi prognozami
 - [ ] Command w schedulerze wysyłający codzienne podsumowania
+
+## Faza 8: UI Enhancements
+
+- [ ] Dodać map picker do wyboru lokalizacji (Leaflet/Google Maps)
 
 ---
 
