@@ -5,61 +5,65 @@ namespace App\Console\Commands;
 use App\Models\ForecastSnapshot;
 use App\Models\MonitoringRequest;
 use App\Models\WeatherProvider;
-use App\Services\WeatherService;
+use App\Services\WeatherProviderFactory;
 use Illuminate\Console\Command;
 
 class FetchForecasts extends Command
 {
     protected $signature = 'forecasts:fetch';
-    protected $description = 'Fetch weather forecasts for all active monitoring requests';
+    protected $description = 'Fetch weather forecasts for all active monitoring requests from all providers';
 
     public function handle()
     {
         $this->info('Starting forecast fetch...');
 
         $activeRequests = MonitoringRequest::where('status', 'active')->get();
-        $provider = WeatherProvider::where('name', 'OpenWeather')->first();
+        $activeProviders = WeatherProvider::where('is_active', true)->get();
 
-        if (!$provider) {
-            $this->error('OpenWeather provider not found in database');
+        if ($activeProviders->isEmpty()) {
+            $this->error('No active weather providers found');
             return 1;
         }
 
         $this->info("Found {$activeRequests->count()} active monitoring requests");
+        $this->info("Found {$activeProviders->count()} active providers: " . $activeProviders->pluck('name')->join(', '));
 
-        $weatherService = new WeatherService();
         $successCount = 0;
         $failCount = 0;
 
         foreach ($activeRequests as $request) {
-            try {
-                $forecastData = $weatherService->getForecast(
-                    $request->location,
-                    $request->target_date->format('Y-m-d')
-                );
+            foreach ($activeProviders as $provider) {
+                try {
+                    $weatherService = WeatherProviderFactory::make($provider);
 
-                // Check if forecast date matches target date (±1 day tolerance)
-                $forecastDate = new \DateTime($forecastData['forecast_date']);
-                $targetDate = new \DateTime($request->target_date->format('Y-m-d'));
-                $daysDiff = abs($forecastDate->diff($targetDate)->days);
+                    $forecastData = $weatherService->getForecast(
+                        $request->location,
+                        $request->target_date->format('Y-m-d')
+                    );
 
-                // Only save snapshot if forecast is for the target date
-                if ($daysDiff <= 1) {
-                    ForecastSnapshot::create([
-                        'monitoring_request_id' => $request->id,
-                        'weather_provider_id' => $provider->id,
-                        'forecast_data' => $forecastData,
-                        'fetched_at' => now(),
-                    ]);
-                    $this->info("✓ Fetched forecast for: {$request->location}");
-                    $successCount++;
-                } else {
-                    $this->info("⚠ Skipped {$request->location}: target date too far (forecast for {$forecastData['forecast_date']})");
+                    // Check if forecast date matches target date (±1 day tolerance)
+                    $forecastDate = new \DateTime($forecastData['forecast_date']);
+                    $targetDate = new \DateTime($request->target_date->format('Y-m-d'));
+                    $daysDiff = abs($forecastDate->diff($targetDate)->days);
+
+                    // Only save snapshot if forecast is for the target date
+                    if ($daysDiff <= 1) {
+                        ForecastSnapshot::create([
+                            'monitoring_request_id' => $request->id,
+                            'weather_provider_id' => $provider->id,
+                            'forecast_data' => $forecastData,
+                            'fetched_at' => now(),
+                        ]);
+                        $this->info("✓ [{$provider->name}] {$request->location}");
+                        $successCount++;
+                    } else {
+                        $this->info("⚠ [{$provider->name}] {$request->location}: target date too far (forecast for {$forecastData['forecast_date']})");
+                    }
+
+                } catch (\Exception $e) {
+                    $this->error("✗ [{$provider->name}] {$request->location}: {$e->getMessage()}");
+                    $failCount++;
                 }
-
-            } catch (\Exception $e) {
-                $this->error("✗ Failed for {$request->location}: {$e->getMessage()}");
-                $failCount++;
             }
         }
 

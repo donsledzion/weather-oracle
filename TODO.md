@@ -14,18 +14,20 @@
 - [x] Ulepszyć komunikaty walidacji
 - [x] Naprawić problem z zapisywaniem snapshot'ów dla zbyt odległych dat
 
-## Faza 3: Localization (PL/EN)
+## Faza 3: Localization (PL/EN) ✅
 
-- [ ] Skonfigurować Laravel localization (pl, en)
-- [ ] Dodać pliki tłumaczeń (resources/lang/pl i resources/lang/en)
-- [ ] Przetłumaczyć wszystkie teksty w UI (formularze, komunikaty, błędy)
-- [ ] Zaimplementować language picker w nawigacji
-- [ ] Zapisywać preferencję języka użytkownika (session/cookie)
+- [x] Skonfigurować Laravel localization (pl, en)
+- [x] Dodać pliki tłumaczeń (lang/pl i lang/en)
+- [x] Przetłumaczyć wszystkie teksty w UI (formularze, komunikaty, błędy)
+- [x] Zaimplementować language picker z flagami 🇵🇱🇬🇧 w nawigacji
+- [x] Zapisywać preferencję języka użytkownika (session + middleware)
 
 ## Faza 4: Więcej providerów + porównanie
 
-- [ ] Dodać drugiego providera (np. WeatherAPI.com lub Tomorrow.io)
-- [ ] Rozszerzyć UI o wybór providerów przy tworzeniu requesta
+- [ ] Dodać Open-Meteo provider (darmowy, 16 dni prognozy, bez API key)
+- [ ] Dodać Visual Crossing provider (1000 calls/dzień, 15 dni prognozy)
+- [ ] Rozszerzyć UI o wybór providerów przy tworzeniu requesta (checkboxy)
+- [ ] Scheduler: pobierać prognozy z wszystkich wybranych providerów
 - [ ] Stworzyć widok porównania providerów dla tego samego requesta
 
 ## Faza 5: Email verification + unsubscribe

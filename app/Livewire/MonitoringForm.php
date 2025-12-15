@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\ForecastSnapshot;
 use App\Models\MonitoringRequest;
 use App\Models\WeatherProvider;
-use App\Services\WeatherService;
+use App\Services\WeatherProviderFactory;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -24,21 +24,22 @@ class MonitoringForm extends Component
     {
         $this->validate();
 
-        // Fetch initial forecast first to validate location
-        try {
-            $weatherService = new WeatherService();
-            $forecastData = $weatherService->getForecast($this->location, $this->targetDate);
+        $monitoringRequest = MonitoringRequest::create([
+            'location' => $this->location,
+            'target_date' => $this->targetDate,
+            'email' => $this->email,
+            'status' => 'active',
+        ]);
 
-            $monitoringRequest = MonitoringRequest::create([
-                'location' => $this->location,
-                'target_date' => $this->targetDate,
-                'email' => $this->email,
-                'status' => 'active',
-            ]);
+        // Fetch initial forecasts from all active providers
+        $activeProviders = WeatherProvider::where('is_active', true)->get();
+        $snapshotsCreated = 0;
 
-            $provider = WeatherProvider::where('name', 'OpenWeather')->first();
+        foreach ($activeProviders as $provider) {
+            try {
+                $weatherService = WeatherProviderFactory::make($provider);
+                $forecastData = $weatherService->getForecast($this->location, $this->targetDate);
 
-            if ($provider) {
                 // Check if forecast date matches target date (±1 day tolerance)
                 $forecastDate = new \DateTime($forecastData['forecast_date']);
                 $targetDateObj = new \DateTime($this->targetDate);
@@ -52,31 +53,27 @@ class MonitoringForm extends Component
                         'forecast_data' => $forecastData,
                         'fetched_at' => now(),
                     ]);
-                    session()->flash('message', __('app.request_created_success'));
-                } else {
-                    session()->flash('message', __('app.request_created_no_data'));
+                    $snapshotsCreated++;
                 }
+
+            } catch (\Exception $e) {
+                // Log error but continue with other providers
+                \Log::warning("Failed to fetch initial forecast from {$provider->name}: " . $e->getMessage());
             }
+        }
 
-            // Clear form and validation errors
-            $this->reset(['location', 'targetDate', 'email']);
-            $this->resetValidation();
+        // Clear form and validation errors
+        $this->reset(['location', 'targetDate', 'email']);
+        $this->resetValidation();
 
-            // Dispatch event to refresh the list
-            $this->dispatch('request-created');
+        // Dispatch event to refresh the list
+        $this->dispatch('request-created');
 
-        } catch (\Exception $e) {
-            // Handle API errors (location not found, network issues, etc.)
-            $errorMessage = $e->getMessage();
-
-            // Make error messages more user-friendly
-            if (str_contains($errorMessage, '404') || str_contains($errorMessage, 'not found')) {
-                session()->flash('error', __('app.location_not_found'));
-            } elseif (str_contains($errorMessage, '401')) {
-                session()->flash('error', __('app.api_config_error'));
-            } else {
-                session()->flash('error', __('app.fetch_failed', ['message' => $errorMessage]));
-            }
+        // Show appropriate message
+        if ($snapshotsCreated > 0) {
+            session()->flash('message', __('app.request_created_success'));
+        } else {
+            session()->flash('message', __('app.request_created_no_data'));
         }
     }
 

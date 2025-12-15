@@ -40,4 +40,9 @@ return [
         'base_url' => env('OPENWEATHER_BASE_URL', 'https://api.openweathermap.org/data/2.5'),
     ],
 
+    'visualcrossing' => [
+        'api_key' => env('VISUAL_CROSSING_API_KEY'),
+        'base_url' => env('VISUAL_CROSSING_BASE_URL', 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline'),
+    ],
+
 ];

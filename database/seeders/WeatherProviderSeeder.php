@@ -22,5 +22,27 @@ class WeatherProviderSeeder extends Seeder
                 'is_active' => true,
             ]
         );
+
+        WeatherProvider::updateOrCreate(
+            ['name' => 'Open-Meteo'],
+            [
+                'configuration' => [
+                    'base_url' => 'https://api.open-meteo.com/v1',
+                    // No API key required - completely free!
+                ],
+                'is_active' => true,
+            ]
+        );
+
+        WeatherProvider::updateOrCreate(
+            ['name' => 'Visual Crossing'],
+            [
+                'configuration' => [
+                    'api_key' => env('VISUAL_CROSSING_API_KEY'),
+                    'base_url' => 'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline',
+                ],
+                'is_active' => true,
+            ]
+        );
     }
 }
