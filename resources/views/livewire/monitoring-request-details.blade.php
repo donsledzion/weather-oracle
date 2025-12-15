@@ -103,6 +103,7 @@
         @endif
     </div>
 
+
     <div class="bg-white rounded-lg shadow p-6">
         <h3 class="text-xl font-bold mb-4">Forecast Snapshots ({{ $request->forecastSnapshots->count() }})</h3>
 
@@ -119,7 +120,7 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-4">
+                        <div class="grid grid-cols-3 gap-4 mb-3">
                             <div>
                                 <p class="text-xs text-gray-600">Temperature</p>
                                 <p class="font-semibold">{{ round($snapshot->forecast_data['temperature_avg']) }}°C</p>
@@ -127,6 +128,9 @@
                                     Min: {{ round($snapshot->forecast_data['temperature_min']) }}°C /
                                     Max: {{ round($snapshot->forecast_data['temperature_max']) }}°C
                                 </p>
+                                @if(isset($snapshot->forecast_data['feels_like']))
+                                    <p class="text-xs text-gray-500">Feels like: {{ round($snapshot->forecast_data['feels_like']) }}°C</p>
+                                @endif
                             </div>
                             <div>
                                 <p class="text-xs text-gray-600">Conditions</p>
@@ -136,6 +140,25 @@
                             <div>
                                 <p class="text-xs text-gray-600">Precipitation</p>
                                 <p class="font-semibold">{{ round($snapshot->forecast_data['precipitation'] * 100) }}%</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-4 pt-3 border-t border-gray-100">
+                            <div>
+                                <p class="text-xs text-gray-600">Humidity</p>
+                                <p class="font-semibold">{{ $snapshot->forecast_data['humidity'] ?? 'N/A' }}%</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Pressure</p>
+                                <p class="font-semibold">{{ $snapshot->forecast_data['pressure'] ?? 'N/A' }} hPa</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Wind</p>
+                                <p class="font-semibold">{{ round($snapshot->forecast_data['wind_speed'] ?? 0, 1) }} m/s</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Clouds</p>
+                                <p class="font-semibold">{{ $snapshot->forecast_data['clouds'] ?? 'N/A' }}%</p>
                             </div>
                         </div>
                     </div>

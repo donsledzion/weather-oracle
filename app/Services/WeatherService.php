@@ -56,12 +56,27 @@ class WeatherService
         }
 
         return [
+            // Temperature
             'temperature_min' => $closestForecast['main']['temp_min'],
             'temperature_max' => $closestForecast['main']['temp_max'],
             'temperature_avg' => $closestForecast['main']['temp'],
+            'feels_like' => $closestForecast['main']['feels_like'],
+
+            // Conditions
             'conditions' => $closestForecast['weather'][0]['main'],
             'description' => $closestForecast['weather'][0]['description'],
+
+            // Precipitation
             'precipitation' => $closestForecast['pop'] ?? 0,
+
+            // Extended data
+            'humidity' => $closestForecast['main']['humidity'],
+            'pressure' => $closestForecast['main']['pressure'],
+            'wind_speed' => $closestForecast['wind']['speed'],
+            'wind_deg' => $closestForecast['wind']['deg'] ?? null,
+            'clouds' => $closestForecast['clouds']['all'],
+            'visibility' => $closestForecast['visibility'] ?? null,
+
             'raw_data' => $closestForecast,
         ];
     }
