@@ -38,15 +38,24 @@ class FetchForecasts extends Command
                     $request->target_date->format('Y-m-d')
                 );
 
-                ForecastSnapshot::create([
-                    'monitoring_request_id' => $request->id,
-                    'weather_provider_id' => $provider->id,
-                    'forecast_data' => $forecastData,
-                    'fetched_at' => now(),
-                ]);
+                // Check if forecast date matches target date (±1 day tolerance)
+                $forecastDate = new \DateTime($forecastData['forecast_date']);
+                $targetDate = new \DateTime($request->target_date->format('Y-m-d'));
+                $daysDiff = abs($forecastDate->diff($targetDate)->days);
 
-                $this->info("✓ Fetched forecast for: {$request->location}");
-                $successCount++;
+                // Only save snapshot if forecast is for the target date
+                if ($daysDiff <= 1) {
+                    ForecastSnapshot::create([
+                        'monitoring_request_id' => $request->id,
+                        'weather_provider_id' => $provider->id,
+                        'forecast_data' => $forecastData,
+                        'fetched_at' => now(),
+                    ]);
+                    $this->info("✓ Fetched forecast for: {$request->location}");
+                    $successCount++;
+                } else {
+                    $this->info("⚠ Skipped {$request->location}: target date too far (forecast for {$forecastData['forecast_date']})");
+                }
 
             } catch (\Exception $e) {
                 $this->error("✗ Failed for {$request->location}: {$e->getMessage()}");

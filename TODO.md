@@ -1,15 +1,18 @@
 # TODO - Weather Oracle
 
-## Faza 1: Rozszerzone dane pogodowe
+## Faza 1: Rozszerzone dane pogodowe ✅
 
-- [ ] Rozszerzyć ForecastSnapshot o więcej danych pogodowych (zachmurzenie, wilgotność, ciśnienie, wiatr, UV index)
-- [ ] Zaktualizować WeatherService aby pobierał rozszerzone dane
-- [ ] Dodać wizualizację rozszerzonych danych na wykresach
+- [x] Rozszerzyć ForecastSnapshot o więcej danych pogodowych (zachmurzenie, wilgotność, ciśnienie, wiatr, widoczność, feels_like)
+- [x] Zaktualizować WeatherService aby pobierał rozszerzone dane
+- [x] Dodać wyświetlanie rozszerzonych danych na kartkach snapshot'ów
 
-## Faza 2: Daily summaries
+## Faza 2: Upgrade dashboard'u
 
-- [ ] Stworzyć daily summary email dla aktywnych requestów
-- [ ] Dodać Command do schedulera wysyłający codzienne podsumowania
+- [ ] Naprawić czyszczenie inputów formularza po submit
+- [ ] Dodać auto-refresh listy requestów po utworzeniu nowego
+- [ ] Obsłużyć błędy API (lokalizacja nie znaleziona)
+- [ ] Ulepszyć komunikaty walidacji
+- [ ] **Przyszłość:** Dodać map picker do wyboru lokalizacji
 
 ## Faza 3: Więcej providerów + porównanie
 
@@ -32,6 +35,13 @@
 - [ ] Zaimplementować limity: 5 requestów/dzień dla niezalogowanych
 - [ ] Dodać middleware: zablokować anonimowe zapytania dla zalogowanych
 - [ ] Dashboard dla zalogowanych użytkowników
+
+## Faza 6: Email notifications
+
+- [ ] Email powiadomienie gdy pierwszy snapshot zostanie zapisany (target date w zasięgu API)
+- [ ] Jeśli kilku providerów zapisuje snapshot tego samego dnia → zbiorczy mail
+- [ ] Daily summary email dla aktywnych requestów z aktualnymi prognozami
+- [ ] Command w schedulerze wysyłający codzienne podsumowania
 
 ---
 

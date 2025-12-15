@@ -5,6 +5,12 @@
         </div>
     @endif
 
+    @if (session()->has('error'))
+        <div class="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <form wire:submit="submit" class="space-y-4">
         <div>
             <label class="block text-sm font-medium text-gray-700">Location</label>

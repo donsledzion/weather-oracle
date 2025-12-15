@@ -56,6 +56,10 @@ class WeatherService
         }
 
         return [
+            // Forecast metadata
+            'forecast_date' => $closestForecast['dt_txt'],
+            'forecast_timestamp' => $closestForecast['dt'],
+
             // Temperature
             'temperature_min' => $closestForecast['main']['temp_min'],
             'temperature_max' => $closestForecast['main']['temp_max'],

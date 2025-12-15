@@ -24,35 +24,60 @@ class MonitoringForm extends Component
     {
         $this->validate();
 
-        $monitoringRequest = MonitoringRequest::create([
-            'location' => $this->location,
-            'target_date' => $this->targetDate,
-            'email' => $this->email,
-            'status' => 'active',
-        ]);
-
-        // Fetch initial forecast
+        // Fetch initial forecast first to validate location
         try {
             $weatherService = new WeatherService();
             $forecastData = $weatherService->getForecast($this->location, $this->targetDate);
 
+            $monitoringRequest = MonitoringRequest::create([
+                'location' => $this->location,
+                'target_date' => $this->targetDate,
+                'email' => $this->email,
+                'status' => 'active',
+            ]);
+
             $provider = WeatherProvider::where('name', 'OpenWeather')->first();
 
             if ($provider) {
-                ForecastSnapshot::create([
-                    'monitoring_request_id' => $monitoringRequest->id,
-                    'weather_provider_id' => $provider->id,
-                    'forecast_data' => $forecastData,
-                    'fetched_at' => now(),
-                ]);
+                // Check if forecast date matches target date (±1 day tolerance)
+                $forecastDate = new \DateTime($forecastData['forecast_date']);
+                $targetDateObj = new \DateTime($this->targetDate);
+                $daysDiff = abs($forecastDate->diff($targetDateObj)->days);
+
+                // Only save snapshot if forecast is for the target date
+                if ($daysDiff <= 1) {
+                    ForecastSnapshot::create([
+                        'monitoring_request_id' => $monitoringRequest->id,
+                        'weather_provider_id' => $provider->id,
+                        'forecast_data' => $forecastData,
+                        'fetched_at' => now(),
+                    ]);
+                    session()->flash('message', 'Monitoring request created and initial forecast fetched successfully!');
+                } else {
+                    session()->flash('message', 'Monitoring request created. Forecast data will be available when target date is within 5 days.');
+                }
             }
 
-            session()->flash('message', 'Monitoring request created and initial forecast fetched successfully!');
-        } catch (\Exception $e) {
-            session()->flash('message', 'Monitoring request created, but failed to fetch forecast: ' . $e->getMessage());
-        }
+            // Clear form and validation errors
+            $this->reset(['location', 'targetDate', 'email']);
+            $this->resetValidation();
 
-        $this->reset();
+            // Dispatch event to refresh the list
+            $this->dispatch('request-created');
+
+        } catch (\Exception $e) {
+            // Handle API errors (location not found, network issues, etc.)
+            $errorMessage = $e->getMessage();
+
+            // Make error messages more user-friendly
+            if (str_contains($errorMessage, '404') || str_contains($errorMessage, 'not found')) {
+                session()->flash('error', 'Location not found. Please check the spelling or try coordinates (lat,lon).');
+            } elseif (str_contains($errorMessage, '401')) {
+                session()->flash('error', 'Weather API configuration error. Please contact support.');
+            } else {
+                session()->flash('error', 'Failed to fetch weather data: ' . $errorMessage);
+            }
+        }
     }
 
     public function render()
