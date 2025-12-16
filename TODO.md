@@ -22,13 +22,14 @@
 - [x] Zaimplementować language picker z flagami 🇵🇱🇬🇧 w nawigacji
 - [x] Zapisywać preferencję języka użytkownika (session + middleware)
 
-## Faza 4: Więcej providerów + porównanie
+## Faza 4: Więcej providerów + porównanie ✅
 
-- [ ] Dodać Open-Meteo provider (darmowy, 16 dni prognozy, bez API key)
-- [ ] Dodać Visual Crossing provider (1000 calls/dzień, 15 dni prognozy)
-- [ ] Rozszerzyć UI o wybór providerów przy tworzeniu requesta (checkboxy)
-- [ ] Scheduler: pobierać prognozy z wszystkich wybranych providerów
-- [ ] Stworzyć widok porównania providerów dla tego samego requesta
+- [x] Dodać Open-Meteo provider (darmowy, 16 dni prognozy, bez API key)
+- [x] Dodać Visual Crossing provider (1000 calls/dzień, 15 dni prognozy)
+- [x] Scheduler: pobierać prognozy z wszystkich aktywnych providerów
+- [x] Stworzyć wykres porównawczy providerów (osobne linie per provider)
+- [x] Utworzyć WeatherProviderInterface i factory pattern
+- [ ] **Opcjonalnie:** Rozszerzyć UI o wybór providerów przy tworzeniu requesta (checkboxy)
 
 ## Faza 5: Email verification + unsubscribe
 

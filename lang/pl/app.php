@@ -70,4 +70,5 @@ return [
     'no_requests_yet' => 'Nie masz jeszcze żadnych żądań monitorowania.',
     'view_details' => 'Zobacz szczegóły',
     'snapshots_count' => ':count snapshot(ów)',
+    'back_to_all_requests' => 'Powrót do wszystkich żądań',
 ];

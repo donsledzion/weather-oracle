@@ -70,4 +70,5 @@ return [
     'no_requests_yet' => 'No monitoring requests yet.',
     'view_details' => 'View Details',
     'snapshots_count' => ':count snapshot(s)',
+    'back_to_all_requests' => 'Back to all requests',
 ];

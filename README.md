@@ -165,39 +165,46 @@ For completed requests:
 
 ## Current Status
 
-### ✅ Implemented (MVP v0.1)
+### ✅ Implemented
 
 1. **User Input** ✅
    - Form for creating monitoring requests (location, target date, email)
    - Livewire component with validation
+   - Auto-refresh list after creation
 
 2. **Monitoring Registration** ✅
    - MonitoringRequest model and database
    - Stores all required fields
-   - Initial forecast fetch on creation
+   - Initial forecast fetch from all active providers
 
 3. **Weather Data Providers** ✅
-   - OpenWeather API integration
-   - WeatherService for fetching forecasts
-   - Configuration via `config/services.php`
-   - Seeder for weather providers
+   - **3 Active Providers:**
+     - **OpenWeather** (5 days, 1000 calls/day)
+     - **Open-Meteo** (16 days, unlimited, FREE!)
+     - **Visual Crossing** (15 days, 1000 calls/day)
+   - WeatherProviderInterface + Factory pattern
+   - Unified data model across all providers
+   - Provider seeder with configuration
 
 4. **Forecast Storage** ✅
    - ForecastSnapshot model with relations
-   - Stores forecast data as JSON
+   - Stores forecast_date from API (validates if within range)
+   - Only saves snapshots when target date is within provider's range
    - Links to MonitoringRequest and WeatherProvider
 
 5. **UI/UX** ✅
    - Dashboard with monitoring form
    - List of all monitoring requests
-   - Detail page showing forecast snapshots
+   - Detail page showing forecast snapshots per provider
+   - **Localization (PL/EN)** with flag switcher 🇵🇱🇬🇧
+   - Language preference saved in session
    - Tailwind CSS styling
 
 6. **Periodic Forecast Collection** ✅
    - Laravel Command `forecasts:fetch`
    - Scheduler runs every 6 hours
-   - Fetches forecasts for all active requests
-   - Stores new snapshots
+   - Fetches forecasts from **all active providers**
+   - Stores new snapshots with validation
 
 7. **Target Date Handling** ✅
    - Laravel Command `targets:check`
@@ -208,19 +215,26 @@ For completed requests:
 
 8. **Visualization** ✅
    - Chart.js integration
-   - Temperature trends chart (avg/min/max)
-   - Shows forecast changes over time
-   - Displays on request details page
+   - **Provider Comparison Chart** (separate lines per provider)
+   - Temperature trends over time
+   - Color-coded: OpenWeather (blue), Open-Meteo (green), Visual Crossing (orange)
+   - Shows forecast changes and provider differences
+
+9. **Extended Weather Data** ✅
+   - Temperature (min/max/avg/feels_like)
+   - Conditions & description
+   - Precipitation probability
+   - Humidity, pressure, wind speed/direction
+   - Cloud coverage, visibility
 
 ### 🚧 Planned Features
 
 See [TODO.md](TODO.md) for detailed roadmap with implementation phases:
 
-**Phase 1:** Extended weather data (humidity, pressure, wind, UV, cloud coverage)
-**Phase 2:** Daily email summaries
-**Phase 3:** Multiple weather providers + comparison view
-**Phase 4:** Email verification + unsubscribe system
-**Phase 5:** Optional user accounts + rate limiting
+**Phase 5:** Email verification + unsubscribe system
+**Phase 6:** Optional user accounts + rate limiting
+**Phase 7:** Email notifications (first snapshot, daily summaries)
+**Phase 8:** UI enhancements (map picker)
 
 ---
 
@@ -231,8 +245,10 @@ See [TODO.md](TODO.md) for detailed roadmap with implementation phases:
 **Local & Production:**
 
 ```env
-# OpenWeather API
-OPENWEATHER_API_KEY=your_api_key_here
+# Weather API Keys
+OPENWEATHER_API_KEY=your_openweather_key_here
+VISUAL_CROSSING_API_KEY=your_visualcrossing_key_here
+# Open-Meteo: No API key needed - completely free!
 
 # Database (MySQL)
 DB_CONNECTION=mysql
@@ -243,8 +259,19 @@ DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-**Get OpenWeather API Key:**
-1. Sign up at https://openweathermap.org/api
-2. Navigate to API Keys section
-3. Copy your key (activation takes ~10-15 minutes)
-4. Free tier: 1000 requests/day, 60 requests/minute
+**Get API Keys:**
+
+1. **OpenWeather** (required):
+   - Sign up at https://openweathermap.org/api
+   - Navigate to API Keys section
+   - Free tier: 1000 requests/day, 60 requests/minute, 5 days forecast
+
+2. **Visual Crossing** (required):
+   - Sign up at https://www.visualcrossing.com/
+   - Get free API key
+   - Free tier: 1000 requests/day, 15 days forecast
+
+3. **Open-Meteo** (no key needed):
+   - Completely free, no registration
+   - 16 days forecast, unlimited requests (fair use)
+   - Works out of the box!
