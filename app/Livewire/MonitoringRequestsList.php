@@ -17,7 +17,10 @@ class MonitoringRequestsList extends Component
 
     public function render()
     {
-        $requests = MonitoringRequest::orderBy('created_at', 'desc')->get();
+        // Show only active requests (not completed, expired, or rejected)
+        $requests = MonitoringRequest::where('status', MonitoringRequest::STATUS_ACTIVE)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('livewire.monitoring-requests-list', [
             'requests' => $requests,

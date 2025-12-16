@@ -17,7 +17,8 @@ class FetchForecasts extends Command
     {
         $this->info('Starting forecast fetch...');
 
-        $activeRequests = MonitoringRequest::where('status', 'active')->get();
+        // Fetch only requests with 'active' status using constant
+        $activeRequests = MonitoringRequest::where('status', MonitoringRequest::STATUS_ACTIVE)->get();
         $activeProviders = WeatherProvider::where('is_active', true)->get();
 
         if ($activeProviders->isEmpty()) {
