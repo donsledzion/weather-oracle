@@ -4,77 +4,102 @@
 
         <div class="grid grid-cols-2 gap-4 mb-4">
             <div>
-                <p class="text-sm text-gray-600">Target Date</p>
+                <p class="text-sm text-gray-600">{{ __('app.target_date') }}</p>
                 <p class="font-semibold">{{ $request->target_date->format('Y-m-d') }}</p>
             </div>
             <div>
-                <p class="text-sm text-gray-600">Status</p>
+                <p class="text-sm text-gray-600">{{ __('app.status') }}</p>
                 <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full
                     {{ $request->status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800' }}">
-                    {{ ucfirst($request->status) }}
+                    {{ __('app.' . $request->status) }}
                 </span>
             </div>
             @if($request->email)
             <div>
-                <p class="text-sm text-gray-600">Email</p>
+                <p class="text-sm text-gray-600">{{ __('app.email') }}</p>
                 <p class="font-semibold">{{ $request->email }}</p>
             </div>
             @endif
             <div>
-                <p class="text-sm text-gray-600">Created</p>
+                <p class="text-sm text-gray-600">{{ __('app.created') }}</p>
                 <p class="font-semibold">{{ $request->created_at->format('Y-m-d H:i') }}</p>
             </div>
         </div>
     </div>
 
     <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 class="text-xl font-bold mb-4">Temperature Trends</h3>
+        <h3 class="text-xl font-bold mb-4">{{ __('app.temperature_trends') }}</h3>
 
-        @if($request->forecastSnapshots->count() > 1)
+        @if($request->forecastSnapshots->count() > 0)
             <canvas id="temperatureChart" height="100"></canvas>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const ctx = document.getElementById('temperatureChart').getContext('2d');
                     const snapshots = @json($request->forecastSnapshots->sortBy('fetched_at')->values());
 
-                    const labels = snapshots.map(s => new Date(s.fetched_at).toLocaleString('pl-PL', {
+                    // Group snapshots by provider
+                    const providerData = {};
+                    snapshots.forEach(s => {
+                        const providerName = s.weather_provider.name;
+                        if (!providerData[providerName]) {
+                            providerData[providerName] = [];
+                        }
+                        providerData[providerName].push(s);
+                    });
+
+                    // Get unique timestamps for labels (rounded to nearest minute to group simultaneous fetches)
+                    const uniqueTimes = {};
+                    snapshots.forEach(s => {
+                        const date = new Date(s.fetched_at);
+                        const rounded = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes()).toISOString();
+                        uniqueTimes[rounded] = true;
+                    });
+                    const timestamps = Object.keys(uniqueTimes).sort();
+                    const labels = timestamps.map(t => new Date(t).toLocaleString('{{ app()->getLocale() }}', {
                         month: 'short',
                         day: 'numeric',
                         hour: '2-digit',
                         minute: '2-digit'
                     }));
 
-                    const avgTemps = snapshots.map(s => s.forecast_data.temperature_avg);
-                    const minTemps = snapshots.map(s => s.forecast_data.temperature_min);
-                    const maxTemps = snapshots.map(s => s.forecast_data.temperature_max);
+                    // Provider colors
+                    const colors = {
+                        'OpenWeather': { border: 'rgb(59, 130, 246)', bg: 'rgba(59, 130, 246, 0.1)' },
+                        'Open-Meteo': { border: 'rgb(16, 185, 129)', bg: 'rgba(16, 185, 129, 0.1)' },
+                        'Visual Crossing': { border: 'rgb(249, 115, 22)', bg: 'rgba(249, 115, 22, 0.1)' }
+                    };
+
+                    // Create datasets for each provider
+                    const datasets = [];
+                    Object.keys(providerData).forEach(providerName => {
+                        const providerSnapshots = providerData[providerName];
+                        const color = colors[providerName] || { border: 'rgb(107, 114, 128)', bg: 'rgba(107, 114, 128, 0.1)' };
+
+                        // Avg temperature
+                        datasets.push({
+                            label: `${providerName} - {{ __("app.avg_temperature") }}`,
+                            data: timestamps.map(t => {
+                                // Find snapshot matching this timestamp (rounded to minute)
+                                const snap = providerSnapshots.find(s => {
+                                    const sDate = new Date(s.fetched_at);
+                                    const sRounded = new Date(sDate.getFullYear(), sDate.getMonth(), sDate.getDate(), sDate.getHours(), sDate.getMinutes()).toISOString();
+                                    return sRounded === t;
+                                });
+                                return snap ? snap.forecast_data.temperature_avg : null;
+                            }),
+                            borderColor: color.border,
+                            backgroundColor: color.bg,
+                            tension: 0.3,
+                            fill: false,
+                            spanGaps: true
+                        });
+                    });
 
                     new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels: labels,
-                            datasets: [
-                                {
-                                    label: 'Avg Temperature',
-                                    data: avgTemps,
-                                    borderColor: 'rgb(59, 130, 246)',
-                                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                                    tension: 0.3
-                                },
-                                {
-                                    label: 'Min Temperature',
-                                    data: minTemps,
-                                    borderColor: 'rgb(99, 102, 241)',
-                                    borderDash: [5, 5],
-                                    fill: false
-                                },
-                                {
-                                    label: 'Max Temperature',
-                                    data: maxTemps,
-                                    borderColor: 'rgb(239, 68, 68)',
-                                    borderDash: [5, 5],
-                                    fill: false
-                                }
-                            ]
+                            datasets: datasets
                         },
                         options: {
                             responsive: true,
@@ -90,7 +115,7 @@
                                 y: {
                                     title: {
                                         display: true,
-                                        text: 'Temperature (°C)'
+                                        text: '{{ __("app.temperature") }} (°C)'
                                     }
                                 }
                             }
@@ -99,23 +124,22 @@
                 });
             </script>
         @else
-            <p class="text-gray-500">Not enough data for chart (need at least 2 snapshots)</p>
+            <p class="text-gray-500">{{ __('app.not_enough_data') }}</p>
         @endif
     </div>
 
 
     <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl font-bold mb-4">Forecast Snapshots ({{ $request->forecastSnapshots->count() }})</h3>
+        <h3 class="text-xl font-bold mb-4">{{ __('app.forecast_snapshots') }} ({{ $request->forecastSnapshots->count() }})</h3>
 
         @if($request->forecastSnapshots->isEmpty())
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <p class="text-yellow-800 font-semibold">⚠ No forecast data available yet</p>
+                <p class="text-yellow-800 font-semibold">⚠ {{ __('app.no_data_yet') }}</p>
                 <p class="text-sm text-yellow-700 mt-2">
-                    Target date is too far in the future. Weather forecasts are available up to 5 days in advance.
-                    Forecast data will start appearing when your target date is within range.
+                    {{ __('app.no_data_message') }}
                 </p>
                 <p class="text-xs text-yellow-600 mt-2">
-                    Target date: {{ $request->target_date->format('Y-m-d') }}
+                    {{ __('app.target_date') }}: {{ $request->target_date->format('Y-m-d') }}
                     ({{ $request->target_date->diffForHumans() }})
                 </p>
             </div>
@@ -126,10 +150,10 @@
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <p class="font-semibold">{{ $snapshot->weatherProvider->name }}</p>
-                                <p class="text-sm text-gray-500">Fetched: {{ $snapshot->fetched_at->format('Y-m-d H:i:s') }}</p>
+                                <p class="text-sm text-gray-500">{{ __('app.fetched') }}: {{ $snapshot->fetched_at->format('Y-m-d H:i:s') }}</p>
                                 @if(isset($snapshot->forecast_data['forecast_date']))
                                     <p class="text-sm text-gray-500">
-                                        Forecast for: {{ $snapshot->forecast_data['forecast_date'] }}
+                                        {{ __('app.forecast_for') }}: {{ $snapshot->forecast_data['forecast_date'] }}
                                     </p>
                                 @endif
                             </div>
@@ -137,42 +161,42 @@
 
                         <div class="grid grid-cols-3 gap-4 mb-3">
                             <div>
-                                <p class="text-xs text-gray-600">Temperature</p>
+                                <p class="text-xs text-gray-600">{{ __('app.temperature') }}</p>
                                 <p class="font-semibold">{{ round($snapshot->forecast_data['temperature_avg']) }}°C</p>
                                 <p class="text-xs text-gray-500">
-                                    Min: {{ round($snapshot->forecast_data['temperature_min']) }}°C /
-                                    Max: {{ round($snapshot->forecast_data['temperature_max']) }}°C
+                                    {{ __('app.min') }}: {{ round($snapshot->forecast_data['temperature_min']) }}°C /
+                                    {{ __('app.max') }}: {{ round($snapshot->forecast_data['temperature_max']) }}°C
                                 </p>
                                 @if(isset($snapshot->forecast_data['feels_like']))
-                                    <p class="text-xs text-gray-500">Feels like: {{ round($snapshot->forecast_data['feels_like']) }}°C</p>
+                                    <p class="text-xs text-gray-500">{{ __('app.feels_like') }}: {{ round($snapshot->forecast_data['feels_like']) }}°C</p>
                                 @endif
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">Conditions</p>
+                                <p class="text-xs text-gray-600">{{ __('app.conditions') }}</p>
                                 <p class="font-semibold">{{ $snapshot->forecast_data['conditions'] }}</p>
                                 <p class="text-xs text-gray-500">{{ $snapshot->forecast_data['description'] }}</p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">Precipitation</p>
+                                <p class="text-xs text-gray-600">{{ __('app.precipitation') }}</p>
                                 <p class="font-semibold">{{ round($snapshot->forecast_data['precipitation'] * 100) }}%</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-4 gap-4 pt-3 border-t border-gray-100">
                             <div>
-                                <p class="text-xs text-gray-600">Humidity</p>
+                                <p class="text-xs text-gray-600">{{ __('app.humidity') }}</p>
                                 <p class="font-semibold">{{ $snapshot->forecast_data['humidity'] ?? 'N/A' }}%</p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">Pressure</p>
+                                <p class="text-xs text-gray-600">{{ __('app.pressure') }}</p>
                                 <p class="font-semibold">{{ $snapshot->forecast_data['pressure'] ?? 'N/A' }} hPa</p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">Wind</p>
+                                <p class="text-xs text-gray-600">{{ __('app.wind') }}</p>
                                 <p class="font-semibold">{{ round($snapshot->forecast_data['wind_speed'] ?? 0, 1) }} m/s</p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-600">Clouds</p>
+                                <p class="text-xs text-gray-600">{{ __('app.clouds') }}</p>
                                 <p class="font-semibold">{{ $snapshot->forecast_data['clouds'] ?? 'N/A' }}%</p>
                             </div>
                         </div>
