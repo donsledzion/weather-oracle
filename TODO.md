@@ -31,6 +31,16 @@
 - [x] Utworzyć WeatherProviderInterface i factory pattern
 - [ ] **Opcjonalnie:** Rozszerzyć UI o wybór providerów przy tworzeniu requesta (checkboxy)
 
+## Faza 4.5: Tłumaczenia warunków pogodowych ✅
+
+- [x] Utworzyć pliki lang/pl/weather.php i lang/en/weather.php ze słownikami per provider
+- [x] Wypełnić słowniki podstawowymi warunkami (OpenWeather ~15, Open-Meteo wszystkie WMO codes, Visual Crossing ~10)
+- [x] Stworzyć WeatherTranslator helper z metodą translate() + fallback do raw string
+- [x] Dodać kanał logowania w config/logging.php: weather_translations.log
+- [x] Logować brakujące tłumaczenia w formacie JSON (provider, condition, locale, timestamp)
+- [x] Zaktualizować blade templates aby używały WeatherTranslator::translate()
+- [x] Przetestować z różnymi warunkami i sprawdzić logi
+
 ## Faza 5: Email verification + unsubscribe
 
 - [ ] Stworzyć system weryfikacji email (token w URL)

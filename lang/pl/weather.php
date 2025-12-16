@@ -1,0 +1,107 @@
+<?php
+
+return [
+    // OpenWeather conditions
+    'openweather' => [
+        'Clear' => 'Bezchmurnie',
+        'Clouds' => 'Pochmurno',
+        'Rain' => 'Deszcz',
+        'Drizzle' => 'Mżawka',
+        'Thunderstorm' => 'Burza',
+        'Snow' => 'Śnieg',
+        'Mist' => 'Mgła',
+        'Smoke' => 'Dym',
+        'Haze' => 'Zamglenie',
+        'Dust' => 'Pył',
+        'Fog' => 'Mgła',
+        'Sand' => 'Piasek',
+        'Ash' => 'Popiół',
+        'Squall' => 'Szkwał',
+        'Tornado' => 'Tornado',
+
+        // Common descriptions
+        'clear sky' => 'bezchmurne niebo',
+        'few clouds' => 'małe zachmurzenie',
+        'scattered clouds' => 'rozproszone chmury',
+        'broken clouds' => 'duże zachmurzenie',
+        'overcast clouds' => 'pochmurno',
+        'light rain' => 'lekki deszcz',
+        'moderate rain' => 'umiarkowany deszcz',
+        'heavy intensity rain' => 'silny deszcz',
+        'light snow' => 'lekki śnieg',
+        'heavy snow' => 'intensywne opady śniegu',
+    ],
+
+    // Open-Meteo (WMO Weather codes) - based on actual descriptions from OpenMeteoService
+    'open-meteo' => [
+        // Main conditions
+        'Clear' => 'Bezchmurnie',
+        'Clouds' => 'Pochmurno',
+        'Fog' => 'Mgła',
+        'Drizzle' => 'Mżawka',
+        'Rain' => 'Deszcz',
+        'Snow' => 'Śnieg',
+        'Thunderstorm' => 'Burza',
+
+        // Descriptions
+        'Clear sky' => 'Czyste niebo',
+        'Mainly clear' => 'Przeważnie bezchmurnie',
+        'Partly cloudy' => 'Częściowe zachmurzenie',
+        'Overcast' => 'Całkowite zachmurzenie',
+        'Depositing rime fog' => 'Mgła z szronem',
+        'Light drizzle' => 'Lekka mżawka',
+        'Moderate drizzle' => 'Umiarkowana mżawka',
+        'Dense drizzle' => 'Gęsta mżawka',
+        'Slight rain' => 'Słaby deszcz',
+        'Moderate rain' => 'Umiarkowany deszcz',
+        'Heavy rain' => 'Silny deszcz',
+        'Slight snow fall' => 'Słabe opady śniegu',
+        'Moderate snow fall' => 'Umiarkowane opady śniegu',
+        'Heavy snow fall' => 'Intensywne opady śniegu',
+        'Snow grains' => 'Ziarna śniegu',
+        'Slight rain showers' => 'Słabe przelotne opady deszczu',
+        'Moderate rain showers' => 'Umiarkowane przelotne opady deszczu',
+        'Violent rain showers' => 'Gwałtowne przelotne opady deszczu',
+        'Slight snow showers' => 'Słabe przelotne opady śniegu',
+        'Heavy snow showers' => 'Intensywne przelotne opady śniegu',
+        'Thunderstorm' => 'Burza',
+        'Thunderstorm with slight hail' => 'Burza z lekkim gradem',
+        'Thunderstorm with heavy hail' => 'Burza z silnym gradem',
+        'Unknown weather' => 'Nieznane warunki',
+    ],
+
+    // Visual Crossing
+    'visualcrossing' => [
+        // Main conditions
+        'Clear' => 'Bezchmurnie',
+        'Partially cloudy' => 'Częściowe zachmurzenie',
+        'Overcast' => 'Pochmurno',
+        'Rain' => 'Deszcz',
+        'Snow' => 'Śnieg',
+        'Wind' => 'Wietrznie',
+        'Fog' => 'Mgła',
+        'Cloudy' => 'Pochmurno',
+        'Rain, Partially cloudy' => 'Deszcz, częściowe zachmurzenie',
+        'Rain, Overcast' => 'Deszcz, pochmurno',
+        'Snow, Partially cloudy' => 'Śnieg, częściowe zachmurzenie',
+        'Snow, Overcast' => 'Śnieg, pochmurno',
+        'Thunderstorm' => 'Burza',
+        'Drizzle' => 'Mżawka',
+        'Ice' => 'Lód',
+        'Unknown' => 'Nieznane',
+
+        // Common descriptions
+        'Partly cloudy throughout the day.' => 'Częściowe zachmurzenie przez cały dzień.',
+        'Cloudy skies throughout the day.' => 'Pochmurne niebo przez cały dzień.',
+        'Clear conditions throughout the day.' => 'Bezchmurne warunki przez cały dzień.',
+        'Overcast throughout the day.' => 'Zachmurzenie przez cały dzień.',
+        'Becoming cloudy in the afternoon.' => 'Zachmurzenie po południu.',
+        'Clearing in the afternoon.' => 'Przejaśnienia po południu.',
+        'Rain in the morning and afternoon.' => 'Deszcz rano i po południu.',
+        'Rain throughout the day.' => 'Deszcz przez cały dzień.',
+        'Possible light rain in the morning and afternoon.' => 'Możliwy lekki deszcz rano i po południu.',
+        'Possible rain throughout the day.' => 'Możliwy deszcz przez cały dzień.',
+        'Snow throughout the day.' => 'Śnieg przez cały dzień.',
+        'Possible snow throughout the day.' => 'Możliwy śnieg przez cały dzień.',
+    ],
+];

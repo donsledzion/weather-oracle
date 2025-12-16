@@ -1,0 +1,107 @@
+<?php
+
+return [
+    // OpenWeather conditions (already in English, but kept for consistency)
+    'openweather' => [
+        'Clear' => 'Clear',
+        'Clouds' => 'Clouds',
+        'Rain' => 'Rain',
+        'Drizzle' => 'Drizzle',
+        'Thunderstorm' => 'Thunderstorm',
+        'Snow' => 'Snow',
+        'Mist' => 'Mist',
+        'Smoke' => 'Smoke',
+        'Haze' => 'Haze',
+        'Dust' => 'Dust',
+        'Fog' => 'Fog',
+        'Sand' => 'Sand',
+        'Ash' => 'Ash',
+        'Squall' => 'Squall',
+        'Tornado' => 'Tornado',
+
+        // Common descriptions
+        'clear sky' => 'clear sky',
+        'few clouds' => 'few clouds',
+        'scattered clouds' => 'scattered clouds',
+        'broken clouds' => 'broken clouds',
+        'overcast clouds' => 'overcast clouds',
+        'light rain' => 'light rain',
+        'moderate rain' => 'moderate rain',
+        'heavy intensity rain' => 'heavy intensity rain',
+        'light snow' => 'light snow',
+        'heavy snow' => 'heavy snow',
+    ],
+
+    // Open-Meteo (WMO Weather codes) - based on actual descriptions from OpenMeteoService
+    'open-meteo' => [
+        // Main conditions
+        'Clear' => 'Clear',
+        'Clouds' => 'Clouds',
+        'Fog' => 'Fog',
+        'Drizzle' => 'Drizzle',
+        'Rain' => 'Rain',
+        'Snow' => 'Snow',
+        'Thunderstorm' => 'Thunderstorm',
+
+        // Descriptions
+        'Clear sky' => 'Clear sky',
+        'Mainly clear' => 'Mainly clear',
+        'Partly cloudy' => 'Partly cloudy',
+        'Overcast' => 'Overcast',
+        'Depositing rime fog' => 'Depositing rime fog',
+        'Light drizzle' => 'Light drizzle',
+        'Moderate drizzle' => 'Moderate drizzle',
+        'Dense drizzle' => 'Dense drizzle',
+        'Slight rain' => 'Slight rain',
+        'Moderate rain' => 'Moderate rain',
+        'Heavy rain' => 'Heavy rain',
+        'Slight snow fall' => 'Slight snow fall',
+        'Moderate snow fall' => 'Moderate snow fall',
+        'Heavy snow fall' => 'Heavy snow fall',
+        'Snow grains' => 'Snow grains',
+        'Slight rain showers' => 'Slight rain showers',
+        'Moderate rain showers' => 'Moderate rain showers',
+        'Violent rain showers' => 'Violent rain showers',
+        'Slight snow showers' => 'Slight snow showers',
+        'Heavy snow showers' => 'Heavy snow showers',
+        'Thunderstorm' => 'Thunderstorm',
+        'Thunderstorm with slight hail' => 'Thunderstorm with slight hail',
+        'Thunderstorm with heavy hail' => 'Thunderstorm with heavy hail',
+        'Unknown weather' => 'Unknown weather',
+    ],
+
+    // Visual Crossing
+    'visualcrossing' => [
+        // Main conditions
+        'Clear' => 'Clear',
+        'Partially cloudy' => 'Partially cloudy',
+        'Overcast' => 'Overcast',
+        'Rain' => 'Rain',
+        'Snow' => 'Snow',
+        'Wind' => 'Wind',
+        'Fog' => 'Fog',
+        'Cloudy' => 'Cloudy',
+        'Rain, Partially cloudy' => 'Rain, Partially cloudy',
+        'Rain, Overcast' => 'Rain, Overcast',
+        'Snow, Partially cloudy' => 'Snow, Partially cloudy',
+        'Snow, Overcast' => 'Snow, Overcast',
+        'Thunderstorm' => 'Thunderstorm',
+        'Drizzle' => 'Drizzle',
+        'Ice' => 'Ice',
+        'Unknown' => 'Unknown',
+
+        // Common descriptions
+        'Partly cloudy throughout the day.' => 'Partly cloudy throughout the day.',
+        'Cloudy skies throughout the day.' => 'Cloudy skies throughout the day.',
+        'Clear conditions throughout the day.' => 'Clear conditions throughout the day.',
+        'Overcast throughout the day.' => 'Overcast throughout the day.',
+        'Becoming cloudy in the afternoon.' => 'Becoming cloudy in the afternoon.',
+        'Clearing in the afternoon.' => 'Clearing in the afternoon.',
+        'Rain in the morning and afternoon.' => 'Rain in the morning and afternoon.',
+        'Rain throughout the day.' => 'Rain throughout the day.',
+        'Possible light rain in the morning and afternoon.' => 'Possible light rain in the morning and afternoon.',
+        'Possible rain throughout the day.' => 'Possible rain throughout the day.',
+        'Snow throughout the day.' => 'Snow throughout the day.',
+        'Possible snow throughout the day.' => 'Possible snow throughout the day.',
+    ],
+];

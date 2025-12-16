@@ -12,7 +12,8 @@
       "Bash(php artisan db:seed:*)",
       "Bash(php artisan make:command:*)",
       "Bash(php artisan:*)",
-      "Bash(php82 artisan make:migration:*)"
+      "Bash(php82 artisan make:migration:*)",
+      "Bash(cat:*)"
     ],
     "deny": [],
     "ask": []
