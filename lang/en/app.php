@@ -17,6 +17,8 @@ return [
     // Messages
     'request_created_success' => 'Monitoring request created and initial forecast fetched successfully!',
     'request_created_no_data' => 'Monitoring request created. Forecast data will be available when target date is within 5 days.',
+    'request_created_verify_email' => 'Check your email inbox and click the activation link to start monitoring!',
+    'guest_limit_reached' => 'You have reached the limit of 5 requests. Activate or reject pending requests or wait for active ones to expire.',
 
     // Errors
     'location_not_found' => 'Location not found. Please check the spelling or try coordinates (lat,lon).',
@@ -71,4 +73,21 @@ return [
     'view_details' => 'View Details',
     'snapshots_count' => ':count snapshot(s)',
     'back_to_all_requests' => 'Back to all requests',
+    'snapshots' => 'snapshots',
+
+    // Guest dashboard
+    'guest_dashboard' => 'Your Dashboard',
+    'managing_requests_for' => 'Managing requests for',
+    'guest_dashboard_info' => 'You can activate pending requests, view active monitoring, and check archives.',
+    'pending_verification' => 'Pending Verification',
+    'expired' => 'Expired',
+    'rejected' => 'Rejected',
+    'pending_activation_message' => 'This request is waiting for activation. Click the button below to start monitoring.',
+    'expires_in' => 'Expires in',
+    'activate_now' => 'Activate Now',
+    'cancel_request' => 'Cancel',
+    'confirm_reject' => 'Are you sure you want to cancel this request?',
+    'want_more' => 'Want More?',
+    'guest_limit_info' => 'As a guest, you can have up to 5 active requests. Create a free account to increase the limit to 20 requests!',
+    'create_free_account' => 'Create Free Account',
 ];

@@ -41,32 +41,31 @@
 - [x] Zaktualizować blade templates aby używały WeatherTranslator::translate()
 - [x] Przetestować z różnymi warunkami i sprawdzić logi
 
-## Faza 5: Statusy requestów + wygasanie
+## Faza 5: Statusy requestów + wygasanie ✅
 
-- [ ] Dodać nowe statusy do MonitoringRequest: `pending_verification`, `active`, `completed`, `expired`, `rejected`
-- [ ] Migration: dodać kolumny `verification_token`, `dashboard_token`, `expires_at` do monitoring_requests
-- [ ] Utworzyć command: MarkExpiredRequests (cron co 10 min) - zmienia `pending_verification` na `expired` jeśli minęło 2h
-- [ ] Utworzyć command: MarkCompletedRequests (cron daily) - zmienia `active` na `completed` gdy target_date < now()
-- [ ] Zaktualizować FetchForecasts command: pobierać tylko requesty ze statusem `active`
-- [ ] Zaktualizować scheduler: nie fetchować requestów `completed`, `expired`, `rejected`
+- [x] Dodać nowe statusy do MonitoringRequest: `pending_verification`, `active`, `completed`, `expired`, `rejected`
+- [x] Migration: dodać kolumny `verification_token`, `dashboard_token`, `expires_at` do monitoring_requests
+- [x] Utworzyć command: MarkExpiredRequests (cron co 10 min) - zmienia `pending_verification` na `expired` jeśli minęło 2h
+- [x] Utworzyć command: MarkCompletedRequests (cron daily) - zmienia `active` na `completed` gdy target_date < now()
+- [x] Zaktualizować FetchForecasts command: pobierać tylko requesty ze statusem `active`
+- [x] Zaktualizować scheduler: nie fetchować requestów `completed`, `expired`, `rejected`
 
-## Faza 6: Email verification dla niezalogowanych
+## Faza 6: Email verification dla niezalogowanych ✅
 
-- [ ] Utworzyć Mailable: RequestVerificationEmail (link aktywacyjny + link do dashboardu + link "reject")
-- [ ] Route: /verify/{token} - aktywuje request (status: pending → active), przekierowuje na dashboard
-- [ ] Route: /reject/{token} - odrzuca request (status: pending → rejected)
-- [ ] Route: /dashboard/{dashboard_token} - dashboard niezalogowanego użytkownika
-- [ ] Dashboard niezalogowanego: lista requestów z danego email (pending, active, completed, expired, rejected)
-- [ ] Dashboard niezalogowanego: przycisk "Activate" dla pending requestów (inline aktywacja bez przechodzenia na /verify)
-- [ ] Zaktualizować MonitoringForm: po utworzeniu requesta wysyłaj email weryfikacyjny (nie od razu active)
-- [ ] Generowanie unikalnych tokenów: verification_token (per request), dashboard_token (per email - reuse dla tego samego email)
+- [x] Utworzyć Mailable: RequestVerificationEmail (link aktywacyjny + link do dashboardu + link "reject")
+- [x] Route: /verify/{token} - aktywuje request (status: pending → active), przekierowuje na dashboard
+- [x] Route: /reject/{token} - odrzuca request (status: pending → rejected)
+- [x] Route: /dashboard/{dashboard_token} - dashboard niezalogowanego użytkownika
+- [x] Dashboard niezalogowanego: lista requestów z danego email (pending, active, completed, expired, rejected)
+- [x] Dashboard niezalogowanego: przycisk "Activate" dla pending requestów (inline aktywacja)
+- [x] Zaktualizować MonitoringForm: po utworzeniu requesta wysyłaj email weryfikacyjny (status: pending_verification)
+- [x] Generowanie unikalnych tokenów: verification_token (per request), dashboard_token (per email - reuse)
 
-## Faza 7: Limity dla niezalogowanych
+## Faza 7: Limity dla niezalogowanych ✅
 
-- [ ] Walidacja w MonitoringForm: sprawdź czy email nie ma już 5 requestów (active + pending)
-- [ ] Komunikat błędu: "Osiągnąłeś limit 5 requestów. Aktywuj lub odrzuć pending requesty albo poczekaj aż aktywne wygasną."
-- [ ] Opcja: link w błędzie do dashboardu niezalogowanego
-- [ ] Query helper: `MonitoringRequest::activeAndPendingCountForEmail($email)`
+- [x] Walidacja w MonitoringForm: sprawdź czy email nie ma już 5 requestów (active + pending)
+- [x] Komunikat błędu: "Osiągnąłeś limit 5 requestów. Aktywuj lub odrzuć pending requesty albo poczekaj aż aktywne wygasną."
+- [x] Query helper: `MonitoringRequest::activeAndPendingCountForEmail($email)`
 
 ## Faza 8: Laravel Breeze + konta użytkowników
 

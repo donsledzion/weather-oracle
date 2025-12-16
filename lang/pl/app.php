@@ -17,6 +17,8 @@ return [
     // Messages
     'request_created_success' => 'Żądanie monitorowania utworzone i początkowa prognoza pobrana pomyślnie!',
     'request_created_no_data' => 'Żądanie monitorowania utworzone. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
+    'request_created_verify_email' => 'Sprawdź swoją skrzynkę email i kliknij link aktywacyjny aby rozpocząć monitorowanie!',
+    'guest_limit_reached' => 'Osiągnąłeś limit 5 żądań. Aktywuj lub odrzuć oczekujące żądania albo poczekaj aż aktywne wygasną.',
 
     // Errors
     'location_not_found' => 'Lokalizacja nie znaleziona. Sprawdź pisownię lub spróbuj współrzędnych (lat,lon).',
@@ -71,4 +73,21 @@ return [
     'view_details' => 'Zobacz szczegóły',
     'snapshots_count' => ':count snapshot(ów)',
     'back_to_all_requests' => 'Powrót do wszystkich żądań',
+    'snapshots' => 'snapshotów',
+
+    // Guest dashboard
+    'guest_dashboard' => 'Twój Dashboard',
+    'managing_requests_for' => 'Zarządzasz żądaniami dla',
+    'guest_dashboard_info' => 'Możesz aktywować oczekujące żądania, przeglądać aktywne monitorowania i sprawdzać archiwum.',
+    'pending_verification' => 'Oczekuje na aktywację',
+    'expired' => 'Wygasłe',
+    'rejected' => 'Odrzucone',
+    'pending_activation_message' => 'To żądanie czeka na aktywację. Kliknij przycisk poniżej aby rozpocząć monitorowanie.',
+    'expires_in' => 'Wygasa za',
+    'activate_now' => 'Aktywuj teraz',
+    'cancel_request' => 'Anuluj',
+    'confirm_reject' => 'Czy na pewno chcesz anulować to żądanie?',
+    'want_more' => 'Chcesz więcej?',
+    'guest_limit_info' => 'Jako gość możesz mieć maksymalnie 5 aktywnych żądań. Załóż darmowe konto aby zwiększyć limit do 20 żądań!',
+    'create_free_account' => 'Załóż darmowe konto',
 ];

@@ -2,10 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Mail\RequestVerificationEmail;
 use App\Models\ForecastSnapshot;
 use App\Models\MonitoringRequest;
 use App\Models\WeatherProvider;
 use App\Services\WeatherProviderFactory;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -24,42 +27,38 @@ class MonitoringForm extends Component
     {
         $this->validate();
 
+        // Check if email has reached limit (5 active + pending)
+        if ($this->email && MonitoringRequest::activeAndPendingCountForEmail($this->email) >= 5) {
+            session()->flash('error', __('app.guest_limit_reached'));
+            return;
+        }
+
+        // Generate tokens
+        $verificationToken = Str::random(64);
+        $dashboardToken = $this->getDashboardTokenForEmail($this->email);
+
         $monitoringRequest = MonitoringRequest::create([
             'location' => $this->location,
             'target_date' => $this->targetDate,
             'email' => $this->email,
-            'status' => 'active',
+            'status' => MonitoringRequest::STATUS_PENDING_VERIFICATION,
+            'verification_token' => $verificationToken,
+            'dashboard_token' => $dashboardToken,
+            'expires_at' => now()->addHours(2),
         ]);
 
-        // Fetch initial forecasts from all active providers
-        $activeProviders = WeatherProvider::where('is_active', true)->get();
-        $snapshotsCreated = 0;
+        // Send verification email
+        if ($this->email) {
+            $verifyUrl = route('requests.verify', $verificationToken);
+            $rejectUrl = route('requests.reject', $verificationToken);
+            $dashboardUrl = route('guest.dashboard', $dashboardToken);
 
-        foreach ($activeProviders as $provider) {
-            try {
-                $weatherService = WeatherProviderFactory::make($provider);
-                $forecastData = $weatherService->getForecast($this->location, $this->targetDate);
-
-                // Check if forecast date matches target date (±1 day tolerance)
-                $forecastDate = new \DateTime($forecastData['forecast_date']);
-                $targetDateObj = new \DateTime($this->targetDate);
-                $daysDiff = abs($forecastDate->diff($targetDateObj)->days);
-
-                // Only save snapshot if forecast is for the target date
-                if ($daysDiff <= 1) {
-                    ForecastSnapshot::create([
-                        'monitoring_request_id' => $monitoringRequest->id,
-                        'weather_provider_id' => $provider->id,
-                        'forecast_data' => $forecastData,
-                        'fetched_at' => now(),
-                    ]);
-                    $snapshotsCreated++;
-                }
-
-            } catch (\Exception $e) {
-                // Log error but continue with other providers
-                \Log::warning("Failed to fetch initial forecast from {$provider->name}: " . $e->getMessage());
-            }
+            Mail::to($this->email)->send(new RequestVerificationEmail(
+                $monitoringRequest,
+                $verifyUrl,
+                $rejectUrl,
+                $dashboardUrl
+            ));
         }
 
         // Clear form and validation errors
@@ -69,12 +68,26 @@ class MonitoringForm extends Component
         // Dispatch event to refresh the list
         $this->dispatch('request-created');
 
-        // Show appropriate message
-        if ($snapshotsCreated > 0) {
-            session()->flash('message', __('app.request_created_success'));
-        } else {
-            session()->flash('message', __('app.request_created_no_data'));
+        // Show message
+        session()->flash('message', __('app.request_created_verify_email'));
+    }
+
+    /**
+     * Get or create dashboard token for email (reuse existing token if available)
+     */
+    protected function getDashboardTokenForEmail(string $email): string
+    {
+        // Try to find existing dashboard token for this email
+        $existingRequest = MonitoringRequest::where('email', $email)
+            ->whereNotNull('dashboard_token')
+            ->first();
+
+        if ($existingRequest) {
+            return $existingRequest->dashboard_token;
         }
+
+        // Generate new token
+        return Str::random(64);
     }
 
     public function render()
