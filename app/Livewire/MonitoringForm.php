@@ -20,7 +20,7 @@ class MonitoringForm extends Component
     #[Validate('required|date|after:today')]
     public $targetDate = '';
 
-    #[Validate('nullable|email')]
+    #[Validate('required|email')]
     public $email = '';
 
     public function submit()
@@ -28,7 +28,7 @@ class MonitoringForm extends Component
         $this->validate();
 
         // Check if email has reached limit (5 active + pending)
-        if ($this->email && MonitoringRequest::activeAndPendingCountForEmail($this->email) >= 5) {
+        if (MonitoringRequest::activeAndPendingCountForEmail($this->email) >= 5) {
             session()->flash('error', __('app.guest_limit_reached'));
             return;
         }
@@ -48,18 +48,16 @@ class MonitoringForm extends Component
         ]);
 
         // Send verification email
-        if ($this->email) {
-            $verifyUrl = route('requests.verify', $verificationToken);
-            $rejectUrl = route('requests.reject', $verificationToken);
-            $dashboardUrl = route('guest.dashboard', $dashboardToken);
+        $verifyUrl = route('requests.verify', $verificationToken);
+        $rejectUrl = route('requests.reject', $verificationToken);
+        $dashboardUrl = route('guest.dashboard', $dashboardToken);
 
-            Mail::to($this->email)->send(new RequestVerificationEmail(
-                $monitoringRequest,
-                $verifyUrl,
-                $rejectUrl,
-                $dashboardUrl
-            ));
-        }
+        Mail::to($this->email)->send(new RequestVerificationEmail(
+            $monitoringRequest,
+            $verifyUrl,
+            $rejectUrl,
+            $dashboardUrl
+        ));
 
         // Clear form and validation errors
         $this->reset(['location', 'targetDate', 'email']);

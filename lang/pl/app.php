@@ -9,7 +9,7 @@ return [
     'location' => 'Lokalizacja',
     'location_placeholder' => 'Wpisz nazwę miasta lub współrzędne',
     'target_date' => 'Data docelowa',
-    'email' => 'Email (opcjonalnie)',
+    'email' => 'Email',
     'email_placeholder' => 'twoj@email.com',
     'start_monitoring' => 'Rozpocznij monitorowanie',
     'creating' => 'Tworzenie...',
@@ -18,6 +18,7 @@ return [
     'request_created_success' => 'Żądanie monitorowania utworzone i początkowa prognoza pobrana pomyślnie!',
     'request_created_no_data' => 'Żądanie monitorowania utworzone. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
     'request_created_verify_email' => 'Sprawdź swoją skrzynkę email i kliknij link aktywacyjny aby rozpocząć monitorowanie!',
+    'request_created_no_email' => 'Żądanie monitorowania utworzone! Prognozy będą pobierane automatycznie.',
     'guest_limit_reached' => 'Osiągnąłeś limit 5 żądań. Aktywuj lub odrzuć oczekujące żądania albo poczekaj aż aktywne wygasną.',
 
     // Errors

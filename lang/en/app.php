@@ -9,7 +9,7 @@ return [
     'location' => 'Location',
     'location_placeholder' => 'Enter city name or coordinates',
     'target_date' => 'Target Date',
-    'email' => 'Email (optional)',
+    'email' => 'Email',
     'email_placeholder' => 'your@email.com',
     'start_monitoring' => 'Start Monitoring',
     'creating' => 'Creating...',
@@ -18,6 +18,7 @@ return [
     'request_created_success' => 'Monitoring request created and initial forecast fetched successfully!',
     'request_created_no_data' => 'Monitoring request created. Forecast data will be available when target date is within 5 days.',
     'request_created_verify_email' => 'Check your email inbox and click the activation link to start monitoring!',
+    'request_created_no_email' => 'Monitoring request created! Forecasts will be fetched automatically.',
     'guest_limit_reached' => 'You have reached the limit of 5 requests. Activate or reject pending requests or wait for active ones to expire.',
 
     // Errors
