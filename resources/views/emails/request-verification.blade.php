@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ app()->getLocale() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verify Weather Monitoring Request</title>
+    <title>{{ __('app.email_verify_title') }}</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -78,55 +78,55 @@
 <body>
     <div class="header">
         <h1>🌤️ Weather Oracle</h1>
-        <p>Verify Your Monitoring Request</p>
+        <p>{{ __('app.email_verify_title') }}</p>
     </div>
 
     <div class="content">
-        <p>Hello!</p>
+        <p>{{ __('app.email_greeting') }}</p>
 
-        <p>You've requested to monitor weather forecasts for:</p>
+        <p>{{ __('app.email_requested_monitoring') }}</p>
 
         <div class="info-box">
-            <strong>📍 Location:</strong> {{ $request->location }}<br>
-            <strong>📅 Target Date:</strong> {{ $request->target_date->format('F j, Y') }}<br>
-            <strong>📧 Email:</strong> {{ $request->email }}
+            <strong>📍 {{ __('app.location') }}:</strong> {{ $request->location }}<br>
+            <strong>📅 {{ __('app.target_date') }}:</strong> {{ $request->target_date->format('F j, Y') }}<br>
+            <strong>📧 {{ __('app.email') }}:</strong> {{ $request->email }}
         </div>
 
-        <p><strong>Please verify your request to start monitoring:</strong></p>
+        <p><strong>{{ __('app.email_please_verify') }}</strong></p>
 
         <div style="text-align: center; margin: 30px 0;">
             <a href="{{ $verifyUrl }}" class="button button-primary">
-                ✅ Activate Monitoring
+                ✅ {{ __('app.email_activate_button') }}
             </a>
         </div>
 
         <p style="text-align: center; color: #6b7280; font-size: 0.875rem;">
-            Or visit your dashboard to manage all your requests:
+            {{ __('app.email_or_visit_dashboard') }}
         </p>
 
         <div style="text-align: center; margin: 20px 0;">
             <a href="{{ $dashboardUrl }}" class="button button-secondary">
-                📊 View Dashboard
+                📊 {{ __('app.email_view_dashboard') }}
             </a>
         </div>
 
         <div class="warning">
-            <strong>⏰ Important:</strong> This verification link will expire in 2 hours. If you don't verify within this time, your request will be automatically cancelled.
+            <strong>⏰ {{ __('app.important') }}:</strong> {{ __('app.email_expires_warning') }}
         </div>
 
         <p style="text-align: center; margin-top: 30px;">
-            <small>Not interested?
-                <a href="{{ $rejectUrl }}" style="color: #ef4444;">Cancel this request</a>
+            <small>{{ __('app.email_not_interested') }}
+                <a href="{{ $rejectUrl }}" style="color: #ef4444;">{{ __('app.email_cancel_request') }}</a>
             </small>
         </p>
     </div>
 
     <div class="footer">
-        <p>This is an automated email from Weather Oracle.<br>
-        You received this because you requested weather forecast monitoring.</p>
+        <p>{{ __('app.email_footer_line1') }}<br>
+        {{ __('app.email_footer_line2') }}</p>
 
         <p style="font-size: 0.75rem; color: #9ca3af;">
-            If you didn't request this, you can safely ignore this email.
+            {{ __('app.email_footer_ignore') }}
         </p>
     </div>
 </body>

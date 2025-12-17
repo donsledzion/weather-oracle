@@ -91,4 +91,20 @@ return [
     'want_more' => 'Want More?',
     'guest_limit_info' => 'As a guest, you can have up to 5 active requests. Create a free account to increase the limit to 20 requests!',
     'create_free_account' => 'Create Free Account',
+
+    // Email verification
+    'important' => 'Important',
+    'email_verify_title' => 'Verify Your Monitoring Request',
+    'email_greeting' => 'Hello!',
+    'email_requested_monitoring' => 'You\'ve requested to monitor weather forecasts for:',
+    'email_please_verify' => 'Please verify your request to start monitoring:',
+    'email_activate_button' => 'Activate Monitoring',
+    'email_or_visit_dashboard' => 'Or visit your dashboard to manage all your requests:',
+    'email_view_dashboard' => 'View Dashboard',
+    'email_expires_warning' => 'This verification link will expire in 2 hours. If you don\'t verify within this time, your request will be automatically cancelled.',
+    'email_not_interested' => 'Not interested?',
+    'email_cancel_request' => 'Cancel this request',
+    'email_footer_line1' => 'This is an automated email from Weather Oracle.',
+    'email_footer_line2' => 'You received this because you requested weather forecast monitoring.',
+    'email_footer_ignore' => 'If you didn\'t request this, you can safely ignore this email.',
 ];

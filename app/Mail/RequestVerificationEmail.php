@@ -29,7 +29,7 @@ class RequestVerificationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify your Weather Monitoring Request',
+            subject: __('app.email_verify_title'),
         );
     }
 

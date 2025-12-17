@@ -91,4 +91,20 @@ return [
     'want_more' => 'Chcesz więcej?',
     'guest_limit_info' => 'Jako gość możesz mieć maksymalnie 5 aktywnych żądań. Załóż darmowe konto aby zwiększyć limit do 20 żądań!',
     'create_free_account' => 'Załóż darmowe konto',
+
+    // Email verification
+    'important' => 'Ważne',
+    'email_verify_title' => 'Zweryfikuj swoje żądanie',
+    'email_greeting' => 'Witaj!',
+    'email_requested_monitoring' => 'Utworzyłeś żądanie monitorowania prognoz pogody dla:',
+    'email_please_verify' => 'Proszę zweryfikuj swoje żądanie aby rozpocząć monitorowanie:',
+    'email_activate_button' => 'Aktywuj monitorowanie',
+    'email_or_visit_dashboard' => 'Lub odwiedź swój dashboard aby zarządzać wszystkimi żądaniami:',
+    'email_view_dashboard' => 'Zobacz Dashboard',
+    'email_expires_warning' => 'Link weryfikacyjny wygaśnie za 2 godziny. Jeśli nie zweryfikujesz w tym czasie, twoje żądanie zostanie automatycznie anulowane.',
+    'email_not_interested' => 'Nie jesteś zainteresowany?',
+    'email_cancel_request' => 'Anuluj to żądanie',
+    'email_footer_line1' => 'To automatyczna wiadomość od Weather Oracle.',
+    'email_footer_line2' => 'Otrzymałeś ją ponieważ zażądałeś monitorowania prognoz pogody.',
+    'email_footer_ignore' => 'Jeśli nie tworzyłeś tego żądania, możesz bezpiecznie zignorować tę wiadomość.',
 ];
