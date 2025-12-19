@@ -15,11 +15,11 @@ return [
     'creating' => 'Creating...',
 
     // Messages
-    'request_created_success' => 'Monitoring request created and initial forecast fetched successfully!',
-    'request_created_no_data' => 'Monitoring request created. Forecast data will be available when target date is within 5 days.',
+    'request_created_success' => 'Weather reading created and initial forecast fetched successfully!',
+    'request_created_no_data' => 'Weather reading created. Forecast data will be available when target date is within 5 days.',
     'request_created_verify_email' => 'Check your email inbox and click the activation link to start monitoring!',
-    'request_created_no_email' => 'Monitoring request created! Forecasts will be fetched automatically.',
-    'guest_limit_reached' => 'You have reached the limit of 5 requests. Activate or reject pending requests or wait for active ones to expire.',
+    'request_created_no_email' => 'Weather reading created! Forecasts will be fetched automatically.',
+    'guest_limit_reached' => 'You have reached the limit of 5 weather readings. Activate or reject pending readings or wait for active ones to expire.',
 
     // Errors
     'location_not_found' => 'Location not found. Please check the spelling or try coordinates (lat,lon).',
@@ -36,7 +36,7 @@ return [
     ],
 
     // Request details
-    'request_details' => 'Request Details',
+    'request_details' => 'Reading Details',
     'status' => 'Status',
     'created' => 'Created',
     'active' => 'Active',
@@ -69,42 +69,42 @@ return [
     'not_enough_data' => 'Not enough data for chart (need at least 2 snapshots)',
 
     // Monitoring list
-    'your_monitoring_requests' => 'Your Monitoring Requests',
-    'no_requests_yet' => 'No monitoring requests yet.',
+    'your_monitoring_requests' => 'Your Weather Readings',
+    'no_requests_yet' => 'No weather readings yet.',
     'view_details' => 'View Details',
     'snapshots_count' => ':count snapshot(s)',
-    'back_to_all_requests' => 'Back to all requests',
+    'back_to_all_requests' => 'Back to all readings',
     'snapshots' => 'snapshots',
 
     // Guest dashboard
     'guest_dashboard' => 'Your Dashboard',
-    'managing_requests_for' => 'Managing requests for',
-    'guest_dashboard_info' => 'You can activate pending requests, view active monitoring, and check archives.',
+    'managing_requests_for' => 'Managing readings for',
+    'guest_dashboard_info' => 'You can activate pending readings, view active monitoring, and check archives.',
     'pending_verification' => 'Pending Verification',
     'expired' => 'Expired',
     'rejected' => 'Rejected',
-    'pending_activation_message' => 'This request is waiting for activation. Click the button below to start monitoring.',
+    'pending_activation_message' => 'This reading is waiting for activation. Click the button below to start monitoring.',
     'expires_in' => 'Expires in',
     'activate_now' => 'Activate Now',
     'cancel_request' => 'Cancel',
-    'confirm_reject' => 'Are you sure you want to cancel this request?',
+    'confirm_reject' => 'Are you sure you want to cancel this reading?',
     'want_more' => 'Want More?',
-    'guest_limit_info' => 'As a guest, you can have up to 5 active requests. Create a free account to increase the limit to 20 requests!',
+    'guest_limit_info' => 'As a guest, you can have up to 5 active readings. Create a free account to increase the limit to 20 readings!',
     'create_free_account' => 'Create Free Account',
 
     // Email verification
     'important' => 'Important',
-    'email_verify_title' => 'Verify Your Monitoring Request',
+    'email_verify_title' => 'Confirm Your Weather Reading',
     'email_greeting' => 'Hello!',
-    'email_requested_monitoring' => 'You\'ve requested to monitor weather forecasts for:',
-    'email_please_verify' => 'Please verify your request to start monitoring:',
+    'email_requested_monitoring' => 'You\'ve created a weather reading for:',
+    'email_please_verify' => 'Please confirm your reading to start monitoring:',
     'email_activate_button' => 'Activate Monitoring',
-    'email_or_visit_dashboard' => 'Or visit your dashboard to manage all your requests:',
+    'email_or_visit_dashboard' => 'Or visit your dashboard to manage all your readings:',
     'email_view_dashboard' => 'View Dashboard',
-    'email_expires_warning' => 'This verification link will expire in 2 hours. If you don\'t verify within this time, your request will be automatically cancelled.',
+    'email_expires_warning' => 'This verification link will expire in 2 hours. If you don\'t confirm within this time, your reading will be automatically cancelled.',
     'email_not_interested' => 'Not interested?',
-    'email_cancel_request' => 'Cancel this request',
+    'email_cancel_request' => 'Cancel this reading',
     'email_footer_line1' => 'This is an automated email from Weather Oracle.',
-    'email_footer_line2' => 'You received this because you requested weather forecast monitoring.',
-    'email_footer_ignore' => 'If you didn\'t request this, you can safely ignore this email.',
+    'email_footer_line2' => 'You received this because you created a weather reading.',
+    'email_footer_ignore' => 'If you didn\'t create this reading, you can safely ignore this email.',
 ];

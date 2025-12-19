@@ -15,11 +15,11 @@ return [
     'creating' => 'Tworzenie...',
 
     // Messages
-    'request_created_success' => 'Żądanie monitorowania utworzone i początkowa prognoza pobrana pomyślnie!',
-    'request_created_no_data' => 'Żądanie monitorowania utworzone. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
+    'request_created_success' => 'Wróżba utworzona i początkowa prognoza pobrana pomyślnie!',
+    'request_created_no_data' => 'Wróżba utworzona. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
     'request_created_verify_email' => 'Sprawdź swoją skrzynkę email i kliknij link aktywacyjny aby rozpocząć monitorowanie!',
-    'request_created_no_email' => 'Żądanie monitorowania utworzone! Prognozy będą pobierane automatycznie.',
-    'guest_limit_reached' => 'Osiągnąłeś limit 5 żądań. Aktywuj lub odrzuć oczekujące żądania albo poczekaj aż aktywne wygasną.',
+    'request_created_no_email' => 'Wróżba utworzona! Prognozy będą pobierane automatycznie.',
+    'guest_limit_reached' => 'Osiągnąłeś limit 5 wróżb. Aktywuj lub odrzuć oczekujące wróżby albo poczekaj aż aktywne wygasną.',
 
     // Errors
     'location_not_found' => 'Lokalizacja nie znaleziona. Sprawdź pisownię lub spróbuj współrzędnych (lat,lon).',
@@ -36,7 +36,7 @@ return [
     ],
 
     // Request details
-    'request_details' => 'Szczegóły żądania',
+    'request_details' => 'Szczegóły wróżby',
     'status' => 'Status',
     'created' => 'Utworzono',
     'active' => 'Aktywne',
@@ -69,42 +69,42 @@ return [
     'not_enough_data' => 'Niewystarczająco danych do wykresu (potrzeba co najmniej 2 snapshot\'ów)',
 
     // Monitoring list
-    'your_monitoring_requests' => 'Twoje żądania monitorowania',
-    'no_requests_yet' => 'Nie masz jeszcze żadnych żądań monitorowania.',
+    'your_monitoring_requests' => 'Twoje wróżby pogodowe',
+    'no_requests_yet' => 'Nie masz jeszcze żadnych wróżb.',
     'view_details' => 'Zobacz szczegóły',
     'snapshots_count' => ':count snapshot(ów)',
-    'back_to_all_requests' => 'Powrót do wszystkich żądań',
+    'back_to_all_requests' => 'Powrót do wszystkich wróżb',
     'snapshots' => 'snapshotów',
 
     // Guest dashboard
     'guest_dashboard' => 'Twój Dashboard',
-    'managing_requests_for' => 'Zarządzasz żądaniami dla',
-    'guest_dashboard_info' => 'Możesz aktywować oczekujące żądania, przeglądać aktywne monitorowania i sprawdzać archiwum.',
+    'managing_requests_for' => 'Zarządzasz wróżbami dla',
+    'guest_dashboard_info' => 'Możesz aktywować oczekujące wróżby, przeglądać aktywne monitorowania i sprawdzać archiwum.',
     'pending_verification' => 'Oczekuje na aktywację',
     'expired' => 'Wygasłe',
     'rejected' => 'Odrzucone',
-    'pending_activation_message' => 'To żądanie czeka na aktywację. Kliknij przycisk poniżej aby rozpocząć monitorowanie.',
+    'pending_activation_message' => 'Ta wróżba czeka na aktywację. Kliknij przycisk poniżej aby rozpocząć monitorowanie.',
     'expires_in' => 'Wygasa za',
     'activate_now' => 'Aktywuj teraz',
     'cancel_request' => 'Anuluj',
-    'confirm_reject' => 'Czy na pewno chcesz anulować to żądanie?',
+    'confirm_reject' => 'Czy na pewno chcesz anulować tę wróżbę?',
     'want_more' => 'Chcesz więcej?',
-    'guest_limit_info' => 'Jako gość możesz mieć maksymalnie 5 aktywnych żądań. Załóż darmowe konto aby zwiększyć limit do 20 żądań!',
+    'guest_limit_info' => 'Jako gość możesz mieć maksymalnie 5 aktywnych wróżb. Załóż darmowe konto aby zwiększyć limit do 20 wróżb!',
     'create_free_account' => 'Załóż darmowe konto',
 
     // Email verification
     'important' => 'Ważne',
-    'email_verify_title' => 'Zweryfikuj swoje żądanie',
+    'email_verify_title' => 'Potwierdź swoją wróżbę pogodową',
     'email_greeting' => 'Witaj!',
-    'email_requested_monitoring' => 'Utworzyłeś żądanie monitorowania prognoz pogody dla:',
-    'email_please_verify' => 'Proszę zweryfikuj swoje żądanie aby rozpocząć monitorowanie:',
+    'email_requested_monitoring' => 'Utworzyłeś wróżbę pogodową dla:',
+    'email_please_verify' => 'Proszę potwierdź swoją wróżbę aby rozpocząć monitorowanie:',
     'email_activate_button' => 'Aktywuj monitorowanie',
-    'email_or_visit_dashboard' => 'Lub odwiedź swój dashboard aby zarządzać wszystkimi żądaniami:',
+    'email_or_visit_dashboard' => 'Lub odwiedź swój dashboard aby zarządzać wszystkimi wróżbami:',
     'email_view_dashboard' => 'Zobacz Dashboard',
-    'email_expires_warning' => 'Link weryfikacyjny wygaśnie za 2 godziny. Jeśli nie zweryfikujesz w tym czasie, twoje żądanie zostanie automatycznie anulowane.',
+    'email_expires_warning' => 'Link weryfikacyjny wygaśnie za 2 godziny. Jeśli nie potwierdzisz w tym czasie, twoja wróżba zostanie automatycznie anulowana.',
     'email_not_interested' => 'Nie jesteś zainteresowany?',
-    'email_cancel_request' => 'Anuluj to żądanie',
+    'email_cancel_request' => 'Anuluj tę wróżbę',
     'email_footer_line1' => 'To automatyczna wiadomość od Weather Oracle.',
-    'email_footer_line2' => 'Otrzymałeś ją ponieważ zażądałeś monitorowania prognoz pogody.',
-    'email_footer_ignore' => 'Jeśli nie tworzyłeś tego żądania, możesz bezpiecznie zignorować tę wiadomość.',
+    'email_footer_line2' => 'Otrzymałeś ją ponieważ utworzyłeś wróżbę pogodową.',
+    'email_footer_ignore' => 'Jeśli nie tworzyłeś tej wróżby, możesz bezpiecznie zignorować tę wiadomość.',
 ];
