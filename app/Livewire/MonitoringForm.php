@@ -23,51 +23,125 @@ class MonitoringForm extends Component
     #[Validate('required|email')]
     public $email = '';
 
+    public function mount()
+    {
+        // Auto-fill email for logged in users
+        if (auth()->check()) {
+            $this->email = auth()->user()->email;
+        }
+    }
+
     public function submit()
     {
         $this->validate();
 
-        // Check if email has reached limit (5 active + pending)
-        if (MonitoringRequest::activeAndPendingCountForEmail($this->email) >= 5) {
-            session()->flash('error', __('app.guest_limit_reached'));
-            return;
+        $user = auth()->user();
+
+        // Check limits
+        if ($user) {
+            // Logged in user: check 20 active limit
+            if (MonitoringRequest::activeCountForUser($user->id) >= 20) {
+                session()->flash('error', __('app.user_limit_reached'));
+                return;
+            }
+        } else {
+            // Guest: check 5 active + pending limit
+            if (MonitoringRequest::activeAndPendingCountForEmail($this->email) >= 5) {
+                session()->flash('error', __('app.guest_limit_reached'));
+                return;
+            }
         }
 
-        // Generate tokens
-        $verificationToken = Str::random(64);
-        $dashboardToken = $this->getDashboardTokenForEmail($this->email);
+        // Logged in users: create active request immediately (no verification)
+        if ($user) {
+            $monitoringRequest = MonitoringRequest::create([
+                'user_id' => $user->id,
+                'location' => $this->location,
+                'target_date' => $this->targetDate,
+                'email' => $this->email,
+                'status' => MonitoringRequest::STATUS_ACTIVE,
+            ]);
 
-        $monitoringRequest = MonitoringRequest::create([
-            'location' => $this->location,
-            'target_date' => $this->targetDate,
-            'email' => $this->email,
-            'status' => MonitoringRequest::STATUS_PENDING_VERIFICATION,
-            'verification_token' => $verificationToken,
-            'dashboard_token' => $dashboardToken,
-            'expires_at' => now()->addHours(2),
-        ]);
+            // Immediately fetch initial forecasts
+            $this->fetchInitialForecasts($monitoringRequest);
 
-        // Send verification email
-        $verifyUrl = route('requests.verify', $verificationToken);
-        $rejectUrl = route('requests.reject', $verificationToken);
-        $dashboardUrl = route('guest.dashboard', $dashboardToken);
+            session()->flash('message', __('app.request_created_success'));
+        } else {
+            // Guest: create pending request with email verification
+            $verificationToken = Str::random(64);
+            $dashboardToken = $this->getDashboardTokenForEmail($this->email);
 
-        Mail::to($this->email)->send(new RequestVerificationEmail(
-            $monitoringRequest,
-            $verifyUrl,
-            $rejectUrl,
-            $dashboardUrl
-        ));
+            $monitoringRequest = MonitoringRequest::create([
+                'location' => $this->location,
+                'target_date' => $this->targetDate,
+                'email' => $this->email,
+                'status' => MonitoringRequest::STATUS_PENDING_VERIFICATION,
+                'verification_token' => $verificationToken,
+                'dashboard_token' => $dashboardToken,
+                'expires_at' => now()->addHours(2),
+            ]);
+
+            // Send verification email
+            $verifyUrl = route('requests.verify', $verificationToken);
+            $rejectUrl = route('requests.reject', $verificationToken);
+            $dashboardUrl = route('guest.dashboard', $dashboardToken);
+
+            Mail::to($this->email)->send(new RequestVerificationEmail(
+                $monitoringRequest,
+                $verifyUrl,
+                $rejectUrl,
+                $dashboardUrl
+            ));
+
+            session()->flash('message', __('app.request_created_verify_email'));
+        }
 
         // Clear form and validation errors
-        $this->reset(['location', 'targetDate', 'email']);
+        $this->reset(['location', 'targetDate']);
+        if (!$user) {
+            $this->reset('email');
+        }
         $this->resetValidation();
 
         // Dispatch event to refresh the list
         $this->dispatch('request-created');
+    }
 
-        // Show message
-        session()->flash('message', __('app.request_created_verify_email'));
+    /**
+     * Fetch initial forecasts for newly created request
+     */
+    protected function fetchInitialForecasts(MonitoringRequest $request): void
+    {
+        $activeProviders = WeatherProvider::where('is_active', true)->get();
+
+        foreach ($activeProviders as $provider) {
+            try {
+                $weatherService = WeatherProviderFactory::make($provider);
+
+                $forecastData = $weatherService->getForecast(
+                    $request->location,
+                    $request->target_date->format('Y-m-d')
+                );
+
+                // Check if forecast date matches target date (±1 day tolerance)
+                $forecastDate = new \DateTime($forecastData['forecast_date']);
+                $targetDate = new \DateTime($request->target_date->format('Y-m-d'));
+                $daysDiff = abs($forecastDate->diff($targetDate)->days);
+
+                // Only save snapshot if forecast is for the target date
+                if ($daysDiff <= 1) {
+                    ForecastSnapshot::create([
+                        'monitoring_request_id' => $request->id,
+                        'weather_provider_id' => $provider->id,
+                        'forecast_data' => $forecastData,
+                        'fetched_at' => now(),
+                    ]);
+                }
+            } catch (\Exception $e) {
+                // Silently fail - scheduler will retry later
+                \Log::warning("Failed to fetch initial forecast from {$provider->name}: {$e->getMessage()}");
+            }
+        }
     }
 
     /**

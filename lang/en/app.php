@@ -4,6 +4,10 @@ return [
     // Page titles
     'page_title' => 'Weather Oracle',
     'monitor_forecasts' => 'Monitor Weather Forecasts',
+    'dashboard' => 'Dashboard',
+    'login' => 'Login',
+    'register' => 'Register',
+    'logout' => 'Logout',
 
     // Form labels
     'location' => 'Location',
@@ -20,6 +24,8 @@ return [
     'request_created_verify_email' => 'Check your email inbox and click the activation link to start monitoring!',
     'request_created_no_email' => 'Weather reading created! Forecasts will be fetched automatically.',
     'guest_limit_reached' => 'You have reached the limit of 5 weather readings. Activate or reject pending readings or wait for active ones to expire.',
+    'user_limit_reached' => 'You have reached the limit of 20 active weather readings. Wait for one to expire or delete unnecessary ones.',
+    'request_deleted' => 'Weather reading deleted successfully.',
 
     // Errors
     'location_not_found' => 'Location not found. Please check the spelling or try coordinates (lat,lon).',
@@ -72,6 +78,8 @@ return [
     'your_monitoring_requests' => 'Your Weather Readings',
     'no_requests_yet' => 'No weather readings yet.',
     'view_details' => 'View Details',
+    'delete_request' => 'Delete',
+    'confirm_delete' => 'Are you sure you want to delete this reading?',
     'snapshots_count' => ':count snapshot(s)',
     'back_to_all_requests' => 'Back to all readings',
     'snapshots' => 'snapshots',

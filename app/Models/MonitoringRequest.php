@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MonitoringRequest extends Model
@@ -15,6 +16,7 @@ class MonitoringRequest extends Model
     const STATUS_REJECTED = 'rejected';
 
     protected $fillable = [
+        'user_id',
         'location',
         'target_date',
         'email',
@@ -28,6 +30,11 @@ class MonitoringRequest extends Model
         'target_date' => 'date',
         'expires_at' => 'datetime',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function forecastSnapshots(): HasMany
     {

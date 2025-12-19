@@ -67,22 +67,24 @@
 - [x] Komunikat błędu: "Osiągnąłeś limit 5 requestów. Aktywuj lub odrzuć pending requesty albo poczekaj aż aktywne wygasną."
 - [x] Query helper: `MonitoringRequest::activeAndPendingCountForEmail($email)`
 
-## Faza 8: Laravel Breeze + konta użytkowników
+## Faza 8: Laravel Breeze + konta użytkowników ✅
 
-- [ ] Zainstalować Laravel Breeze z email verification
-- [ ] Migration: dodać `user_id` (nullable) do monitoring_requests
-- [ ] Migracja danych: po rejestracji/logowaniu przypisać requesty z email do user_id
-- [ ] Middleware: sprawdź czy user jest zalogowany i automatycznie przypisz email z konta
-- [ ] Dashboard zalogowanego: pełna lista requestów użytkownika (wszystkie statusy)
-- [ ] Dashboard zalogowanego: możliwość usuwania requestów
+- [x] Zainstalować Laravel Breeze z email verification
+- [x] Migration: dodać `user_id` (nullable) do monitoring_requests
+- [x] Migracja danych: po rejestracji/logowaniu przypisać requesty z email do user_id (Event Listener)
+- [x] MonitoringForm: auto-fill email dla zalogowanych, ustawia user_id
+- [x] Zalogowani: requesty od razu `active` (bez weryfikacji email)
+- [x] Dashboard zalogowanego: pełna lista requestów użytkownika (wszystkie statusy)
+- [x] Dashboard zalogowanego: możliwość usuwania requestów
+- [x] Nawigacja: Login/Register/Dashboard/Logout
 - [ ] Dashboard zalogowanego: ustawienia powiadomień (placeholder - funkcjonalność w Fazie 10)
 
-## Faza 9: Limity dla zalogowanych
+## Faza 9: Limity dla zalogowanych ✅
 
-- [ ] Walidacja w MonitoringForm: zalogowany użytkownik może mieć max 20 requestów `active`
-- [ ] Komunikat błędu: "Osiągnąłeś limit 20 aktywnych requestów. Poczekaj aż któryś wygaśnie lub usuń niepotrzebne."
-- [ ] Zalogowani: requesty od razu `active` (bez pending/verification)
-- [ ] Query helper: `MonitoringRequest::activeCountForUser($userId)`
+- [x] Walidacja w MonitoringForm: zalogowany użytkownik może mieć max 20 requestów `active`
+- [x] Komunikat błędu: "Osiągnąłeś limit 20 aktywnych requestów. Poczekaj aż któryś wygaśnie lub usuń niepotrzebne."
+- [x] Zalogowani: requesty od razu `active` (bez pending/verification)
+- [x] Query helper: `MonitoringRequest::activeCountForUser($userId)`
 
 ## Faza 10: Email notifications
 

@@ -1,8 +1,10 @@
 <?php
 
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Facades\Event;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,4 +19,11 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
-    })->create();
+    })
+    ->booted(function () {
+        Event::listen(
+            Verified::class,
+            \App\Listeners\AssignUserToRequests::class
+        );
+    })
+    ->create();

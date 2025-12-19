@@ -4,6 +4,10 @@ return [
     // Page titles
     'page_title' => 'Weather Oracle',
     'monitor_forecasts' => 'Monitoruj prognozy pogody',
+    'dashboard' => 'Dashboard',
+    'login' => 'Zaloguj się',
+    'register' => 'Zarejestruj się',
+    'logout' => 'Wyloguj',
 
     // Form labels
     'location' => 'Lokalizacja',
@@ -20,6 +24,8 @@ return [
     'request_created_verify_email' => 'Sprawdź swoją skrzynkę email i kliknij link aktywacyjny aby rozpocząć monitorowanie!',
     'request_created_no_email' => 'Wróżba utworzona! Prognozy będą pobierane automatycznie.',
     'guest_limit_reached' => 'Osiągnąłeś limit 5 wróżb. Aktywuj lub odrzuć oczekujące wróżby albo poczekaj aż aktywne wygasną.',
+    'user_limit_reached' => 'Osiągnąłeś limit 20 aktywnych wróżb. Poczekaj aż któraś wygaśnie lub usuń niepotrzebne.',
+    'request_deleted' => 'Wróżba usunięta pomyślnie.',
 
     // Errors
     'location_not_found' => 'Lokalizacja nie znaleziona. Sprawdź pisownię lub spróbuj współrzędnych (lat,lon).',
@@ -72,6 +78,8 @@ return [
     'your_monitoring_requests' => 'Twoje wróżby pogodowe',
     'no_requests_yet' => 'Nie masz jeszcze żadnych wróżb.',
     'view_details' => 'Zobacz szczegóły',
+    'delete_request' => 'Usuń',
+    'confirm_delete' => 'Czy na pewno chcesz usunąć tę wróżbę?',
     'snapshots_count' => ':count snapshot(ów)',
     'back_to_all_requests' => 'Powrót do wszystkich wróżb',
     'snapshots' => 'snapshotów',
