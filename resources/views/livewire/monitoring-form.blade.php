@@ -33,16 +33,18 @@
             @error('targetDate') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
         </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700">{{ __('app.email') }}</label>
-            <input
-                type="email"
-                wire:model="email"
-                placeholder="{{ __('app.email_placeholder') }}"
-                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-            >
-            @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-        </div>
+        @guest
+            <div>
+                <label class="block text-sm font-medium text-gray-700">{{ __('app.email') }}</label>
+                <input
+                    type="email"
+                    wire:model="email"
+                    placeholder="{{ __('app.email_placeholder') }}"
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                @error('email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+            </div>
+        @endguest
 
         <button
             type="submit"

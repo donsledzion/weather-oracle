@@ -14,13 +14,8 @@ use Livewire\Component;
 
 class MonitoringForm extends Component
 {
-    #[Validate('required|string|min:2')]
     public $location = '';
-
-    #[Validate('required|date|after:today')]
     public $targetDate = '';
-
-    #[Validate('required|email')]
     public $email = '';
 
     public function mount()
@@ -31,11 +26,25 @@ class MonitoringForm extends Component
         }
     }
 
+    protected function rules()
+    {
+        return [
+            'location' => 'required|string|min:2',
+            'targetDate' => 'required|date|after:today',
+            'email' => auth()->check() ? 'nullable' : 'required|email',
+        ];
+    }
+
     public function submit()
     {
         $this->validate();
 
         $user = auth()->user();
+
+        // Use user's email if logged in
+        if ($user) {
+            $this->email = $user->email;
+        }
 
         // Check limits
         if ($user) {

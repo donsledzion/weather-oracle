@@ -4,7 +4,7 @@ return [
     // Page titles
     'page_title' => 'Weather Oracle',
     'monitor_forecasts' => 'Monitoruj prognozy pogody',
-    'dashboard' => 'Dashboard',
+    'dashboard' => 'Panel',
     'login' => 'Zaloguj się',
     'register' => 'Zarejestruj się',
     'logout' => 'Wyloguj',
@@ -85,7 +85,7 @@ return [
     'snapshots' => 'snapshotów',
 
     // Guest dashboard
-    'guest_dashboard' => 'Twój Dashboard',
+    'guest_dashboard' => 'Twój Panel',
     'managing_requests_for' => 'Zarządzasz wróżbami dla',
     'guest_dashboard_info' => 'Możesz aktywować oczekujące wróżby, przeglądać aktywne monitorowania i sprawdzać archiwum.',
     'pending_verification' => 'Oczekuje na aktywację',
@@ -107,8 +107,8 @@ return [
     'email_requested_monitoring' => 'Utworzyłeś wróżbę pogodową dla:',
     'email_please_verify' => 'Proszę potwierdź swoją wróżbę aby rozpocząć monitorowanie:',
     'email_activate_button' => 'Aktywuj monitorowanie',
-    'email_or_visit_dashboard' => 'Lub odwiedź swój dashboard aby zarządzać wszystkimi wróżbami:',
-    'email_view_dashboard' => 'Zobacz Dashboard',
+    'email_or_visit_dashboard' => 'Lub odwiedź swój panel aby zarządzać wszystkimi wróżbami:',
+    'email_view_dashboard' => 'Zobacz Panel',
     'email_expires_warning' => 'Link weryfikacyjny wygaśnie za 2 godziny. Jeśli nie potwierdzisz w tym czasie, twoja wróżba zostanie automatycznie anulowana.',
     'email_not_interested' => 'Nie jesteś zainteresowany?',
     'email_cancel_request' => 'Anuluj tę wróżbę',

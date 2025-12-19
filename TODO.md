@@ -69,7 +69,7 @@
 
 ## Faza 8: Laravel Breeze + konta użytkowników ✅
 
-- [x] Zainstalować Laravel Breeze z email verification
+- [x] Zainstalować Laravel Breeze z email verification (MustVerifyEmail enabled)
 - [x] Migration: dodać `user_id` (nullable) do monitoring_requests
 - [x] Migracja danych: po rejestracji/logowaniu przypisać requesty z email do user_id (Event Listener)
 - [x] MonitoringForm: auto-fill email dla zalogowanych, ustawia user_id
