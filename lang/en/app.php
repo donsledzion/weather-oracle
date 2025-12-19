@@ -48,6 +48,14 @@ return [
     'active' => 'Active',
     'completed' => 'Completed',
 
+    // Status labels
+    'status_pending_verification' => 'Pending Verification',
+    'status_verified' => 'Verified',
+    'status_active' => 'Active',
+    'status_completed' => 'Completed',
+    'status_expired' => 'Expired',
+    'status_rejected' => 'Rejected',
+
     // Forecast snapshots
     'forecast_snapshots' => 'Forecast Snapshots',
     'no_data_yet' => 'No forecast data available yet',
@@ -115,4 +123,23 @@ return [
     'email_footer_line1' => 'This is an automated email from Weather Oracle.',
     'email_footer_line2' => 'You received this because you created a weather reading.',
     'email_footer_ignore' => 'If you didn\'t create this reading, you can safely ignore this email.',
+
+    // Notification preferences
+    'notification_preferences' => 'Notification Preferences',
+    'managing_notifications_for' => 'Managing notifications for',
+    'global_notification_settings' => 'Global Notification Settings',
+    'global_settings_description' => 'These settings apply to all your weather readings. You can additionally enable/disable notifications for individual readings below.',
+    'first_snapshot_notifications' => 'First Snapshot',
+    'first_snapshot_description' => 'Notification when the first forecast appears for a given provider',
+    'daily_summary_notifications' => 'Daily Summary',
+    'daily_summary_description' => 'Daily summary of forecast changes',
+    'final_summary_notifications' => 'Final Summary',
+    'final_summary_description' => 'Summary of the reading after reaching the target date',
+    'save_preferences' => 'Save Preferences',
+    'preferences_updated' => 'Preferences updated successfully.',
+    'per_request_settings' => 'Per-Reading Notifications',
+    'per_request_description' => 'Enable or disable notifications for each reading individually. Notifications will only be sent if the global notification type is enabled.',
+    'no_requests_found' => 'No readings found.',
+    'enabled' => 'Enabled',
+    'disabled' => 'Disabled',
 ];

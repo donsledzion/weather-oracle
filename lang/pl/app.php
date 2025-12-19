@@ -48,6 +48,14 @@ return [
     'active' => 'Aktywne',
     'completed' => 'Zakończone',
 
+    // Status labels
+    'status_pending_verification' => 'Oczekuje weryfikacji',
+    'status_verified' => 'Zweryfikowane',
+    'status_active' => 'Aktywne',
+    'status_completed' => 'Zakończone',
+    'status_expired' => 'Wygasłe',
+    'status_rejected' => 'Odrzucone',
+
     // Forecast snapshots
     'forecast_snapshots' => 'Snapshoty prognozy',
     'no_data_yet' => 'Brak danych prognozy',
@@ -115,4 +123,23 @@ return [
     'email_footer_line1' => 'To automatyczna wiadomość od Weather Oracle.',
     'email_footer_line2' => 'Otrzymałeś ją ponieważ utworzyłeś wróżbę pogodową.',
     'email_footer_ignore' => 'Jeśli nie tworzyłeś tej wróżby, możesz bezpiecznie zignorować tę wiadomość.',
+
+    // Notification preferences
+    'notification_preferences' => 'Preferencje powiadomień',
+    'managing_notifications_for' => 'Zarządzasz powiadomieniami dla',
+    'global_notification_settings' => 'Globalne ustawienia powiadomień',
+    'global_settings_description' => 'Te ustawienia dotyczą wszystkich twoich wróżb. Możesz dodatkowo włączyć/wyłączyć powiadomienia dla poszczególnych wróżb poniżej.',
+    'first_snapshot_notifications' => 'Pierwszy snapshot',
+    'first_snapshot_description' => 'Powiadomienie gdy pojawi się pierwsza prognoza dla danego providera',
+    'daily_summary_notifications' => 'Dzienne podsumowanie',
+    'daily_summary_description' => 'Codzienne podsumowanie zmian w prognozach',
+    'final_summary_notifications' => 'Podsumowanie końcowe',
+    'final_summary_description' => 'Podsumowanie wróżby po osiągnięciu daty docelowej',
+    'save_preferences' => 'Zapisz preferencje',
+    'preferences_updated' => 'Preferencje zaktualizowane pomyślnie.',
+    'per_request_settings' => 'Powiadomienia dla poszczególnych wróżb',
+    'per_request_description' => 'Włącz lub wyłącz powiadomienia dla każdej wróżby osobno. Powiadomienia będą wysyłane tylko jeśli globalny typ powiadomienia jest włączony.',
+    'no_requests_found' => 'Nie znaleziono żadnych wróżb.',
+    'enabled' => 'Włączone',
+    'disabled' => 'Wyłączone',
 ];

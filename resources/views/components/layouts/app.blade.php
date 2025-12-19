@@ -6,6 +6,7 @@
     <title>{{ $title ?? 'Weather Oracle' }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body>
     <div class="min-h-screen bg-gray-100">
@@ -46,5 +47,6 @@
             {{ $slot }}
         </main>
     </div>
+    @livewireScripts
 </body>
 </html>

@@ -54,4 +54,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(MonitoringRequest::class);
     }
+
+    /**
+     * Get or create notification preferences for this user
+     */
+    public function notificationPreferences()
+    {
+        return NotificationPreference::getForUser($this->id);
+    }
 }

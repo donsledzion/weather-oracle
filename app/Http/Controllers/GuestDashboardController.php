@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MonitoringRequest;
+use App\Models\NotificationPreference;
 
 class GuestDashboardController extends Controller
 {
@@ -24,10 +25,14 @@ class GuestDashboardController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+        // Get or create notification preferences for this email
+        $notificationPrefs = NotificationPreference::getForEmail($sampleRequest->email);
+
         return view('guest-dashboard', [
             'requests' => $requests,
             'email' => $sampleRequest->email,
             'dashboardToken' => $token,
+            'notificationToken' => $notificationPrefs->token,
         ]);
     }
 }

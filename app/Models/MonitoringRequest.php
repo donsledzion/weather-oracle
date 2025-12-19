@@ -24,11 +24,13 @@ class MonitoringRequest extends Model
         'verification_token',
         'dashboard_token',
         'expires_at',
+        'notifications_enabled',
     ];
 
     protected $casts = [
         'target_date' => 'date',
         'expires_at' => 'datetime',
+        'notifications_enabled' => 'boolean',
     ];
 
     public function user(): BelongsTo

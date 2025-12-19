@@ -88,12 +88,40 @@
 
 ## Faza 10: Email notifications
 
-- [ ] Email powiadomienie gdy pierwszy snapshot zostanie zapisany (target date w zasięgu API)
-- [ ] Jeśli kilku providerów zapisuje snapshot tego samego dnia → zbiorczy mail
-- [ ] Daily summary email dla aktywnych requestów z aktualnymi prognozami
-- [ ] Command w schedulerze wysyłający codzienne podsumowania
-- [ ] Ustawienia powiadomień w dashboardzie (opt-out per request)
-- [ ] Link "unsubscribe" w każdym mailu (zmienia ustawienia powiadomień dla requesta)
+### 10.1: System zarządzania powiadomieniami
+- [ ] Migration: utworzyć tabelę `notification_preferences` (email, user_id, first_snapshot_enabled, daily_summary_enabled, final_summary_enabled)
+- [ ] Migration: dodać kolumnę `notifications_enabled` (boolean, default true) do `monitoring_requests`
+- [ ] Model `NotificationPreference` z metodami helper (getForEmail, getForUser, updatePreference)
+- [ ] Route `/notifications/{token}` - panel zarządzania powiadomieniami (token-based, bez auth)
+- [ ] Controller `NotificationPreferencesController` - wyświetlanie i update preferencji
+- [ ] View `notification-preferences.blade.php` - 3 globalne toggle + lista wróżb z toggle per wróżba
+- [ ] Livewire component `NotificationToggles` dla interaktywnych toggles
+
+### 10.2: Powiadomienia - First Snapshot
+- [ ] Mailable `FirstSnapshotNotification` - email gdy pierwszy snapshot z providera się pojawi
+- [ ] Logika w `FetchForecasts` command - wykrywanie pierwszego snapshotu
+- [ ] Link "unsubscribe" w mailu prowadzący do `/notifications/{token}`
+- [ ] Sprawdzanie `notifications_enabled` i `first_snapshot_enabled` przed wysłaniem
+
+### 10.3: Powiadomienia - Daily Summary
+- [ ] Mailable `DailySummary` - email z podsumowaniem wszystkich aktywnych wróżb
+- [ ] Command `SendDailySummaries` - wysyła daily summary dla użytkowników z włączonym daily_summary_enabled
+- [ ] Scheduler: daily o 8:00 rano
+- [ ] Link "unsubscribe" w mailu
+- [ ] Grupowanie wróżb per email/user w zbiorczym mailu
+
+### 10.4: Powiadomienia - Final Summary
+- [ ] Mailable `FinalSummary` - podsumowanie po osiągnięciu target_date
+- [ ] Command `SendFinalSummaries` - wysyła summary dla wróżb które właśnie się zakończyły (status completed)
+- [ ] Wykres porównawczy providerów w mailu (jak był forecast vs jak jest teraz)
+- [ ] Link "unsubscribe" w mailu
+- [ ] Scheduler: daily sprawdzanie nowo completed wróżb
+
+### 10.5: Dashboard - integracja powiadomień
+- [ ] Dashboard zalogowanego: dodać toggle "🔔 Powiadomienia" przy każdej wróżbie
+- [ ] Dashboard zalogowanego: link do globalnych ustawień powiadomień
+- [ ] Guest dashboard: dodać toggle przy każdej wróżbie
+- [ ] Guest dashboard: link do globalnych ustawień (token-based)
 
 ## Faza 11: UI Enhancements
 

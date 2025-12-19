@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\GuestDashboardController;
+use App\Http\Controllers\NotificationPreferencesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestVerificationController;
 use Illuminate\Support\Facades\Route;
@@ -21,6 +22,11 @@ Route::get('/reject/{token}', [RequestVerificationController::class, 'reject'])-
 
 // Guest dashboard (token-based, no auth required)
 Route::get('/guest-dashboard/{token}', [GuestDashboardController::class, 'show'])->name('guest.dashboard');
+
+// Notification preferences (token-based, no auth required)
+Route::get('/notifications/{token}', [NotificationPreferencesController::class, 'show'])->name('notifications.show');
+Route::post('/notifications/{token}/global', [NotificationPreferencesController::class, 'updateGlobal'])->name('notifications.update-global');
+Route::post('/notifications/{token}/toggle/{requestId}', [NotificationPreferencesController::class, 'toggleRequest'])->name('notifications.toggle-request');
 
 // Authenticated user dashboard
 Route::get('/dashboard', function () {

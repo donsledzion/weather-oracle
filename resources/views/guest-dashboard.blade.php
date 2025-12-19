@@ -7,11 +7,20 @@
         @endif
 
         <div class="bg-white rounded-lg shadow p-6 mb-6">
-            <h1 class="text-2xl font-bold mb-2">{{ __('app.guest_dashboard') }}</h1>
-            <p class="text-gray-600">{{ __('app.managing_requests_for') }}: <strong>{{ $email }}</strong></p>
-            <p class="text-sm text-gray-500 mt-2">
-                {{ __('app.guest_dashboard_info') }}
-            </p>
+            <div class="flex items-start justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold mb-2">{{ __('app.guest_dashboard') }}</h1>
+                    <p class="text-gray-600">{{ __('app.managing_requests_for') }}: <strong>{{ $email }}</strong></p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        {{ __('app.guest_dashboard_info') }}
+                    </p>
+                </div>
+                <a href="{{ route('notifications.show', $notificationToken) }}"
+                   class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition shadow-sm whitespace-nowrap">
+                    <span class="text-xl">🔔</span>
+                    <span>{{ __('app.notification_preferences') }}</span>
+                </a>
+            </div>
         </div>
 
         @if($requests->isEmpty())
