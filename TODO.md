@@ -88,14 +88,18 @@
 
 ## Faza 10: Email notifications
 
-### 10.1: System zarządzania powiadomieniami
-- [ ] Migration: utworzyć tabelę `notification_preferences` (email, user_id, first_snapshot_enabled, daily_summary_enabled, final_summary_enabled)
-- [ ] Migration: dodać kolumnę `notifications_enabled` (boolean, default true) do `monitoring_requests`
-- [ ] Model `NotificationPreference` z metodami helper (getForEmail, getForUser, updatePreference)
-- [ ] Route `/notifications/{token}` - panel zarządzania powiadomieniami (token-based, bez auth)
-- [ ] Controller `NotificationPreferencesController` - wyświetlanie i update preferencji
-- [ ] View `notification-preferences.blade.php` - 3 globalne toggle + lista wróżb z toggle per wróżba
-- [ ] Livewire component `NotificationToggles` dla interaktywnych toggles
+### 10.1: System zarządzania powiadomieniami ✅
+- [x] Migration: utworzyć tabelę `notification_preferences` (email, user_id, token, first_snapshot_enabled, daily_summary_enabled, final_summary_enabled)
+- [x] Migration: dodać kolumnę `notifications_enabled` (boolean, default true) do `monitoring_requests`
+- [x] Model `NotificationPreference` z metodami helper (getForEmail, getForUser, getByToken, hasAnyEnabled)
+- [x] Route `/notifications/{token}` - panel zarządzania powiadomieniami (token-based, bez auth)
+- [x] Controller `NotificationPreferencesController` - wyświetlanie i update preferencji (show, updateGlobal, toggleRequest)
+- [x] View `notification-preferences.blade.php` - 3 globalne toggle + lista wróżb z toggle per wróżba
+- [x] Livewire component `NotificationToggles` dla interaktywnych toggles z ładnymi stylami
+- [x] Linki do panelu powiadomień w dashboardach (zalogowany + guest)
+- [x] Tłumaczenia PL/EN dla wszystkich tekstów powiadomień
+- [x] Dodany Chart.js do app.js (fix błędu na stronie szczegółów)
+- [x] Naprawione @livewireScripts i @livewireStyles w layoutcie
 
 ### 10.2: Powiadomienia - First Snapshot
 - [ ] Mailable `FirstSnapshotNotification` - email gdy pierwszy snapshot z providera się pojawi
@@ -117,11 +121,10 @@
 - [ ] Link "unsubscribe" w mailu
 - [ ] Scheduler: daily sprawdzanie nowo completed wróżb
 
-### 10.5: Dashboard - integracja powiadomień
-- [ ] Dashboard zalogowanego: dodać toggle "🔔 Powiadomienia" przy każdej wróżbie
-- [ ] Dashboard zalogowanego: link do globalnych ustawień powiadomień
-- [ ] Guest dashboard: dodać toggle przy każdej wróżbie
-- [ ] Guest dashboard: link do globalnych ustawień (token-based)
+### 10.5: Dashboard - integracja powiadomień ✅
+- [x] Dashboard zalogowanego: link do globalnych ustawień powiadomień (przycisk 🔔 w headerze)
+- [x] Guest dashboard: link do globalnych ustawień (token-based, przycisk 🔔 w headerze)
+- [x] Panel powiadomień zawiera toggles per wróżba (nie trzeba ich w dashboardzie)
 
 ## Faza 11: UI Enhancements
 
