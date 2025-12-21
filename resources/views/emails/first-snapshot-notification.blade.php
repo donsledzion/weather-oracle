@@ -84,7 +84,7 @@
         <div class="weather-data">
             <h3>{{ __('app.forecast_for') }} {{ $snapshot->forecast_date->format('Y-m-d') }}</h3>
             <p>🌡️ {{ __('app.temperature') }}: <strong>{{ round($snapshot->avg_temp) }}°C</strong> ({{ round($snapshot->min_temp) }}°C - {{ round($snapshot->max_temp) }}°C)</p>
-            <p>🌤️ {{ __('app.conditions') }}: <strong>{{ $snapshot->conditions }}</strong></p>
+            <p>{!! \App\Helpers\WeatherIconMapper::getIcon($snapshot->conditions, $providerName) !!} {{ __('app.conditions') }}: <strong>{{ $snapshot->conditions }}</strong></p>
             @if($snapshot->precipitation_mm > 0)
                 <p>🌧️ {{ __('app.precipitation') }}: <strong>{{ $snapshot->precipitation_mm }} mm</strong></p>
             @endif

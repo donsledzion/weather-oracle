@@ -251,7 +251,10 @@
                             </div>
                             <div>
                                 <p class="text-xs text-gray-600">{{ __('app.conditions') }}</p>
-                                <p class="font-semibold">{{ \App\Helpers\WeatherTranslator::translate($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) }}</p>
+                                <p class="font-semibold">
+                                    <span class="text-2xl">{!! \App\Helpers\WeatherIconMapper::getIcon($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) !!}</span>
+                                    {{ \App\Helpers\WeatherTranslator::translate($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) }}
+                                </p>
                                 <p class="text-xs text-gray-500">{{ \App\Helpers\WeatherTranslator::translateDescription($snapshot->forecast_data['description'], $snapshot->weatherProvider->name) }}</p>
                             </div>
                             <div>
