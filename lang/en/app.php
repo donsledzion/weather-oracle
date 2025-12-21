@@ -76,7 +76,7 @@ return [
     'status_rejected' => 'Rejected',
 
     // Forecast snapshots
-    'forecast_snapshots' => 'Forecast Snapshots',
+    'forecast_snapshots' => 'Forecasts',
     'no_data_yet' => 'No forecast data available yet',
     'no_data_message' => 'Target date is too far in the future. Weather forecasts are available up to 5 days in advance. Forecast data will start appearing when your target date is within range.',
     'fetched' => 'Fetched',
@@ -99,7 +99,7 @@ return [
     'avg_temperature' => 'Avg Temperature',
     'min_temperature' => 'Min Temperature',
     'max_temperature' => 'Max Temperature',
-    'not_enough_data' => 'Not enough data for chart (need at least 2 snapshots)',
+    'not_enough_data' => 'Not enough data for chart (need at least 2 forecasts)',
 
     // Monitoring list
     'your_monitoring_requests' => 'Your Weather Readings',
@@ -107,9 +107,9 @@ return [
     'view_details' => 'View Details',
     'delete_request' => 'Delete',
     'confirm_delete' => 'Are you sure you want to delete this reading?',
-    'snapshots_count' => ':count snapshot(s)',
+    'snapshots_count' => ':count forecast(s)',
     'back_to_all_requests' => 'Back to all readings',
-    'snapshots' => 'snapshots',
+    'snapshots' => 'forecasts',
 
     // Guest dashboard
     'guest_dashboard' => 'Your Dashboard',
@@ -148,7 +148,7 @@ return [
     'managing_notifications_for' => 'Managing notifications for',
     'global_notification_settings' => 'Global Notification Settings',
     'global_settings_description' => 'These settings apply to all your weather readings. You can additionally enable/disable notifications for individual readings below.',
-    'first_snapshot_notifications' => 'First Snapshot',
+    'first_snapshot_notifications' => 'First Forecast',
     'first_snapshot_description' => 'Notification when the first forecast appears for a given provider',
     'daily_summary_notifications' => 'Daily Summary',
     'daily_summary_description' => 'Daily summary of forecast changes',

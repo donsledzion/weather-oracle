@@ -76,7 +76,7 @@ return [
     'status_rejected' => 'Odrzucone',
 
     // Forecast snapshots
-    'forecast_snapshots' => 'Snapshoty prognozy',
+    'forecast_snapshots' => 'Prognozy',
     'no_data_yet' => 'Brak danych prognozy',
     'no_data_message' => 'Data docelowa jest zbyt daleko w przyszłości. Prognozy pogody są dostępne do 5 dni do przodu. Dane prognozy zaczną się pojawiać gdy twoja data będzie w zasięgu.',
     'fetched' => 'Pobrano',
@@ -99,7 +99,7 @@ return [
     'avg_temperature' => 'Średnia temperatura',
     'min_temperature' => 'Minimalna temperatura',
     'max_temperature' => 'Maksymalna temperatura',
-    'not_enough_data' => 'Niewystarczająco danych do wykresu (potrzeba co najmniej 2 snapshot\'ów)',
+    'not_enough_data' => 'Niewystarczająco danych do wykresu (potrzeba co najmniej 2 prognozy)',
 
     // Monitoring list
     'your_monitoring_requests' => 'Twoje wróżby pogodowe',
@@ -107,9 +107,9 @@ return [
     'view_details' => 'Zobacz szczegóły',
     'delete_request' => 'Usuń',
     'confirm_delete' => 'Czy na pewno chcesz usunąć tę wróżbę?',
-    'snapshots_count' => ':count snapshot(ów)',
+    'snapshots_count' => ':count prognoz(y)',
     'back_to_all_requests' => 'Powrót do wszystkich wróżb',
-    'snapshots' => 'snapshotów',
+    'snapshots' => 'prognoz',
 
     // Guest dashboard
     'guest_dashboard' => 'Twój Panel',
@@ -148,7 +148,7 @@ return [
     'managing_notifications_for' => 'Zarządzasz powiadomieniami dla',
     'global_notification_settings' => 'Globalne ustawienia powiadomień',
     'global_settings_description' => 'Te ustawienia dotyczą wszystkich twoich wróżb. Możesz dodatkowo włączyć/wyłączyć powiadomienia dla poszczególnych wróżb poniżej.',
-    'first_snapshot_notifications' => 'Pierwszy snapshot',
+    'first_snapshot_notifications' => 'Pierwsza prognoza',
     'first_snapshot_description' => 'Powiadomienie gdy pojawi się pierwsza prognoza dla danego providera',
     'daily_summary_notifications' => 'Dzienne podsumowanie',
     'daily_summary_description' => 'Codzienne podsumowanie zmian w prognozach',
