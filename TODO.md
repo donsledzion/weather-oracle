@@ -101,25 +101,32 @@
 - [x] Dodany Chart.js do app.js (fix błędu na stronie szczegółów)
 - [x] Naprawione @livewireScripts i @livewireStyles w layoutcie
 
-### 10.2: Powiadomienia - First Snapshot
-- [ ] Mailable `FirstSnapshotNotification` - email gdy pierwszy snapshot z providera się pojawi
-- [ ] Logika w `FetchForecasts` command - wykrywanie pierwszego snapshotu
-- [ ] Link "unsubscribe" w mailu prowadzący do `/notifications/{token}`
-- [ ] Sprawdzanie `notifications_enabled` i `first_snapshot_enabled` przed wysłaniem
+### 10.2: Powiadomienia - First Snapshot ✅
+- [x] Mailable `FirstSnapshotNotification` - email gdy pierwszy snapshot z providera się pojawi
+- [x] Logika w `FetchForecasts` command - wykrywanie pierwszego snapshotu per provider
+- [x] Link do ustawień powiadomień w mailu prowadzący do `/notifications/{token}`
+- [x] Sprawdzanie `notifications_enabled` i `first_snapshot_enabled` przed wysłaniem
+- [x] Email template z danymi prognozy i informacjami o wróżbie
+- [x] Tłumaczenia PL/EN dla email template
 
-### 10.3: Powiadomienia - Daily Summary
-- [ ] Mailable `DailySummary` - email z podsumowaniem wszystkich aktywnych wróżb
-- [ ] Command `SendDailySummaries` - wysyła daily summary dla użytkowników z włączonym daily_summary_enabled
-- [ ] Scheduler: daily o 8:00 rano
-- [ ] Link "unsubscribe" w mailu
-- [ ] Grupowanie wróżb per email/user w zbiorczym mailu
+### 10.3: Powiadomienia - Daily Summary ✅
+- [x] Mailable `DailySummary` - email z podsumowaniem wszystkich aktywnych wróżb
+- [x] Command `SendDailySummaries` - wysyła daily summary dla użytkowników z włączonym daily_summary_enabled
+- [x] Scheduler: daily o 8:00 rano
+- [x] Link do ustawień powiadomień w mailu
+- [x] Grupowanie wróżb per email/user w zbiorczym mailu
+- [x] Pokazuje liczbę nowych snapshotów dzisiaj vs łącznie
+- [x] Wyświetla najnowszą prognozę dla każdej wróżby
+- [x] Tłumaczenia PL/EN
 
-### 10.4: Powiadomienia - Final Summary
-- [ ] Mailable `FinalSummary` - podsumowanie po osiągnięciu target_date
-- [ ] Command `SendFinalSummaries` - wysyła summary dla wróżb które właśnie się zakończyły (status completed)
-- [ ] Wykres porównawczy providerów w mailu (jak był forecast vs jak jest teraz)
-- [ ] Link "unsubscribe" w mailu
-- [ ] Scheduler: daily sprawdzanie nowo completed wróżb
+### 10.4: Powiadomienia - Final Summary ✅
+- [x] Mailable `FinalSummary` - podsumowanie po osiągnięciu target_date
+- [x] Command `SendFinalSummaries` - wysyła summary dla wróżb które właśnie się zakończyły (status completed)
+- [x] Porównanie providerów w mailu (statystyki per provider: count, avg temp, range)
+- [x] Zestawienie pierwsza vs ostatnia prognoza per provider
+- [x] Link do ustawień powiadomień w mailu
+- [x] Scheduler: daily sprawdzanie nowo completed wróżb
+- [x] Tłumaczenia PL/EN
 
 ### 10.5: Dashboard - integracja powiadomień ✅
 - [x] Dashboard zalogowanego: link do globalnych ustawień powiadomień (przycisk 🔔 w headerze)

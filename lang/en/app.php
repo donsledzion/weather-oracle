@@ -142,4 +142,36 @@ return [
     'no_requests_found' => 'No readings found.',
     'enabled' => 'Enabled',
     'disabled' => 'Disabled',
+
+    // First snapshot notification
+    'email_first_snapshot_subject' => 'First forecast for :location from :provider',
+    'email_first_snapshot_title' => 'First Forecast Available!',
+    'email_first_snapshot_intro' => 'We just received the first forecast from :provider for your weather reading.',
+    'email_first_snapshot_message' => 'We will check for forecast updates daily and notify you about important changes.',
+    'email_notification_settings' => 'Manage notification settings',
+
+    // Daily summary notification
+    'email_daily_summary_subject' => 'Daily summary of your :count readings',
+    'email_daily_summary_title' => 'Daily Weather Summary',
+    'email_daily_summary_new_snapshots' => 'new forecasts today',
+    'email_daily_summary_intro' => 'Here\'s a summary of your :count active weather readings:',
+    'email_daily_summary_snapshots_today' => ':count new today',
+    'email_daily_summary_total_snapshots' => ':count total',
+    'email_daily_summary_footer' => 'You\'re receiving this email because you have daily summaries enabled.',
+
+    // Final summary notification
+    'email_final_summary_subject' => 'Weather reading summary: :location (:date)',
+    'email_final_summary_title' => 'Your weather reading has completed!',
+    'email_final_summary_completed' => 'Target date has been reached',
+    'email_final_summary_intro' => 'We\'ve collected all forecasts from different providers. Here\'s the comparison:',
+    'email_final_summary_comparison' => 'Provider Comparison',
+    'email_final_summary_snapshots' => 'Forecast count',
+    'email_final_summary_avg_temp' => 'Average temperature',
+    'email_final_summary_temp_range' => 'Temperature range',
+    'email_final_summary_first_vs_last' => 'Forecast change',
+    'email_final_summary_first' => 'First',
+    'email_final_summary_last' => 'Last',
+    'email_final_summary_tip' => 'Different providers may have different forecasts. Check the details to see the full history of changes.',
+    'email_final_summary_view_full' => 'View Full Details',
+    'email_final_summary_footer' => 'You\'re receiving this email because your weather reading has completed.',
 ];

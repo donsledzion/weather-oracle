@@ -142,4 +142,36 @@ return [
     'no_requests_found' => 'Nie znaleziono żadnych wróżb.',
     'enabled' => 'Włączone',
     'disabled' => 'Wyłączone',
+
+    // First snapshot notification
+    'email_first_snapshot_subject' => 'Pierwsza prognoza dla :location od :provider',
+    'email_first_snapshot_title' => 'Pierwsza prognoza dostępna!',
+    'email_first_snapshot_intro' => 'Właśnie otrzymaliśmy pierwszą prognozę od :provider dla Twojej wróżby pogodowej.',
+    'email_first_snapshot_message' => 'Będziemy codziennie sprawdzać aktualizacje prognozy i powiadamiać Cię o ważnych zmianach.',
+    'email_notification_settings' => 'Zarządzaj ustawieniami powiadomień',
+
+    // Daily summary notification
+    'email_daily_summary_subject' => 'Dzienne podsumowanie Twoich :count wróżb',
+    'email_daily_summary_title' => 'Dzienne podsumowanie pogody',
+    'email_daily_summary_new_snapshots' => 'nowych prognoz dzisiaj',
+    'email_daily_summary_intro' => 'Oto podsumowanie Twoich :count aktywnych wróżb pogodowych:',
+    'email_daily_summary_snapshots_today' => ':count nowych dzisiaj',
+    'email_daily_summary_total_snapshots' => ':count łącznie',
+    'email_daily_summary_footer' => 'Otrzymujesz ten email ponieważ masz włączone codzienne podsumowania.',
+
+    // Final summary notification
+    'email_final_summary_subject' => 'Podsumowanie wróżby: :location (:date)',
+    'email_final_summary_title' => 'Twoja wróżba pogodowa się zakończyła!',
+    'email_final_summary_completed' => 'Data docelowa została osiągnięta',
+    'email_final_summary_intro' => 'Zebraliśmy dla Ciebie wszystkie prognozy od różnych providerów. Oto porównanie:',
+    'email_final_summary_comparison' => 'Porównanie providerów',
+    'email_final_summary_snapshots' => 'Liczba prognoz',
+    'email_final_summary_avg_temp' => 'Średnia temperatura',
+    'email_final_summary_temp_range' => 'Zakres temperatur',
+    'email_final_summary_first_vs_last' => 'Zmiana prognozy',
+    'email_final_summary_first' => 'Pierwsza',
+    'email_final_summary_last' => 'Ostatnia',
+    'email_final_summary_tip' => 'Różne providery mogą mieć różne prognozy. Sprawdź szczegóły aby zobaczyć pełną historię zmian.',
+    'email_final_summary_view_full' => 'Zobacz pełne szczegóły',
+    'email_final_summary_footer' => 'Otrzymujesz ten email ponieważ Twoja wróżba pogodowa się zakończyła.',
 ];

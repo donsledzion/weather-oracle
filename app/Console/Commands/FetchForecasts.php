@@ -5,8 +5,11 @@ namespace App\Console\Commands;
 use App\Models\ForecastSnapshot;
 use App\Models\MonitoringRequest;
 use App\Models\WeatherProvider;
+use App\Models\NotificationPreference;
+use App\Mail\FirstSnapshotNotification;
 use App\Services\WeatherProviderFactory;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
 
 class FetchForecasts extends Command
 {
@@ -49,14 +52,25 @@ class FetchForecasts extends Command
 
                     // Only save snapshot if forecast is for the target date
                     if ($daysDiff <= 1) {
-                        ForecastSnapshot::create([
+                        // Check if this is the first snapshot for this provider
+                        $isFirstSnapshot = !ForecastSnapshot::where('monitoring_request_id', $request->id)
+                            ->where('weather_provider_id', $provider->id)
+                            ->exists();
+
+                        $snapshot = ForecastSnapshot::create([
                             'monitoring_request_id' => $request->id,
                             'weather_provider_id' => $provider->id,
                             'forecast_data' => $forecastData,
                             'fetched_at' => now(),
                         ]);
+
                         $this->info("✓ [{$provider->name}] {$request->location}");
                         $successCount++;
+
+                        // Send notification if this is first snapshot
+                        if ($isFirstSnapshot) {
+                            $this->sendFirstSnapshotNotification($request, $snapshot);
+                        }
                     } else {
                         $this->info("⚠ [{$provider->name}] {$request->location}: target date too far (forecast for {$forecastData['forecast_date']})");
                     }
@@ -71,5 +85,40 @@ class FetchForecasts extends Command
         $this->info("\nCompleted: {$successCount} successful, {$failCount} failed");
 
         return 0;
+    }
+
+    /**
+     * Send first snapshot notification email
+     */
+    protected function sendFirstSnapshotNotification(MonitoringRequest $request, ForecastSnapshot $snapshot): void
+    {
+        // Check if request has notifications enabled
+        if (!$request->notifications_enabled) {
+            return;
+        }
+
+        // Get notification preferences
+        $preferences = $request->user_id
+            ? NotificationPreference::getForUser($request->user_id)
+            : NotificationPreference::getForEmail($request->email);
+
+        // Check if first snapshot notifications are enabled
+        if (!$preferences->first_snapshot_enabled) {
+            return;
+        }
+
+        // Get recipient email
+        $recipientEmail = $request->user_id
+            ? $request->user->email
+            : $request->email;
+
+        try {
+            Mail::to($recipientEmail)->send(
+                new FirstSnapshotNotification($request, $snapshot, $preferences->token)
+            );
+            $this->info("  📧 First snapshot notification sent to {$recipientEmail}");
+        } catch (\Exception $e) {
+            $this->error("  ✗ Failed to send notification: {$e->getMessage()}");
+        }
     }
 }

@@ -25,3 +25,15 @@ Schedule::command('requests:mark-completed')
     ->daily()
     ->withoutOverlapping()
     ->onOneServer();
+
+// Send daily summary emails (daily at 8:00 AM)
+Schedule::command('notifications:send-daily-summaries')
+    ->dailyAt('08:00')
+    ->withoutOverlapping()
+    ->onOneServer();
+
+// Send final summary emails for newly completed requests (daily after marking completed)
+Schedule::command('notifications:send-final-summaries')
+    ->daily()
+    ->withoutOverlapping()
+    ->onOneServer();
