@@ -208,7 +208,20 @@
 
 
     <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-xl font-bold mb-4">{{ __('app.forecast_snapshots') }} ({{ $request->forecastSnapshots->count() }})</h3>
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">{{ __('app.forecast_snapshots') }} ({{ $request->forecastSnapshots->count() }})</h3>
+
+            @if($request->forecastSnapshots->count() > 0)
+                <div x-data="{ allExpanded: false }">
+                    <button
+                        @click="allExpanded = !allExpanded; document.querySelectorAll('[x-data]').forEach(el => { if(el.__x) el.__x.$data.open = allExpanded })"
+                        class="text-sm text-blue-600 hover:text-blue-800 font-medium">
+                        <span x-show="!allExpanded">{{ __('app.expand_all') }}</span>
+                        <span x-show="allExpanded">{{ __('app.collapse_all') }}</span>
+                    </button>
+                </div>
+            @endif
+        </div>
 
         @if($request->forecastSnapshots->isEmpty())
             <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
@@ -222,63 +235,119 @@
                 </p>
             </div>
         @else
-            <div class="space-y-4">
-                @foreach($request->forecastSnapshots as $snapshot)
-                    <div class="border border-gray-200 rounded-lg p-4">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <p class="font-semibold">{{ $snapshot->weatherProvider->name }}</p>
-                                <p class="text-sm text-gray-500">{{ __('app.fetched') }}: {{ $snapshot->fetched_at->format('Y-m-d H:i:s') }}</p>
-                                @if(isset($snapshot->forecast_data['forecast_date']))
-                                    <p class="text-sm text-gray-500">
-                                        {{ __('app.forecast_for') }}: {{ $snapshot->forecast_data['forecast_date'] }}
-                                    </p>
-                                @endif
+            @php
+                // Group snapshots by fetched time (rounded to minute)
+                $groupedSnapshots = $request->forecastSnapshots->groupBy(function($snapshot) {
+                    return $snapshot->fetched_at->format('Y-m-d H:i');
+                })->sortKeysDesc();
+            @endphp
+
+            <div class="space-y-3">
+                @foreach($groupedSnapshots as $fetchTime => $snapshots)
+                    <div class="border border-gray-200 rounded-lg overflow-hidden" x-data="{ open: false }">
+                        {{-- Compact view (always visible) --}}
+                        <div @click="open = !open" class="p-4 cursor-pointer hover:bg-gray-50 transition">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 flex-1">
+                                    {{-- Icons from all providers --}}
+                                    <div class="flex gap-1">
+                                        @foreach($snapshots as $snap)
+                                            <span class="text-2xl">{!! \App\Helpers\WeatherIconMapper::getIcon($snap->forecast_data['conditions'], $snap->weatherProvider->name) !!}</span>
+                                        @endforeach
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-semibold text-lg">{{ \Carbon\Carbon::parse($fetchTime)->format('Y-m-d H:i') }}</p>
+                                        @php
+                                            $count = $snapshots->count();
+                                            if ($count == 1) {
+                                                $sourceLabel = __('app.provider');
+                                            } elseif ($count >= 2 && $count <= 4) {
+                                                $sourceLabel = __('app.providers_2_4');
+                                            } else {
+                                                $sourceLabel = __('app.providers');
+                                            }
+                                        @endphp
+                                        <p class="text-sm text-gray-600">{{ $count }} {{ $sourceLabel }}</p>
+                                    </div>
+                                    <div class="text-right text-sm text-gray-500">
+                                        @php
+                                            $temps = $snapshots->pluck('forecast_data.temperature_avg');
+                                            $avgTemp = round($temps->avg());
+                                        @endphp
+                                        <p class="font-semibold text-lg">{{ $avgTemp }}°C</p>
+                                        <p class="text-xs">{{ __('app.average') }}</p>
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <svg class="w-5 h-5 text-gray-400 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-4 mb-3">
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.temperature') }}</p>
-                                <p class="font-semibold">{{ round($snapshot->forecast_data['temperature_avg']) }}°C</p>
-                                <p class="text-xs text-gray-500">
-                                    {{ __('app.min') }}: {{ round($snapshot->forecast_data['temperature_min']) }}°C /
-                                    {{ __('app.max') }}: {{ round($snapshot->forecast_data['temperature_max']) }}°C
-                                </p>
-                                @if(isset($snapshot->forecast_data['feels_like']))
-                                    <p class="text-xs text-gray-500">{{ __('app.feels_like') }}: {{ round($snapshot->forecast_data['feels_like']) }}°C</p>
-                                @endif
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.conditions') }}</p>
-                                <p class="font-semibold">
-                                    <span class="text-2xl">{!! \App\Helpers\WeatherIconMapper::getIcon($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) !!}</span>
-                                    {{ \App\Helpers\WeatherTranslator::translate($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) }}
-                                </p>
-                                <p class="text-xs text-gray-500">{{ \App\Helpers\WeatherTranslator::translateDescription($snapshot->forecast_data['description'], $snapshot->weatherProvider->name) }}</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.precipitation') }}</p>
-                                <p class="font-semibold">{{ round($snapshot->forecast_data['precipitation'] * 100) }}%</p>
-                            </div>
-                        </div>
+                        {{-- Detailed view (collapsible) --}}
+                        <div x-show="open" x-collapse class="border-t border-gray-200 bg-gray-50">
+                            <div class="p-4">
+                                <div class="grid grid-cols-1 md:grid-cols-{{ $snapshots->count() }} gap-4">
+                                    @foreach($snapshots as $snapshot)
+                                        <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                            {{-- Provider header --}}
+                                            <div class="mb-3 pb-2 border-b border-gray-200">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-2xl">{!! \App\Helpers\WeatherIconMapper::getIcon($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) !!}</span>
+                                                    <p class="font-bold text-sm">{{ $snapshot->weatherProvider->name }}</p>
+                                                </div>
+                                            </div>
 
-                        <div class="grid grid-cols-4 gap-4 pt-3 border-t border-gray-100">
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.humidity') }}</p>
-                                <p class="font-semibold">{{ $snapshot->forecast_data['humidity'] ?? 'N/A' }}%</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.pressure') }}</p>
-                                <p class="font-semibold">{{ $snapshot->forecast_data['pressure'] ?? 'N/A' }} hPa</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.wind') }}</p>
-                                <p class="font-semibold">{{ round($snapshot->forecast_data['wind_speed'] ?? 0, 1) }} m/s</p>
-                            </div>
-                            <div>
-                                <p class="text-xs text-gray-600">{{ __('app.clouds') }}</p>
-                                <p class="font-semibold">{{ $snapshot->forecast_data['clouds'] ?? 'N/A' }}%</p>
+                                            {{-- Main metrics --}}
+                                            <div class="space-y-3 mb-3">
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.temperature') }}</p>
+                                                    <p class="font-semibold text-lg">{{ round($snapshot->forecast_data['temperature_avg']) }}°C</p>
+                                                    <p class="text-xs text-gray-500">
+                                                        {{ __('app.min') }}: {{ round($snapshot->forecast_data['temperature_min']) }}°C /
+                                                        {{ __('app.max') }}: {{ round($snapshot->forecast_data['temperature_max']) }}°C
+                                                    </p>
+                                                    @if(isset($snapshot->forecast_data['feels_like']))
+                                                        <p class="text-xs text-gray-500">{{ __('app.feels_like') }}: {{ round($snapshot->forecast_data['feels_like']) }}°C</p>
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.conditions') }}</p>
+                                                    <p class="font-semibold text-sm">
+                                                        {{ \App\Helpers\WeatherTranslator::translate($snapshot->forecast_data['conditions'], $snapshot->weatherProvider->name) }}
+                                                    </p>
+                                                    <p class="text-xs text-gray-500">{{ \App\Helpers\WeatherTranslator::translateDescription($snapshot->forecast_data['description'], $snapshot->weatherProvider->name) }}</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.precipitation') }}</p>
+                                                    <p class="font-semibold">{{ round($snapshot->forecast_data['precipitation'] * 100) }}%</p>
+                                                </div>
+                                            </div>
+
+                                            {{-- Additional metrics --}}
+                                            <div class="grid grid-cols-2 gap-3 pt-3 border-t border-gray-100">
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.humidity') }}</p>
+                                                    <p class="font-semibold text-sm">{{ $snapshot->forecast_data['humidity'] ?? 'N/A' }}%</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.pressure') }}</p>
+                                                    <p class="font-semibold text-sm">{{ $snapshot->forecast_data['pressure'] ?? 'N/A' }} hPa</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.wind') }}</p>
+                                                    <p class="font-semibold text-sm">{{ round($snapshot->forecast_data['wind_speed'] ?? 0, 1) }} m/s</p>
+                                                </div>
+                                                <div>
+                                                    <p class="text-xs text-gray-600">{{ __('app.clouds') }}</p>
+                                                    <p class="font-semibold text-sm">{{ $snapshot->forecast_data['clouds'] ?? 'N/A' }}%</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>

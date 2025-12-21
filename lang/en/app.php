@@ -37,6 +37,12 @@ return [
     'start_monitoring' => 'Start Monitoring',
     'creating' => 'Creating...',
 
+    // Accordion UI
+    'provider' => 'provider',
+    'providers_2_4' => 'providers',
+    'providers' => 'providers',
+    'average' => 'Average temperature',
+
     // Messages
     'request_created_success' => 'Weather reading created and initial forecast fetched successfully!',
     'request_created_no_data' => 'Weather reading created. Forecast data will be available when target date is within 5 days.',
@@ -110,6 +116,8 @@ return [
     'snapshots_count' => ':count forecast(s)',
     'back_to_all_requests' => 'Back to all readings',
     'snapshots' => 'forecasts',
+    'expand_all' => 'Expand All',
+    'collapse_all' => 'Collapse All',
 
     // Guest dashboard
     'guest_dashboard' => 'Your Dashboard',

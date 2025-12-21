@@ -37,6 +37,12 @@ return [
     'start_monitoring' => 'Rozpocznij monitorowanie',
     'creating' => 'Tworzenie...',
 
+    // Accordion UI
+    'provider' => 'źródło',
+    'providers_2_4' => 'źródła',
+    'providers' => 'źródeł',
+    'average' => 'Średnia temperatura',
+
     // Messages
     'request_created_success' => 'Wróżba utworzona i początkowa prognoza pobrana pomyślnie!',
     'request_created_no_data' => 'Wróżba utworzona. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
@@ -110,6 +116,8 @@ return [
     'snapshots_count' => ':count prognoz(y)',
     'back_to_all_requests' => 'Powrót do wszystkich wróżb',
     'snapshots' => 'prognoz',
+    'expand_all' => 'Rozwiń wszystkie',
+    'collapse_all' => 'Zwiń wszystkie',
 
     // Guest dashboard
     'guest_dashboard' => 'Twój Panel',
