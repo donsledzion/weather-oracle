@@ -84,6 +84,22 @@
                         'Visual Crossing': { border: 'rgb(249, 115, 22)', bg: 'rgba(249, 115, 22, 0.1)' }
                     };
 
+                    // Calculate adaptive point settings based on data density
+                    let pointRadius, pointHoverRadius;
+                    if (dataCount <= 20) {
+                        pointRadius = 4;
+                        pointHoverRadius = 6;
+                    } else if (dataCount <= 50) {
+                        pointRadius = 2;
+                        pointHoverRadius = 5;
+                    } else if (dataCount <= 100) {
+                        pointRadius = 1;
+                        pointHoverRadius = 4;
+                    } else {
+                        pointRadius = 0; // Hide points for very dense data
+                        pointHoverRadius = 4;
+                    }
+
                     // Create datasets for each provider
                     const datasets = [];
                     Object.keys(providerData).forEach(providerName => {
@@ -103,10 +119,19 @@
                                 return snap ? snap.forecast_data.temperature_avg : null;
                             }),
                             borderColor: color.border,
-                            backgroundColor: color.bg,
+                            backgroundColor: color.border,
+                            borderWidth: 2,
                             tension: 0.3,
                             fill: false,
-                            spanGaps: true
+                            spanGaps: true,
+                            pointRadius: pointRadius,
+                            pointHoverRadius: pointHoverRadius,
+                            pointBackgroundColor: color.border,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1,
+                            pointHoverBackgroundColor: color.border,
+                            pointHoverBorderColor: '#fff',
+                            pointHoverBorderWidth: 2
                         });
                     });
 
