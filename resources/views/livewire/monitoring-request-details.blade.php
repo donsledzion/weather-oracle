@@ -27,10 +27,44 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
-        <h3 class="text-xl font-bold mb-4">{{ __('app.temperature_trends') }}</h3>
+    <div class="bg-white rounded-lg shadow p-6 mb-6" x-data="{ activeMetric: 'temperature' }">
+        <h3 class="text-xl font-bold mb-4">{{ __('app.weather_trends') }}</h3>
 
         @if($request->forecastSnapshots->count() > 0)
+            {{-- Metric tabs --}}
+            <div class="flex flex-wrap gap-2 mb-4 border-b border-gray-200">
+                <button @click="activeMetric = 'temperature'"
+                        :class="activeMetric === 'temperature' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">🌡️</span> {{ __('app.metric_temperature') }}
+                </button>
+                <button @click="activeMetric = 'precipitation'"
+                        :class="activeMetric === 'precipitation' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">🌧️</span> {{ __('app.metric_precipitation') }}
+                </button>
+                <button @click="activeMetric = 'clouds'"
+                        :class="activeMetric === 'clouds' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">☁️</span> {{ __('app.metric_clouds') }}
+                </button>
+                <button @click="activeMetric = 'pressure'"
+                        :class="activeMetric === 'pressure' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">🔽</span> {{ __('app.metric_pressure') }}
+                </button>
+                <button @click="activeMetric = 'wind'"
+                        :class="activeMetric === 'wind' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">💨</span> {{ __('app.metric_wind') }}
+                </button>
+                <button @click="activeMetric = 'humidity'"
+                        :class="activeMetric === 'humidity' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                        class="px-4 py-2 border-b-2 font-medium text-sm transition-colors">
+                    <span class="text-lg mr-1">💧</span> {{ __('app.metric_humidity') }}
+                </button>
+            </div>
+
             <div class="relative w-full" style="height: 300px;">
                 <canvas id="temperatureChart"></canvas>
             </div>
@@ -68,13 +102,13 @@
                     const dataCount = timestamps.length;
                     let maxTicks;
                     if (dataCount <= 10) {
-                        maxTicks = dataCount; // Show all labels for small datasets
+                        maxTicks = dataCount;
                     } else if (dataCount <= 50) {
-                        maxTicks = Math.ceil(dataCount / 3); // Show ~1/3 of labels
+                        maxTicks = Math.ceil(dataCount / 3);
                     } else if (dataCount <= 100) {
-                        maxTicks = Math.ceil(dataCount / 5); // Show ~1/5 of labels
+                        maxTicks = Math.ceil(dataCount / 5);
                     } else {
-                        maxTicks = Math.ceil(dataCount / 10); // Show ~1/10 of labels
+                        maxTicks = Math.ceil(dataCount / 10);
                     }
 
                     // Provider colors
@@ -96,50 +130,94 @@
                         pointRadius = 1;
                         pointHoverRadius = 4;
                     } else {
-                        pointRadius = 0; // Hide points for very dense data
+                        pointRadius = 0;
                         pointHoverRadius = 4;
                     }
 
-                    // Create datasets for each provider
-                    const datasets = [];
-                    Object.keys(providerData).forEach(providerName => {
-                        const providerSnapshots = providerData[providerName];
-                        const color = colors[providerName] || { border: 'rgb(107, 114, 128)', bg: 'rgba(107, 114, 128, 0.1)' };
+                    // Function to get datasets for a specific metric
+                    function getDatasetsForMetric(metric) {
+                        const datasets = [];
+                        Object.keys(providerData).forEach(providerName => {
+                            const providerSnapshots = providerData[providerName];
+                            const color = colors[providerName] || { border: 'rgb(107, 114, 128)', bg: 'rgba(107, 114, 128, 0.1)' };
 
-                        // Avg temperature
-                        datasets.push({
-                            label: `${providerName} - {{ __("app.avg_temperature") }}`,
-                            data: timestamps.map(t => {
-                                // Find snapshot matching this timestamp (rounded to minute)
-                                const snap = providerSnapshots.find(s => {
-                                    const sDate = new Date(s.fetched_at);
-                                    const sRounded = new Date(sDate.getFullYear(), sDate.getMonth(), sDate.getDate(), sDate.getHours(), sDate.getMinutes()).toISOString();
-                                    return sRounded === t;
-                                });
-                                return snap ? snap.forecast_data.temperature_avg : null;
-                            }),
-                            borderColor: color.border,
-                            backgroundColor: color.border,
-                            borderWidth: 2,
-                            tension: 0.3,
-                            fill: false,
-                            spanGaps: true,
-                            pointRadius: pointRadius,
-                            pointHoverRadius: pointHoverRadius,
-                            pointBackgroundColor: color.border,
-                            pointBorderColor: '#fff',
-                            pointBorderWidth: 1,
-                            pointHoverBackgroundColor: color.border,
-                            pointHoverBorderColor: '#fff',
-                            pointHoverBorderWidth: 2
+                            let label, dataExtractor;
+                            switch(metric) {
+                                case 'temperature':
+                                    label = `${providerName} - {{ __("app.avg_temperature") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.temperature_avg;
+                                    break;
+                                case 'precipitation':
+                                    label = `${providerName} - {{ __("app.precipitation") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.precipitation * 100;
+                                    break;
+                                case 'clouds':
+                                    label = `${providerName} - {{ __("app.clouds") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.clouds;
+                                    break;
+                                case 'pressure':
+                                    label = `${providerName} - {{ __("app.pressure") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.pressure;
+                                    break;
+                                case 'wind':
+                                    label = `${providerName} - {{ __("app.wind") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.wind_speed;
+                                    break;
+                                case 'humidity':
+                                    label = `${providerName} - {{ __("app.humidity") }}`;
+                                    dataExtractor = (snap) => snap.forecast_data.humidity;
+                                    break;
+                            }
+
+                            datasets.push({
+                                label: label,
+                                data: timestamps.map(t => {
+                                    const snap = providerSnapshots.find(s => {
+                                        const sDate = new Date(s.fetched_at);
+                                        const sRounded = new Date(sDate.getFullYear(), sDate.getMonth(), sDate.getDate(), sDate.getHours(), sDate.getMinutes()).toISOString();
+                                        return sRounded === t;
+                                    });
+                                    return snap ? dataExtractor(snap) : null;
+                                }),
+                                borderColor: color.border,
+                                backgroundColor: color.border,
+                                borderWidth: 2,
+                                tension: 0.3,
+                                fill: false,
+                                spanGaps: true,
+                                pointRadius: pointRadius,
+                                pointHoverRadius: pointHoverRadius,
+                                pointBackgroundColor: color.border,
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 1,
+                                pointHoverBackgroundColor: color.border,
+                                pointHoverBorderColor: '#fff',
+                                pointHoverBorderWidth: 2
+                            });
                         });
-                    });
+                        return datasets;
+                    }
 
-                    new Chart(ctx, {
+                    // Function to get Y-axis config for metric
+                    function getYAxisConfig(metric) {
+                        const configs = {
+                            'temperature': { label: '{{ __("app.temperature") }} (°C)', unit: '°C' },
+                            'precipitation': { label: '{{ __("app.precipitation") }} (%)', unit: '%' },
+                            'clouds': { label: '{{ __("app.clouds") }} (%)', unit: '%' },
+                            'pressure': { label: '{{ __("app.pressure") }} (hPa)', unit: ' hPa' },
+                            'wind': { label: '{{ __("app.wind") }} (m/s)', unit: ' m/s' },
+                            'humidity': { label: '{{ __("app.humidity") }} (%)', unit: '%' }
+                        };
+                        return configs[metric] || configs['temperature'];
+                    }
+
+                    // Create chart instance
+                    let currentMetric = 'temperature';
+                    const weatherChart = new Chart(ctx, {
                         type: 'line',
                         data: {
                             labels: labels,
-                            datasets: datasets
+                            datasets: getDatasetsForMetric('temperature')
                         },
                         options: {
                             responsive: true,
@@ -166,7 +244,8 @@
                                     enabled: true,
                                     callbacks: {
                                         label: function(context) {
-                                            return context.dataset.label + ': ' + Math.round(context.parsed.y * 10) / 10 + '°C';
+                                            const config = getYAxisConfig(currentMetric);
+                                            return context.dataset.label + ': ' + Math.round(context.parsed.y * 10) / 10 + config.unit;
                                         }
                                     }
                                 }
@@ -185,7 +264,7 @@
                                 y: {
                                     title: {
                                         display: true,
-                                        text: '{{ __("app.temperature") }} (°C)',
+                                        text: getYAxisConfig('temperature').label,
                                         font: {
                                             size: window.innerWidth < 640 ? 11 : 13
                                         }
@@ -198,6 +277,26 @@
                                 }
                             }
                         }
+                    });
+
+                    // Listen to Alpine.js metric changes
+                    document.addEventListener('alpine:initialized', () => {
+                        Alpine.effect(() => {
+                            const metric = Alpine.$data(document.querySelector('[x-data]')).activeMetric;
+                            if (metric && metric !== currentMetric) {
+                                currentMetric = metric;
+                                const config = getYAxisConfig(metric);
+
+                                // Update datasets
+                                weatherChart.data.datasets = getDatasetsForMetric(metric);
+
+                                // Update Y-axis label
+                                weatherChart.options.scales.y.title.text = config.label;
+
+                                // Update chart
+                                weatherChart.update();
+                            }
+                        });
                     });
                 });
             </script>

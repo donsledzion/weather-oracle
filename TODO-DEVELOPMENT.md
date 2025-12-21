@@ -1,7 +1,7 @@
 # TODO - Weather Oracle Development Roadmap
 
-> **Status aktualny**: Faza 10 zakończona ✅
-> **Następny krok**: Faza 11 - UX & Chart Enhancements
+> **Status aktualny**: Faza 11.3 zakończona ✅
+> **Następny krok**: Faza 11.4 - Multi-metric Chart Tabs
 
 ---
 
@@ -9,74 +9,43 @@
 
 ### Faza 11: UX & Chart Enhancements
 
-#### 11.1: Terminologia - "Snapshoty" → "Odczyty prognozy" ⏳
+#### 11.1: Terminologia - "Snapshoty" → "Prognozy" ✅
 **Problem**: Zbyt techniczne pojęcie dla użytkowników końcowych
 
 **Zadania**:
-- [ ] Zmienić nazwę w kodzie: `ForecastSnapshot` → zachować (model), ale UI: "Forecast Reading"
-- [ ] Zaktualizować tłumaczenia:
-  - `lang/pl/app.php`: `forecast_snapshots` → `forecast_readings`, `snapshot` → `reading`
-  - `lang/en/app.php`: `forecast_snapshots` → `forecast_readings`
-- [ ] Zaktualizować wszystkie blade templates (dashboard, guest-dashboard, request-details)
-- [ ] Zaktualizować email templates (FirstSnapshot → FirstReading)
-- [ ] Zaktualizować NavigationMenu i nagłówki
+- [x] Zaktualizować tłumaczenia: "snapshoty" → "prognozy" w lang/pl/app.php i lang/en/app.php
+- [x] Zmienić "monitory" → "wróżby" w limitach
+- [x] Usunąć techniczny żargon ("dashboard" → "panel")
 
-**Efekt**: Użytkownik widzi "Odczyty prognozy" zamiast "Snapshoty"
+**Efekt**: Użytkownik widzi "Prognozy" zamiast "Snapshoty"
 
 ---
 
-#### 11.2: Weather Icons & Categorization ⏳
+#### 11.2: Weather Icons & Categorization ✅
 **Problem**: Brak ikonek pogodowych, warunki są tekstowe
 
 **Zadania**:
-- [ ] Utworzyć `app/Helpers/WeatherIconMapper.php`:
-  - Metoda `getIcon(string $conditions, string $provider): string` - zwraca emoji/unicode icon
-  - Metoda `getCategory(string $conditions, string $provider): string` - zwraca kategorię (clear, cloudy, rain, storm, snow, fog)
-  - Mapowanie per provider (OpenWeather, Open-Meteo, Visual Crossing)
-- [ ] Utworzyć mapowania dla kategorii:
-  - **clear**: ☀️ (Clear, Sunny)
-  - **partly_cloudy**: 🌤️ (Partly cloudy, Few clouds)
-  - **cloudy**: ☁️ (Cloudy, Overcast)
-  - **rain**: 🌧️ (Rain, Light rain, Drizzle)
-  - **heavy_rain**: ⛈️ (Heavy rain, Thunderstorm)
-  - **snow**: ❄️ (Snow, Light snow)
-  - **sleet**: 🌨️ (Sleet, Freezing rain)
-  - **fog**: 🌫️ (Fog, Mist, Haze)
-  - **wind**: 💨 (Windy)
-- [ ] Dodać fallback: jeśli brak mapowania → `🌍` (generic)
-- [ ] Zaktualizować blade templates aby używały `WeatherIconMapper::getIcon()`
-- [ ] Dodać ikonę obok opisu warunków w:
-  - Lista odczytów (monitoring-request-details.blade.php)
-  - Email templates (first-snapshot, daily-summary, final-summary)
-  - Dashboard cards (jeśli pokazujemy najnowszy odczyt)
+- [x] Utworzyć `app/Helpers/WeatherIconMapper.php` z HTML entities (unikanie problemów UTF-8)
+- [x] Mapowanie kategorii pogodowych z regex patterns
+- [x] Dodać ikony do accordion UI w monitoring-request-details.blade.php
+- [x] Poprawić regex patterns dla wszystkich wariantów warunków (plural, różne prefiks)
 
-**Efekt**: Użytkownik widzi ikonkę pogody obok opisu (np. "☀️ Clear sky")
+**Efekt**: Użytkownik widzi ikonkę pogody obok opisu warunków
 
 ---
 
-#### 11.3: Collapsible/Accordion Forecast Readings ⏳
+#### 11.3: Collapsible/Accordion Forecast Readings ✅
 **Problem**: Lista odczytów jest bardzo długa i trudna do przeglądania przy wielu danych
 
 **Zadania**:
-- [ ] Przeprojektować UI odczytów w `monitoring-request-details.blade.php`:
-  - Domyślnie zwinięte (pokazuje: provider, ikona, temp, data/czas fetchu)
-  - Kliknięcie rozwija pełne szczegóły (wilgotność, ciśnienie, wiatr, chmury, feels_like)
-- [ ] Implementacja z Alpine.js (już dostępny przez Livewire):
-  ```blade
-  <div x-data="{ open: false }">
-      <div @click="open = !open" class="cursor-pointer">
-          <!-- Compact view: icon, provider, temp, time -->
-      </div>
-      <div x-show="open" x-collapse>
-          <!-- Full details -->
-      </div>
-  </div>
-  ```
-- [ ] Opcjonalnie: grupowanie per provider z licznikiem odczytów
-- [ ] Dodać przycisk "Rozwiń wszystkie" / "Zwiń wszystkie" na górze listy
-- [ ] Responsywny layout dla mobile
+- [x] Grupowanie prognoz po czasie odczytu (nie po providerze!)
+- [x] Compact view: ikony wszystkich providerów, czas, liczba źródeł, średnia temperatura
+- [x] Detailed view: karty dla każdego providera obok siebie z pełnymi danymi
+- [x] Implementacja z Alpine.js (`x-data="{ open: false }"`, `x-collapse`)
+- [x] Dodać tłumaczenia: źródło/źródła/źródeł, "Średnia temperatura"
+- [x] Responsywny grid layout
 
-**Efekt**: Lista odczytów jest kompaktowa, użytkownik klika aby zobaczyć szczegóły
+**Efekt**: Lista prognoz grupowana po czasie, łatwe porównanie providerów
 
 ---
 

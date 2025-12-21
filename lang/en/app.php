@@ -43,6 +43,15 @@ return [
     'providers' => 'providers',
     'average' => 'Average temperature',
 
+    // Chart metrics
+    'weather_trends' => 'Weather Trends',
+    'metric_temperature' => 'Temperature',
+    'metric_precipitation' => 'Precipitation',
+    'metric_clouds' => 'Clouds',
+    'metric_pressure' => 'Pressure',
+    'metric_wind' => 'Wind',
+    'metric_humidity' => 'Humidity',
+
     // Messages
     'request_created_success' => 'Weather reading created and initial forecast fetched successfully!',
     'request_created_no_data' => 'Weather reading created. Forecast data will be available when target date is within 5 days.',

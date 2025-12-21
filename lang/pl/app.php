@@ -43,6 +43,15 @@ return [
     'providers' => 'źródeł',
     'average' => 'Średnia temperatura',
 
+    // Chart metrics
+    'weather_trends' => 'Trendy pogodowe',
+    'metric_temperature' => 'Temperatura',
+    'metric_precipitation' => 'Opady',
+    'metric_clouds' => 'Zachmurzenie',
+    'metric_pressure' => 'Ciśnienie',
+    'metric_wind' => 'Wiatr',
+    'metric_humidity' => 'Wilgotność',
+
     // Messages
     'request_created_success' => 'Wróżba utworzona i początkowa prognoza pobrana pomyślnie!',
     'request_created_no_data' => 'Wróżba utworzona. Dane prognozy będą dostępne gdy data docelowa będzie w zasięgu 5 dni.',
