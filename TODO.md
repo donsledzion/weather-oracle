@@ -133,10 +133,96 @@
 - [x] Guest dashboard: link do globalnych ustawień (token-based, przycisk 🔔 w headerze)
 - [x] Panel powiadomień zawiera toggles per wróżba (nie trzeba ich w dashboardzie)
 
-## Faza 11: UI Enhancements
+## Faza 11: UX & Chart Enhancements ⏳
 
-- [ ] Dodać map picker do wyboru lokalizacji (Leaflet/Google Maps)
-- [ ] Rozszerzyć UI o wybór providerów przy tworzeniu requesta (checkboxy)
+### 11.1: Terminologia - "Snapshoty" → "Odczyty prognozy"
+- [ ] Zmienić tłumaczenia: `forecast_snapshots` → `forecast_readings`
+- [ ] Zaktualizować blade templates (dashboard, request-details)
+- [ ] Zaktualizować email templates
+
+### 11.2: Weather Icons & Categorization
+- [ ] Utworzyć `WeatherIconMapper.php` (getIcon, getCategory)
+- [ ] Mapowania emoji: ☀️🌤️☁️🌧️⛈️❄️🌨️🌫️💨
+- [ ] Zaktualizować templates aby pokazywały ikonki
+
+### 11.3: Collapsible/Accordion Forecast Readings
+- [ ] Przeprojektować UI odczytów - domyślnie zwinięte
+- [ ] Implementacja z Alpine.js (x-collapse)
+- [ ] Przycisk "Rozwiń wszystkie" / "Zwiń wszystkie"
+- [ ] Responsywny layout dla mobile
+
+### 11.4: Multi-metric Chart (Tabs)
+- [ ] Dodać tabs: Temperatura | Opady | Zachmurzenie | Ciśnienie | Wiatr | Wilgotność
+- [ ] Implementacja z Alpine.js (activeTab)
+- [ ] Refaktoryzacja Chart.js - dynamiczny update przy zmianie zakładki
+- [ ] Zachować porównanie między providerami
+
+### 11.5: Landing Page / Welcome Page
+- [ ] Utworzyć route `/` → WelcomeController
+- [ ] Utworzyć `welcome.blade.php` z hero section, "Jak to działa?", CTAs
+- [ ] Tłumaczenia PL/EN
+- [ ] Footer z linkami
+
+---
+
+## Faza 12: Public Forecasts System ⏳
+
+### 12.1: Database Schema - Public Monitors
+- [ ] Migration: dodać `is_public` do `monitoring_requests`
+- [ ] Migration: utworzyć tabelę `public_monitor_locations`
+- [ ] Seeder: 10 predefiniowanych lokalizacji (Warszawa, Kraków, Berlin, Paryż, etc.)
+
+### 12.2: Public Monitors Maintenance Command
+- [ ] Utworzyć `MaintainPublicMonitors` command
+- [ ] Logika: utrzymuj 2-3 aktywne monitory per lokalizacja, rolling system
+- [ ] Scheduler: daily
+
+### 12.3: Public Forecasts View
+- [ ] Route: `/demo` → PublicForecastsController
+- [ ] View: lista publicznych lokalizacji, aktywne + completed monitory
+- [ ] Zaktualizować MonitoringRequestDetails aby akceptował publiczne monitory
+- [ ] Tłumaczenia PL/EN
+
+---
+
+## Faza 13: Automated Testing ⏳
+
+### 13.1: Unit Tests
+- [ ] WeatherTranslatorTest
+- [ ] WeatherIconMapperTest
+- [ ] NotificationPreferenceTest
+- [ ] MonitoringRequestTest
+**Target**: >80% coverage dla helpers i models
+
+### 13.2: Feature Tests
+- [ ] RegistrationTest (przypisanie requestów)
+- [ ] MonitoringRequestTest (limity, weryfikacja)
+- [ ] DashboardTest (visibility, usuwanie)
+- [ ] NotificationPreferencesTest
+- [ ] PublicMonitorsTest
+**Target**: >70% coverage dla feature flows
+
+### 13.3: Command Tests
+- [ ] FetchForecastsTest (mock API, snapshots, notifications)
+- [ ] SendDailySummariesTest
+- [ ] SendFinalSummariesTest
+- [ ] MaintainPublicMonitorsTest
+**Target**: >60% coverage dla commands
+
+### 13.4: API/Integration Tests
+- [ ] OpenWeatherTest (mock API response)
+- [ ] OpenMeteoTest
+- [ ] VisualCrossingTest
+
+---
+
+## 📋 Development Roadmap
+
+**SPRINT 1** (Tydzień 1-2): Faza 11 (UX Fixes) - ~20h
+**SPRINT 2** (Tydzień 3): Faza 12 (Public Monitors) - ~18h
+**SPRINT 3** (Tydzień 4-5): Faza 13 (Testing) - ~32h
+
+📄 **Szczegółowy plan**: Zobacz [TODO-DEVELOPMENT.md](./TODO-DEVELOPMENT.md)
 
 ---
 

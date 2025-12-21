@@ -19,6 +19,9 @@ class GuestDashboardController extends Controller
             abort(404, 'Dashboard not found');
         }
 
+        // Store email in session for request details authorization
+        session(['guest_email' => $sampleRequest->email]);
+
         // Get all requests for this email, ordered by status and date
         $requests = MonitoringRequest::where('email', $sampleRequest->email)
             ->orderByRaw("FIELD(status, 'pending_verification', 'active', 'completed', 'expired', 'rejected')")

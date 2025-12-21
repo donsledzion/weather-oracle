@@ -9,6 +9,25 @@ return [
     'register' => 'Register',
     'logout' => 'Logout',
 
+    // Welcome page
+    'welcome_title' => 'Weather Oracle',
+    'welcome_subtitle' => 'Monitor and compare weather forecasts from multiple sources',
+    'go_to_dashboard' => 'Go to Dashboard',
+    'get_started' => 'Get Started Free',
+    'no_account_required' => 'No account required! Just enter your email and you\'ll receive an activation link and a link to your panel.',
+    'already_have_account' => 'Already have an account? Login to increase your limit to 20 forecasts.',
+    'choose_location' => 'Choose Location',
+    'choose_location_desc' => 'Select a place and date to monitor weather forecasts',
+    'compare_sources' => 'Compare Sources',
+    'compare_sources_desc' => 'Get forecasts from 3 independent providers: OpenWeather, Open-Meteo, Visual Crossing',
+    'get_notifications' => 'Email Notifications',
+    'get_notifications_desc' => 'Receive daily summaries and final reports with provider comparison',
+    'why_weather_oracle' => 'Why Weather Oracle?',
+    'why_independent_sources' => '3 independent weather data sources',
+    'why_monitor_changes' => 'Monitor forecast changes over time',
+    'why_notifications' => 'Automatic email notifications',
+    'why_free_limits' => 'Free up to 5 forecasts (20 for logged in users)',
+
     // Form labels
     'location' => 'Location',
     'location_placeholder' => 'Enter city name or coordinates',

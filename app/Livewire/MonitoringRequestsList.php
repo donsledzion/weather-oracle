@@ -17,13 +17,12 @@ class MonitoringRequestsList extends Component
 
     public function render()
     {
-        // Show only active requests (not completed, expired, or rejected)
-        $requests = MonitoringRequest::where('status', MonitoringRequest::STATUS_ACTIVE)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // REMOVED: This component should NOT be used publicly
+        // It was showing all active requests to everyone (SECURITY ISSUE)
+        // Use dashboard (auth required) or guest-dashboard (token-based) instead
 
         return view('livewire.monitoring-requests-list', [
-            'requests' => $requests,
+            'requests' => collect(), // Empty collection
         ]);
     }
 }
