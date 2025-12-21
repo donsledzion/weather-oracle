@@ -31,7 +31,9 @@
         <h3 class="text-xl font-bold mb-4">{{ __('app.temperature_trends') }}</h3>
 
         @if($request->forecastSnapshots->count() > 0)
-            <canvas id="temperatureChart" height="100"></canvas>
+            <div class="relative w-full" style="height: 300px;">
+                <canvas id="temperatureChart"></canvas>
+            </div>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const ctx = document.getElementById('temperatureChart').getContext('2d');
@@ -61,6 +63,19 @@
                         hour: '2-digit',
                         minute: '2-digit'
                     }));
+
+                    // Calculate adaptive maxTicksLimit based on data range
+                    const dataCount = timestamps.length;
+                    let maxTicks;
+                    if (dataCount <= 10) {
+                        maxTicks = dataCount; // Show all labels for small datasets
+                    } else if (dataCount <= 50) {
+                        maxTicks = Math.ceil(dataCount / 3); // Show ~1/3 of labels
+                    } else if (dataCount <= 100) {
+                        maxTicks = Math.ceil(dataCount / 5); // Show ~1/5 of labels
+                    } else {
+                        maxTicks = Math.ceil(dataCount / 10); // Show ~1/10 of labels
+                    }
 
                     // Provider colors
                     const colors = {
@@ -103,19 +118,57 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: {
+                                mode: 'index',
+                                intersect: false,
+                            },
                             plugins: {
                                 legend: {
                                     position: 'top',
+                                    labels: {
+                                        boxWidth: 12,
+                                        padding: 10,
+                                        font: {
+                                            size: window.innerWidth < 640 ? 10 : 12
+                                        }
+                                    }
                                 },
                                 title: {
                                     display: false
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                    callbacks: {
+                                        label: function(context) {
+                                            return context.dataset.label + ': ' + Math.round(context.parsed.y * 10) / 10 + '°C';
+                                        }
+                                    }
                                 }
                             },
                             scales: {
+                                x: {
+                                    ticks: {
+                                        maxTicksLimit: maxTicks,
+                                        maxRotation: window.innerWidth < 640 ? 45 : 0,
+                                        minRotation: window.innerWidth < 640 ? 45 : 0,
+                                        font: {
+                                            size: window.innerWidth < 640 ? 9 : 11
+                                        }
+                                    }
+                                },
                                 y: {
                                     title: {
                                         display: true,
-                                        text: '{{ __("app.temperature") }} (°C)'
+                                        text: '{{ __("app.temperature") }} (°C)',
+                                        font: {
+                                            size: window.innerWidth < 640 ? 11 : 13
+                                        }
+                                    },
+                                    ticks: {
+                                        font: {
+                                            size: window.innerWidth < 640 ? 10 : 12
+                                        }
                                     }
                                 }
                             }
