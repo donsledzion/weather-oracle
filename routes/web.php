@@ -3,6 +3,7 @@
 use App\Http\Controllers\GuestDashboardController;
 use App\Http\Controllers\NotificationPreferencesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicForecastsController;
 use App\Http\Controllers\RequestVerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,6 +11,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+// Public demo page (shows public monitors)
+Route::get('/demo', [PublicForecastsController::class, 'index'])->name('public.forecasts');
 
 // Email verification routes (for guests)
 Route::get('/verify/{token}', [RequestVerificationController::class, 'verify'])->name('requests.verify');
@@ -28,20 +32,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Request details - accessible by both authenticated users and guests
+// Request details - accessible by authenticated users, guests, and public monitors
 Route::get('/requests/{id}', function ($id) {
     $request = \App\Models\MonitoringRequest::findOrFail($id);
 
     // Authorization check
-    if (auth()->check()) {
+    if ($request->is_public) {
+        // Public monitors are accessible to everyone
+        // No authorization needed
+    } elseif (auth()->check()) {
         // Logged in user: must own the request
         if ($request->user_id !== auth()->id()) {
             abort(403, 'Unauthorized access to this request');
         }
     } else {
-        // Guest: must have valid dashboard_token in session or URL
-        // We'll allow access if they came from guest-dashboard
-        // This is secure because guest-dashboard already validates the token
+        // Guest: must have valid dashboard_token in session
         $allowedEmail = session('guest_email');
         if (!$allowedEmail || $request->email !== $allowedEmail) {
             abort(403, 'Unauthorized access to this request');

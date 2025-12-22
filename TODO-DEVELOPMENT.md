@@ -1,13 +1,13 @@
 # TODO - Weather Oracle Development Roadmap
 
-> **Status aktualny**: Faza 11.3 zakończona ✅
-> **Następny krok**: Faza 11.4 - Multi-metric Chart Tabs
+> **Status aktualny**: Faza 11 zakończona ✅
+> **Następny krok**: Faza 12 - Public Forecasts System
 
 ---
 
 ## 🔥 PRIORYTET 1: Critical Fixes & UX Improvements
 
-### Faza 11: UX & Chart Enhancements
+### Faza 11: UX & Chart Enhancements ✅
 
 #### 11.1: Terminologia - "Snapshoty" → "Prognozy" ✅
 **Problem**: Zbyt techniczne pojęcie dla użytkowników końcowych
@@ -49,70 +49,32 @@
 
 ---
 
-#### 11.4: Multi-metric Chart (Tabs) ⏳
+#### 11.4: Multi-metric Chart (Tabs) ✅
 **Problem**: Wykres pokazuje tylko temperaturę, brak porównania innych metryk
 
 **Zadania**:
-- [ ] Dodać tabs/zakładki nad wykresem w `monitoring-request-details.blade.php`:
-  - 🌡️ Temperatura (°C)
-  - 🌧️ Opady (mm lub %)
-  - ☁️ Zachmurzenie (%)
-  - 🔽 Ciśnienie (hPa)
-  - 💨 Wiatr (m/s)
-  - 💧 Wilgotność (%)
-- [ ] Implementacja z Alpine.js:
-  ```blade
-  <div x-data="{ activeTab: 'temperature' }">
-      <!-- Tabs buttons -->
-      <div class="tabs">
-          <button @click="activeTab = 'temperature'">🌡️ Temperatura</button>
-          <button @click="activeTab = 'precipitation'">🌧️ Opady</button>
-          <!-- etc -->
-      </div>
-
-      <!-- Chart container -->
-      <div class="chart-wrapper">
-          <canvas id="weatherChart"></canvas>
-      </div>
-  </div>
-  ```
-- [ ] Refaktoryzacja Chart.js logic:
-  - Jedna instancja Chart.js, dynamicznie updateowana przy zmianie zakładki
-  - `chart.data.datasets = getDataForMetric(activeTab); chart.update();`
-- [ ] Dodać metody pomocnicze w JS:
-  - `getDataForMetric(metric)` - zwraca datasets dla danej metryki
-  - `getYAxisConfig(metric)` - zwraca konfigurację osi Y (label, unit)
-- [ ] Zachować porównanie między providerami (osobne linie per provider)
-- [ ] Adaptacyjne ustawienia punktów (jak obecnie dla temperatury)
+- [x] Dodać tabs/zakładki nad wykresem: Temperatura, Opady, Zachmurzenie, Ciśnienie, Wiatr, Wilgotność
+- [x] Implementacja z Alpine.js: `x-data="{ activeMetric: 'temperature' }"`
+- [x] Refaktoryzacja Chart.js z dynamicznym updatem przy zmianie zakładki
+- [x] Metody pomocnicze: `getDatasetsForMetric()`, `getYAxisConfig()`
+- [x] Zachowano porównanie providerów i adaptacyjne punkty
+- [x] Tłumaczenia PL/EN
 
 **Efekt**: Użytkownik może porównywać różne metryki pogodowe między providerami
 
 ---
 
-#### 11.5: Landing Page / Welcome Page ⏳
+#### 11.5: Landing Page / Welcome Page ✅
 **Problem**: Brak strony powitalnej dla nowych użytkowników
 
 **Zadania**:
-- [ ] Utworzyć route `/` → `WelcomeController@index`
-- [ ] Utworzyć `resources/views/welcome.blade.php`:
-  - Hero section: "Weather Oracle - Porównaj prognozy pogody z różnych źródeł"
-  - Sekcja "Jak to działa?":
-    1. Wybierz lokalizację i datę
-    2. Otrzymuj prognozy z 3 renomowanych providerów
-    3. Porównuj zmiany prognozy na przestrzeni czasu
-    4. Dostań email z podsumowaniem
-  - Sekcja "Dlaczego Weather Oracle?":
-    - ✅ 3 niezależne źródła (OpenWeather, Open-Meteo, Visual Crossing)
-    - ✅ Monitorowanie zmian prognozy
-    - ✅ Email notifications
-    - ✅ Darmowe do 5 wróżb (20 dla zalogowanych)
-  - CTA: "Utwórz pierwszą wróżbę pogodową" → link do /register lub /dashboard
-  - Link do demo: "Zobacz przykładowe monitory" → `/demo`
-- [ ] Dodać animacje/ilustracje (opcjonalnie: Tailwind UI examples)
-- [ ] Tłumaczenia PL/EN
-- [ ] Footer z linkami: O nas, Kontakt, Privacy Policy, Terms of Service
+- [x] Utworzono `resources/views/welcome.blade.php` z hero section
+- [x] Sekcja "Jak to działa?" z 3 krokami
+- [x] Sekcja "Dlaczego Weather Oracle?" z benefitami
+- [x] Formularz monitorowania dla gości i zalogowanych
+- [x] Tłumaczenia PL/EN
 
-**Efekt**: Profesjonalna strona główna, która wyjaśnia wartość serwisu
+**Efekt**: Profesjonalna strona główna z możliwością tworzenia wróżb bez logowania
 
 ---
 

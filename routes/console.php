@@ -37,3 +37,9 @@ Schedule::command('notifications:send-final-summaries')
     ->daily()
     ->withoutOverlapping()
     ->onOneServer();
+
+// Maintain public monitors for demo purposes (daily)
+Schedule::command('monitors:maintain-public')
+    ->daily()
+    ->withoutOverlapping()
+    ->onOneServer();

@@ -65,6 +65,7 @@ return [
     'location_not_found' => 'Lokalizacja nie znaleziona. Sprawdź pisownię lub spróbuj współrzędnych (lat,lon).',
     'api_config_error' => 'Błąd konfiguracji API pogody. Skontaktuj się z pomocą techniczną.',
     'fetch_failed' => 'Nie udało się pobrać danych pogodowych: :message',
+    'email_send_failed' => 'Nie udało się wysłać emaila. Sprawdź poprawność adresu email.',
 
     // Validation
     'validation' => [
@@ -112,6 +113,23 @@ return [
     // Chart
     'temperature_trends' => 'Trendy temperatur',
     'avg_temperature' => 'Średnia temperatura',
+
+    // Public forecasts page
+    'demo' => 'Demo',
+    'see_demo_title' => 'Zobacz jak to działa!',
+    'see_demo_description' => 'Sprawdź przykładowe wróżby pogodowe z różnych miejsc na świecie',
+    'view_public_demos' => 'Zobacz publiczne demo',
+    'public_forecasts_title' => 'Publiczne Prognozy Demo',
+    'public_forecasts_intro' => 'Przykładowe wróżby pogodowe',
+    'public_forecasts_description' => 'Poniżej znajdziesz aktywne i ukończone publiczne wróżby pogodowe dla różnych lokalizacji na świecie. To darmowe demo pokazuje jak działa system monitorowania pogody.',
+    'active_monitors' => 'Aktywne wróżby',
+    'completed_monitors' => 'Ukończone wróżby',
+    'latest_5' => 'ostatnie 5',
+    'progress' => 'Postęp',
+    'days_ago' => 'dni temu',
+    'view_details' => 'Zobacz szczegóły',
+    'view_summary' => 'Zobacz podsumowanie',
+    'no_public_monitors' => 'Brak publicznych wróżb dla tej lokalizacji',
     'min_temperature' => 'Minimalna temperatura',
     'max_temperature' => 'Maksymalna temperatura',
     'not_enough_data' => 'Niewystarczająco danych do wykresu (potrzeba co najmniej 2 prognozy)',

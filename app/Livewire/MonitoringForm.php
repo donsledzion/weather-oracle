@@ -95,14 +95,21 @@ class MonitoringForm extends Component
             $rejectUrl = route('requests.reject', $verificationToken);
             $dashboardUrl = route('guest.dashboard', $dashboardToken);
 
-            Mail::to($this->email)->send(new RequestVerificationEmail(
-                $monitoringRequest,
-                $verifyUrl,
-                $rejectUrl,
-                $dashboardUrl
-            ));
+            try {
+                Mail::to($this->email)->send(new RequestVerificationEmail(
+                    $monitoringRequest,
+                    $verifyUrl,
+                    $rejectUrl,
+                    $dashboardUrl
+                ));
 
-            session()->flash('message', __('app.request_created_verify_email'));
+                session()->flash('message', __('app.request_created_verify_email'));
+            } catch (\Exception $e) {
+                // If email sending fails (e.g., invalid email address), delete the request and show error
+                $monitoringRequest->delete();
+                session()->flash('error', __('app.email_send_failed'));
+                return;
+            }
         }
 
         // Clear form and validation errors

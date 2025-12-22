@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <div class="bg-blue-50 p-8 rounded-lg text-center">
+        <div class="bg-blue-50 p-8 rounded-lg text-center mb-8">
             <h2 class="text-2xl font-bold mb-4">{{ __('app.why_weather_oracle') }}</h2>
             <div class="grid md:grid-cols-2 gap-4 text-left max-w-2xl mx-auto">
                 <div class="flex items-start gap-2">
@@ -76,6 +76,15 @@
                     <span>{{ __('app.why_free_limits') }}</span>
                 </div>
             </div>
+        </div>
+
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-8 text-center">
+            <div class="text-4xl mb-4">&#127758;</div>
+            <h2 class="text-2xl font-bold mb-2">{{ __('app.see_demo_title') }}</h2>
+            <p class="text-gray-700 mb-6">{{ __('app.see_demo_description') }}</p>
+            <a href="{{ route('public.forecasts') }}" class="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-8 rounded-lg transition">
+                {{ __('app.view_public_demos') }} &rarr;
+            </a>
         </div>
     </div>
 </x-layouts.app>

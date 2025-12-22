@@ -65,6 +65,7 @@ return [
     'location_not_found' => 'Location not found. Please check the spelling or try coordinates (lat,lon).',
     'api_config_error' => 'Weather API configuration error. Please contact support.',
     'fetch_failed' => 'Failed to fetch weather data: :message',
+    'email_send_failed' => 'Failed to send email. Please check the email address is correct.',
 
     // Validation
     'validation' => [
@@ -112,6 +113,23 @@ return [
     // Chart
     'temperature_trends' => 'Temperature Trends',
     'avg_temperature' => 'Avg Temperature',
+
+    // Public forecasts page
+    'demo' => 'Demo',
+    'see_demo_title' => 'See how it works!',
+    'see_demo_description' => 'Check out sample weather readings from different places around the world',
+    'view_public_demos' => 'View public demos',
+    'public_forecasts_title' => 'Public Forecasts Demo',
+    'public_forecasts_intro' => 'Sample Weather Readings',
+    'public_forecasts_description' => 'Below you will find active and completed public weather readings for various locations around the world. This free demo shows how the weather monitoring system works.',
+    'active_monitors' => 'Active Readings',
+    'completed_monitors' => 'Completed Readings',
+    'latest_5' => 'latest 5',
+    'progress' => 'Progress',
+    'days_ago' => 'days ago',
+    'view_details' => 'View Details',
+    'view_summary' => 'View Summary',
+    'no_public_monitors' => 'No public readings for this location',
     'min_temperature' => 'Min Temperature',
     'max_temperature' => 'Max Temperature',
     'not_enough_data' => 'Not enough data for chart (need at least 2 forecasts)',
