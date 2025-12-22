@@ -55,6 +55,9 @@ jobs:
           # Seed weather providers (idempotent)
           php82 artisan db:seed --class=WeatherProviderSeeder --force
 
+          # Seed public monitor locations (idempotent)
+          php82 artisan db:seed --class=PublicMonitorLocationsSeeder --force
+
           # Clear and optimize cache
           php82 artisan optimize
 

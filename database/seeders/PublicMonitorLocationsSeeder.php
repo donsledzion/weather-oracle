@@ -13,6 +13,11 @@ class PublicMonitorLocationsSeeder extends Seeder
      */
     public function run(): void
     {
+        // Check if data already exists (idempotent seeder)
+        if (DB::table('public_monitor_locations')->count() > 0) {
+            return;
+        }
+
         $locations = [
             // Poland
             ['name' => 'Warsaw, Poland', 'latitude' => 52.2297700, 'longitude' => 21.0117800],
