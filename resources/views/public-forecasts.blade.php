@@ -52,8 +52,7 @@
                                                         <div class="bg-blue-500 h-2 rounded-full" style="width: {{ $progress }}%"></div>
                                                     </div>
                                                     <p class="text-xs text-gray-500 mt-1">
-                                                        {{ __('app.created') }}: {{ $request->created_at->format('Y-m-d H:i') }}
-                                                        ({{ $daysElapsed }} {{ __('app.days_ago') }})
+                                                        {{ __('app.created') }}: {{ $request->created_at->diffForHumans() }}
                                                     </p>
                                                 </div>
 

@@ -13,31 +13,32 @@ class PublicMonitorLocationsSeeder extends Seeder
      */
     public function run(): void
     {
-        // Check if data already exists (idempotent seeder)
-        if (DB::table('public_monitor_locations')->count() > 0) {
-            return;
-        }
+        // Clear old locations first (to allow re-seeding with new data)
+        DB::table('public_monitor_locations')->truncate();
 
         $locations = [
-            // Poland
-            ['name' => 'Warsaw, Poland', 'latitude' => 52.2297700, 'longitude' => 21.0117800],
-            ['name' => 'Krakow, Poland', 'latitude' => 50.0646500, 'longitude' => 19.9449800],
-            ['name' => 'Gdansk, Poland', 'latitude' => 54.3520300, 'longitude' => 18.6466400],
+            // Polish cities - mountains
+            ['name' => 'Zakopane', 'latitude' => 49.2992200, 'longitude' => 19.9495800],
 
-            // Europe
-            ['name' => 'Berlin, Germany', 'latitude' => 52.5200070, 'longitude' => 13.4049540],
-            ['name' => 'Paris, France', 'latitude' => 48.8566140, 'longitude' => 2.3522220],
-            ['name' => 'London, UK', 'latitude' => 51.5073510, 'longitude' => -0.1277580],
+            // Polish cities - southeast
+            ['name' => 'Ustrzyki Dolne', 'latitude' => 49.4307900, 'longitude' => 22.5928400],
 
-            // USA
-            ['name' => 'New York, USA', 'latitude' => 40.7127750, 'longitude' => -74.0059730],
-            ['name' => 'Los Angeles, USA', 'latitude' => 34.0522340, 'longitude' => -118.2436850],
+            // Polish cities - northeast
+            ['name' => 'Suwałki', 'latitude' => 54.1116200, 'longitude' => 22.9305600],
 
-            // Asia
-            ['name' => 'Tokyo, Japan', 'latitude' => 35.6761920, 'longitude' => 139.6503110],
+            // Polish cities - coast
+            ['name' => 'Łeba', 'latitude' => 54.7595200, 'longitude' => 17.5613900],
+            ['name' => 'Hel', 'latitude' => 54.6083300, 'longitude' => 18.8027800],
 
-            // Australia
-            ['name' => 'Sydney, Australia', 'latitude' => -33.8688200, 'longitude' => 151.2092900],
+            // Polish cities - west
+            ['name' => 'Szczecin', 'latitude' => 53.4285400, 'longitude' => 14.5528100],
+
+            // Polish cities - major cities
+            ['name' => 'Toruń', 'latitude' => 53.0137900, 'longitude' => 18.5984400],
+            ['name' => 'Kraków', 'latitude' => 50.0646500, 'longitude' => 19.9449800],
+            ['name' => 'Wrocław', 'latitude' => 51.1078900, 'longitude' => 17.0385400],
+            ['name' => 'Gdańsk', 'latitude' => 54.3520300, 'longitude' => 18.6466400],
+            ['name' => 'Warszawa', 'latitude' => 52.2297700, 'longitude' => 21.0117800],
         ];
 
         foreach ($locations as $location) {
