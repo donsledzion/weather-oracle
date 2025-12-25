@@ -49,12 +49,17 @@ class WeatherIconMapper
             return 'cloudy';
         }
 
-        if (preg_match('/\b(thunder|lightning|storm)\b/i', $conditionsLower)) {
+        if (preg_match('/\b(thunder|lightning|storm)\b/i', $conditionsLower) ||
+            preg_match('/thunderstorm/i', $conditionsLower)) {
             return 'thunderstorm';
         }
 
         if (preg_match('/\b(heavy|torrential|intense)\s*(rain|shower)\b/i', $conditionsLower)) {
             return 'heavy_rain';
+        }
+
+        if (preg_match('/\b(sleet|freezing\s*rain|ice\s*pellets?)\b/i', $conditionsLower)) {
+            return 'sleet';
         }
 
         if (preg_match('/\b(drizzle|light\s*rain|sprinkle)\b/i', $conditionsLower)) {
@@ -65,11 +70,7 @@ class WeatherIconMapper
             return 'rain';
         }
 
-        if (preg_match('/\b(sleet|freezing\s*rain|ice\s*pellet)\b/i', $conditionsLower)) {
-            return 'sleet';
-        }
-
-        if (preg_match('/\b(light\s*snow|flurr)\b/i', $conditionsLower)) {
+        if (preg_match('/\b(light\s*snow|flurries?)\b/i', $conditionsLower)) {
             return 'light_snow';
         }
 
@@ -85,7 +86,7 @@ class WeatherIconMapper
             return 'mist';
         }
 
-        if (preg_match('/\b(wind|windy|gust)\b/i', $conditionsLower)) {
+        if (preg_match('/\b(wind|windy|gusty?)\b/i', $conditionsLower)) {
             return 'wind';
         }
 

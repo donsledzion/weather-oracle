@@ -133,55 +133,68 @@
 - [x] Guest dashboard: link do globalnych ustawień (token-based, przycisk 🔔 w headerze)
 - [x] Panel powiadomień zawiera toggles per wróżba (nie trzeba ich w dashboardzie)
 
-## Faza 11: UX & Chart Enhancements ⏳
+## Faza 11: UX & Chart Enhancements ✅
 
-### 11.1: Terminologia - "Snapshoty" → "Odczyty prognozy"
-- [ ] Zmienić tłumaczenia: `forecast_snapshots` → `forecast_readings`
-- [ ] Zaktualizować blade templates (dashboard, request-details)
-- [ ] Zaktualizować email templates
+### 11.1: Terminologia - "Snapshoty" → "Prognozy" ✅
+- [x] Zmienić tłumaczenia: `snapshoty` → `prognozy` w lang/pl/app.php i lang/en/app.php
+- [x] Zmienić "monitory" → "wróżby" w limitach
+- [x] Usunąć techniczny żargon ("dashboard" → "panel")
 
-### 11.2: Weather Icons & Categorization
-- [ ] Utworzyć `WeatherIconMapper.php` (getIcon, getCategory)
-- [ ] Mapowania emoji: ☀️🌤️☁️🌧️⛈️❄️🌨️🌫️💨
-- [ ] Zaktualizować templates aby pokazywały ikonki
+### 11.2: Weather Icons & Categorization ✅
+- [x] Utworzyć `WeatherIconMapper.php` z HTML entities (unikanie problemów UTF-8)
+- [x] Mapowanie kategorii pogodowych z regex patterns
+- [x] Dodać ikony do accordion UI w monitoring-request-details.blade.php
+- [x] Poprawić regex patterns dla wszystkich wariantów warunków
 
-### 11.3: Collapsible/Accordion Forecast Readings
-- [ ] Przeprojektować UI odczytów - domyślnie zwinięte
-- [ ] Implementacja z Alpine.js (x-collapse)
-- [ ] Przycisk "Rozwiń wszystkie" / "Zwiń wszystkie"
-- [ ] Responsywny layout dla mobile
+### 11.3: Collapsible/Accordion Forecast Readings ✅
+- [x] Grupowanie prognoz po czasie odczytu (nie po providerze)
+- [x] Compact view: ikony wszystkich providerów, czas, liczba źródeł, średnia temperatura
+- [x] Detailed view: karty dla każdego providera obok siebie z pełnymi danymi
+- [x] Implementacja z Alpine.js (`x-data="{ open: false }"`, `x-collapse`)
+- [x] Dodać tłumaczenia: źródło/źródła/źródeł, "Średnia temperatura"
+- [x] Responsywny grid layout
 
-### 11.4: Multi-metric Chart (Tabs)
-- [ ] Dodać tabs: Temperatura | Opady | Zachmurzenie | Ciśnienie | Wiatr | Wilgotność
-- [ ] Implementacja z Alpine.js (activeTab)
-- [ ] Refaktoryzacja Chart.js - dynamiczny update przy zmianie zakładki
-- [ ] Zachować porównanie między providerami
+### 11.4: Multi-metric Chart (Tabs) ✅
+- [x] Dodać tabs: Temperatura, Opady, Zachmurzenie, Ciśnienie, Wiatr, Wilgotność
+- [x] Implementacja z Alpine.js: `x-data="{ activeMetric: 'temperature' }"`
+- [x] Refaktoryzacja Chart.js z dynamicznym updatem przy zmianie zakładki
+- [x] Metody pomocnicze: `getDatasetsForMetric()`, `getYAxisConfig()`
+- [x] Zachowano porównanie providerów i adaptacyjne punkty
+- [x] Tłumaczenia PL/EN
 
-### 11.5: Landing Page / Welcome Page
-- [ ] Utworzyć route `/` → WelcomeController
-- [ ] Utworzyć `welcome.blade.php` z hero section, "Jak to działa?", CTAs
-- [ ] Tłumaczenia PL/EN
-- [ ] Footer z linkami
+### 11.5: Landing Page / Welcome Page ✅
+- [x] Utworzono `welcome.blade.php` z hero section
+- [x] Sekcja "Jak to działa?" z 3 krokami
+- [x] Sekcja "Dlaczego Weather Oracle?" z benefitami
+- [x] Formularz monitorowania dla gości i zalogowanych
+- [x] Tłumaczenia PL/EN
 
 ---
 
-## Faza 12: Public Forecasts System ⏳
+## Faza 12: Public Forecasts System ✅
 
-### 12.1: Database Schema - Public Monitors
-- [ ] Migration: dodać `is_public` do `monitoring_requests`
-- [ ] Migration: utworzyć tabelę `public_monitor_locations`
-- [ ] Seeder: 10 predefiniowanych lokalizacji (Warszawa, Kraków, Berlin, Paryż, etc.)
+### 12.1: Database Schema - Public Monitors ✅
+- [x] Migration: dodać `is_public` do `monitoring_requests`
+- [x] Migration: utworzyć tabelę `public_monitor_locations`
+- [x] Seeder: 11 polskich miast (Zakopane, Ustrzyki, Suwałki, Łeba, Hel, Szczecin, Toruń, Kraków, Wrocław, Gdańsk, Warszawa)
+- [x] Model `PublicMonitorLocation` z relacjami
 
-### 12.2: Public Monitors Maintenance Command
-- [ ] Utworzyć `MaintainPublicMonitors` command
-- [ ] Logika: utrzymuj 2-3 aktywne monitory per lokalizacja, rolling system
-- [ ] Scheduler: daily
+### 12.2: Public Monitors Maintenance Command ✅
+- [x] Utworzyć `MaintainPublicMonitors` command
+- [x] Logika: utrzymuj max 3 aktywne monitory per lokalizacja, stagger co 3 dni
+- [x] Scheduler: daily + dodany do deploy.yml
+- [x] Czyszczenie expired monitorów
 
-### 12.3: Public Forecasts View
-- [ ] Route: `/demo` → PublicForecastsController
-- [ ] View: lista publicznych lokalizacji, aktywne + completed monitory
-- [ ] Zaktualizować MonitoringRequestDetails aby akceptował publiczne monitory
-- [ ] Tłumaczenia PL/EN
+### 12.3: Public Forecasts View ✅
+- [x] Route: `/demo` → PublicForecastsController
+- [x] View: lista publicznych lokalizacji, aktywne + completed monitory z progress barami
+- [x] Zaktualizować autoryzację aby akceptowała publiczne monitory
+- [x] Tłumaczenia PL/EN
+- [x] Link "Demo" w nawigacji i duży CTA na welcome page
+- [x] Ujednolicono layout (welcome i demo używają tego samego layoutu)
+- [x] Ujednolicono style list wróżb (dashboard i demo mają progress bary)
+- [x] Dodano graceful error handling dla nieistniejących emaili gości
+- [x] Fix wyświetlania dni (diffForHumans zamiast float)
 
 ---
 
@@ -189,7 +202,7 @@
 
 ### 13.1: Unit Tests
 - [ ] WeatherTranslatorTest
-- [ ] WeatherIconMapperTest
+- [x] WeatherIconMapperTest (20/20 testów, wykryto i naprawiono 5 bugów w regex patterns)
 - [ ] NotificationPreferenceTest
 - [ ] MonitoringRequestTest
 **Target**: >80% coverage dla helpers i models
