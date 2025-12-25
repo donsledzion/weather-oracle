@@ -218,9 +218,17 @@
 ### 13.3: Command Tests
 - [x] FetchForecastsTest (4/4 testy logiki command - filtrowanie aktywnych requestów i providerów)
 - [x] MaintainPublicMonitorsTest (10/10 testów ✅ - wykryto i naprawiono KRYTYCZNY bug w diffInDays)
-- [ ] SendDailySummariesTest
-- [ ] SendFinalSummariesTest
-**Target**: >60% coverage dla commands ✅
+- [x] SendDailySummariesTest (8/8 testów ✅ - wykryto i naprawiono bug: snapshots() → forecastSnapshots())
+- [x] SendFinalSummariesTest (7/7 testów ✅)
+**Target**: >60% coverage dla commands ✅✅✅
+
+**Podsumowanie Fazy 13.3:**
+- **94 testy przeszły** (Unit + Command)
+- **223 asercje**
+- **Czas: 5.44s**
+- **Naprawione bugi:**
+  1. MaintainPublicMonitors: diffInDays zwracał ujemne wartości (KRYTYCZNY - publiczne monitory się nie tworzyły)
+  2. DailySummary + FinalSummary: używały nieistniejącej relacji snapshots() zamiast forecastSnapshots()
 
 ### 13.4: API/Integration Tests
 - [ ] OpenWeatherTest (mock API response)

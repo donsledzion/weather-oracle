@@ -32,7 +32,7 @@ class FinalSummary extends Mailable
      */
     protected function calculateProviderStats(): array
     {
-        $snapshots = $this->request->snapshots()
+        $snapshots = $this->request->forecastSnapshots()
             ->with('weatherProvider')
             ->orderBy('created_at')
             ->get();

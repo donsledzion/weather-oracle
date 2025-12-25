@@ -27,7 +27,7 @@ class DailySummary extends Mailable
         $this->recipientEmail = $recipientEmail;
         $this->notificationToken = $notificationToken;
         $this->totalSnapshots = $requests->sum(function ($request) {
-            return $request->snapshots()->whereDate('created_at', today())->count();
+            return $request->forecastSnapshots()->whereDate('created_at', today())->count();
         });
     }
 
