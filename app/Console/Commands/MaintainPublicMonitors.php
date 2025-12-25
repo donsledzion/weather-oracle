@@ -70,7 +70,7 @@ class MaintainPublicMonitors extends Command
         $latestMonitor = $activeMonitors->sortByDesc('created_at')->first();
 
         if ($latestMonitor) {
-            $daysSinceLastCreation = now()->diffInDays($latestMonitor->created_at);
+            $daysSinceLastCreation = $latestMonitor->created_at->diffInDays(now());
 
             if ($daysSinceLastCreation < $location->stagger_days) {
                 $this->line("  Latest monitor created {$daysSinceLastCreation} days ago. Waiting for {$location->stagger_days} days.");

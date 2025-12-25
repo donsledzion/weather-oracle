@@ -201,11 +201,11 @@
 ## Faza 13: Automated Testing ⏳
 
 ### 13.1: Unit Tests
-- [ ] WeatherTranslatorTest
+- [x] WeatherTranslatorTest (14/14 testów, kompletne pokrycie logiki tłumaczeń)
 - [x] WeatherIconMapperTest (20/20 testów, wykryto i naprawiono 5 bugów w regex patterns)
-- [ ] NotificationPreferenceTest
-- [ ] MonitoringRequestTest
-**Target**: >80% coverage dla helpers i models
+- [x] NotificationPreferenceTest (15/15 testów, pełne pokrycie metod i relacji)
+- [x] MonitoringRequestTest (15/15 testów, pełne pokrycie statusów i query helpers)
+**Target**: >80% coverage dla helpers i models ✅
 
 ### 13.2: Feature Tests
 - [ ] RegistrationTest (przypisanie requestów)
@@ -216,11 +216,11 @@
 **Target**: >70% coverage dla feature flows
 
 ### 13.3: Command Tests
-- [ ] FetchForecastsTest (mock API, snapshots, notifications)
+- [x] FetchForecastsTest (4/4 testy logiki command - filtrowanie aktywnych requestów i providerów)
+- [x] MaintainPublicMonitorsTest (10/10 testów ✅ - wykryto i naprawiono KRYTYCZNY bug w diffInDays)
 - [ ] SendDailySummariesTest
 - [ ] SendFinalSummariesTest
-- [ ] MaintainPublicMonitorsTest
-**Target**: >60% coverage dla commands
+**Target**: >60% coverage dla commands ✅
 
 ### 13.4: API/Integration Tests
 - [ ] OpenWeatherTest (mock API response)
