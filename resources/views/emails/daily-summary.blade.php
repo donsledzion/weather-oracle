@@ -103,8 +103,8 @@
 
         @foreach($requests as $request)
             @php
-                $todaySnapshots = $request->snapshots()->whereDate('created_at', today())->get();
-                $latestSnapshot = $request->snapshots()->latest()->first();
+                $todaySnapshots = $request->forecastSnapshots()->whereDate('created_at', today())->get();
+                $latestSnapshot = $request->forecastSnapshots()->latest()->first();
             @endphp
 
             <div class="request-item">
@@ -118,11 +118,11 @@
 
                 <div class="snapshot-info">
                     {{ __('app.email_daily_summary_snapshots_today', ['count' => $todaySnapshots->count()]) }}
-                    • {{ __('app.email_daily_summary_total_snapshots', ['count' => $request->snapshots()->count()]) }}
+                    • {{ __('app.email_daily_summary_total_snapshots', ['count' => $request->forecastSnapshots()->count()]) }}
                 </div>
 
                 <div style="margin-top: 10px;">
-                    <a href="{{ route('request.details', $request->id) }}" style="color: #2563eb; text-decoration: none; font-size: 14px;">
+                    <a href="{{ route('requests.show', $request->id) }}" style="color: #2563eb; text-decoration: none; font-size: 14px;">
                         {{ __('app.view_details') }} →
                     </a>
                 </div>

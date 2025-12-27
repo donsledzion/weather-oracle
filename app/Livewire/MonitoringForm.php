@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Mail\RequestVerificationEmail;
 use App\Models\ForecastSnapshot;
 use App\Models\MonitoringRequest;
+use App\Models\NotificationPreference;
 use App\Models\WeatherProvider;
 use App\Services\WeatherProviderFactory;
 use Illuminate\Support\Facades\Mail;
@@ -71,6 +72,9 @@ class MonitoringForm extends Component
                 'status' => MonitoringRequest::STATUS_ACTIVE,
             ]);
 
+            // Ensure notification preferences exist for this user
+            NotificationPreference::getForUser($user->id);
+
             // Immediately fetch initial forecasts
             $this->fetchInitialForecasts($monitoringRequest);
 
@@ -94,6 +98,9 @@ class MonitoringForm extends Component
             $verifyUrl = route('requests.verify', $verificationToken);
             $rejectUrl = route('requests.reject', $verificationToken);
             $dashboardUrl = route('guest.dashboard', $dashboardToken);
+
+            // Ensure notification preferences exist for this email
+            NotificationPreference::getForEmail($this->email);
 
             try {
                 Mail::to($this->email)->send(new RequestVerificationEmail(

@@ -151,7 +151,7 @@
         @endif
 
         <div style="text-align: center; margin: 25px 0;">
-            <a href="{{ route('request.details', $request->id) }}" class="btn">
+            <a href="{{ route('requests.show', $request->id) }}" class="btn">
                 {{ __('app.email_final_summary_view_full') }}
             </a>
         </div>
